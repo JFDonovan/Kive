@@ -2,15 +2,12 @@
 import os
 
 from flask import Flask, request
-from flask_restful import Resource, Api
 
 from ingest import ingest, update, delete
 from dir_manage import create_workspace, delete_workspace, import_folder
 from search import search_from_strs
 
 app = Flask(__name__)
-api = Api(app)
-
 
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
@@ -18,40 +15,42 @@ def shutdown_server():
         raise RuntimeError('Not running with the Werkzeug Server')
     func()
 
-
-class shutdown(Resource):
-    def get(self):
-        shutdown_server()
-        return 'Shutting down server..'
-
-
-class sumNumbers(Resource):
-    def get(self, first_number, second_number, workspace_guid):
-        result = "success"
-        try:
-            os.mkdir("G:/Users/jfdon/PycharmProjects/Kive latest/app/workspace_repo/" + workspace_guid + "/")
-            os.mkdir("G:/Users/jfdon/PycharmProjects/Kive latest/app/workspace_repo/" + workspace_guid + "/index_dir/")
-        except:
-            result = "workspace already exists"
-
-        return {'data': str(int(first_number)+int(second_number))+" "+result}
+@app.route('/shutdown/', methods=['GET'])
+def shutdown():
+    shutdown_server()
+    return 'Shutting down server..'
 
 
-class create_workspace_req(Resource):
-    def get(self, name):
-        create_workspace(name)
-        return {'data': "TBD"}
+@app.route('/test/<name>', methods=['GET'])
+def test(name):
+    response = "success"
+    try:
+        os.mkdir("G:/Users/jfdon/PycharmProjects/Kive latest/app/workspace_repo/" + name + "/")
+        os.mkdir("G:/Users/jfdon/PycharmProjects/Kive latest/app/workspace_repo/" + name + "/index_dir/")
+    except:
+        response = "workspace already exists"
+
+    return {'data': response}
 
 
+@app.route('/create-workspace/<name>', methods=['GET'])
+def create_workspace_ep(name):
+    response = None
+    try:
+        response = create_workspace(name=name)
+    except:
+        response = "CREATE WORKSPACE FAILED"
+    return {'data': response}
 
-api.add_resource(shutdown, '/shutdown/')
-api.add_resource(sumNumbers, '/sumtwonumbers/<first_number>/<second_number>/<workspace_guid>/')
-#api.add_resource(create_workspace_req, '/create-workspace/<name>')
 
-
-
-
-
+@app.route('/delete-workspace/<guid>', methods=['GET'])
+def delete_workspace_ep(guid):
+    response = None
+    try:
+        response = delete_workspace(guid=guid)
+    except:
+        response = "DELETE WORKSPACE FAILED"
+    return {'data': response}
 
 
 

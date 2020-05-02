@@ -156,10 +156,10 @@ function addWork(toBackend, data, guid) {
   console.log("added command to queue:  " + workspaceQueues[guid].length);
 }
 
-function dequeue(guid) {
+/*function dequeue(guid) {
   workspaceQueues[guid].shift()
   console.log("removed command from queue: " + workspaceQueues[guid].length);
-}
+}*/
 
 // Shows overlay that disables search functionality.
 function enableOverlay() {

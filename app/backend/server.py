@@ -1,10 +1,10 @@
 #import sumTwoNumbers
 import os
 
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 from ingest import ingest, update, delete
-from dir_manage import create_workspace, delete_workspace, import_folder
+from dir_manage import create_workspace, delete_workspace
 from search import search_from_strs
 
 app = Flask(__name__)
@@ -40,7 +40,7 @@ def create_workspace_ep(name):
         response = create_workspace(name=name)
     except:
         response = "CREATE WORKSPACE FAILED"
-    return {'data': response}
+    return jsonify(response)
 
 
 @app.route('/delete-workspace/<guid>', methods=['GET'])
@@ -50,7 +50,7 @@ def delete_workspace_ep(guid):
         response = delete_workspace(guid=guid)
     except:
         response = "DELETE WORKSPACE FAILED"
-    return {'data': response}
+    return jsonify(response)
 
 
 

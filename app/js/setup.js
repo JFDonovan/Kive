@@ -77,14 +77,14 @@ function onLoad() {
     };
 
     // Read each workspace json
-    fs.readFile("app/workspace_repo/workspaces.json", 'utf-8', (err, data) => {
+    fs.readFile("/Users/chrisyue/workspace_repo/workspaces.json", 'utf-8', (err, data) => {
         if (err) {
             // Couldn't find workspace_repo/workspaces.json
             console.log("No workspace_repo/workspaces.json present.");
             // Create the workspace_repo directory
-            fs.mkdirSync("app/workspace_repo");
+            fs.mkdirSync("/Users/chrisyue/workspace_repo");
             // Create the workspaces.json file 
-            fs.writeFile("app/workspace_repo/workspaces.json", '{}', function (err2) {
+            fs.writeFile("/Users/chrisyue/workspace_repo/workspaces.json", '{}', function (err2) {
                 if (err2) throw (err2);
                 console.log("Succesfully wrote file.");
             });

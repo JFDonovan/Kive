@@ -13,7 +13,7 @@ function readTree(workspace) {
     let dialog = remote.dialog;
     let fs = remote.require('fs');
 
-    fs.readFile("app/workspace_repo/" + workspace + "/tree.json", 'utf-8', (err, data) => {
+    fs.readFile("/Users/chrisyue/workspace_repo/" + workspace + "/tree.json", 'utf-8', (err, data) => {
         if (err) {
             alert("An error occurred reading the tree file :" + err.message);
             return;
@@ -36,7 +36,7 @@ function appendTree(workspace, parent_node) {
     let fs = remote.require('fs');
 
     // Reads from temp.json file
-    fs.readFile("app/workspace_repo/" + workspace + "/temp.json", 'utf-8', (err, data) => {
+    fs.readFile("/Users/chrisyue/workspace_repo/" + workspace + "/temp.json", 'utf-8', (err, data) => {
         if (err) {
             alert("An error occurred reading the tree file :" + err.message);
             return;
@@ -309,7 +309,7 @@ function treeToJson(workspace) {
     treeJson = $('#' + workspace + '_tree').tree('toJson');
 
     // Writes to tree json
-    fs.writeFile("app/workspace_repo/" + workspace + "/tree.json", treeJson, (err) => {
+    fs.writeFile("/Users/chrisyue/workspace_repo/" + workspace + "/tree.json", treeJson, (err) => {
         if (err) {
             alert("An error ocurred updating the file" + err.message);
             console.log(err);
@@ -331,7 +331,7 @@ function treeToBackupJson(workspace) {
     treeJson = $('#' + workspace + '_tree').tree('toJson');
 
     // Writes to tree_backup.json
-    fs.writeFile("app/workspace_repo/" + workspace + "/tree_backup.json", treeJson, (err) => {
+    fs.writeFile("/Users/chrisyue/workspace_repo/" + workspace + "/tree_backup.json", treeJson, (err) => {
         if (err) {
             alert("An error ocurred updating the file" + err.message);
             console.log(err);

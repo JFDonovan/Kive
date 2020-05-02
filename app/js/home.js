@@ -45,7 +45,7 @@ function renameWorkspace(name, guid) {
     let fs = remote.require('fs');
 
     // Reads from workspaces json
-    fs.readFile("app/workspace_repo/workspaces.json", 'utf-8', (err, data) => {
+    fs.readFile("/Users/chrisyue/workspace_repo/workspaces.json", 'utf-8', (err, data) => {
         if (err) {
             // Failure
             alert("An error occurred reading the tree file :" + err.message);
@@ -61,7 +61,7 @@ function renameWorkspace(name, guid) {
         // Checks to see that workspaces json was successfully read from tree 
         if (workspacesJson) {
             // Writes workspacesJson object to workspaces json
-            fs.writeFile("app/workspace_repo/workspaces.json", JSON.stringify(workspacesJson), (err) => {
+            fs.writeFile("/Users/chrisyue/workspace_repo/workspaces.json", JSON.stringify(workspacesJson), (err) => {
                 if (err) {
                     // Failure
                     alert("An error ocurred updating the file" + err.message);

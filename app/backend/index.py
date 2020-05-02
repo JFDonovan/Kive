@@ -36,11 +36,11 @@ def index(json_lst, operation, workspace_guid):
         schema = get_schema()
 
         # Index directory has to be made before index gets written
-        if len(os.listdir('app/workspace_repo/{}/index_dir'.format(workspace_guid))) == 0:
+        if len(os.listdir('/Users/chrisyue/workspace_repo/{}/index_dir'.format(workspace_guid))) == 0:
             # Create index based on schema
-            ix = create_in('app/workspace_repo/{}/index_dir'.format(workspace_guid), schema)
+            ix = create_in('/Users/chrisyue/workspace_repo/{}/index_dir'.format(workspace_guid), schema)
         else:
-            ix = open_dir('app/workspace_repo/{}/index_dir'.format(workspace_guid))
+            ix = open_dir('/Users/chrisyue/workspace_repo/{}/index_dir'.format(workspace_guid))
 
         # Prepare to write paths to index
         writer = ix.writer(procs=os.cpu_count(), multisegment=True)

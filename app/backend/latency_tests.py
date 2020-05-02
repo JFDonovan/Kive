@@ -32,8 +32,8 @@ if __name__ == '__main__':
         os.system('echo "create-workspace:*:workspace_{}" | python3 app/backend/cmd_interpret.py'.format(i))
 
     workspace_guids = []
-    for dir in os.listdir('app/workspace_repo'):
-        if os.path.isdir('app/workspace_repo/{}'.format(dir)):
+    for dir in os.listdir('/Users/chrisyue/workspace_repo'):
+        if os.path.isdir('/Users/chrisyue/workspace_repo/{}'.format(dir)):
             workspace_guids.append(dir)
 
     print('****************** System Information *******************')

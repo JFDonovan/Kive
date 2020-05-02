@@ -1,0 +1,524 @@
+/* color palette idea 
+#1C515E
+#519A5D
+#FFFBDA
+#7FCAD1
+#4A3A42
+*/
+
+/* --------------- Scrollbar --------------- */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 3px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(182, 182, 182); 
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(139, 139, 139); 
+}
+/* ------------------------------------------- */
+
+/* --------------- Workspace View --------------- */
+
+/* Container for workspace buttons */
+#workspace_btns_cont {
+  position: absolute;
+  height: 91.5%;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /*border-style: outset;*/
+  /*border-color: #96BBBB;*/
+  /*border-radius: 10px;*/
+}
+
+#kive_header {
+  color: white;
+  width: 100%;
+  align-content: center;
+  text-align: center;
+  vertical-align: center;
+}
+
+/* Header in Home view */
+#home_header {
+  width: 100%;
+  align-content: center;
+  text-align: center;
+  vertical-align: center;
+}
+#home_header h3{ 
+  color: #FFFFFF;
+}
+
+/* New Workspace Button */
+.new_workspace_btn {
+  background-color: white;
+  width: 25px;
+  height: 25px;
+  color: #1C515E;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px;
+  border-color: #1C515E;
+}
+
+/* Workspace Button */
+.workspace_btn {
+  background-color: #008CBA;
+  border: none;
+  color: white;
+  padding: 15px 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+/* ---------------------------------------------- */
+
+/* --------------- File explorer View --------------- */
+
+/*Button to go home*/
+.home_btn {
+  background-color: white;
+  border: 1px;
+  height: fit-content;
+  width: fit-content;
+  color: #006494;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  /*margin: 4px 2px;*/
+  top: 4px;
+  left: 4px;
+  cursor: pointer;
+  border-radius: 25%;
+  border-color: #008CBA;
+  align-content: center;
+  position: absolute;
+}
+
+#ingest_dropdown {
+  padding-bottom: 4px;
+}
+
+/* Container for tree display */
+#tree_display {
+  position: absolute;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 4px;
+  height: 85%;
+  width: 100%;
+  overflow-y: auto;
+  border: none;
+  /*border-style: hidden double double double;
+  border-color: #006494;
+  border-radius: 0px 0px 5px 5px;*/
+  background-color: #FFFFFF;
+}
+
+.file-icon {
+  height: 20px;
+  width: 20px;
+  padding: 2px;
+}
+
+/* Left Panel */
+#explore_panel {
+  width: 25%;
+  left: 0;
+  height: 100%;
+  top: 0%;
+  position: absolute;
+  z-index: 1;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-top: 20px;
+  background-color: #006494;
+  border-right: 1px solid #343434;
+}
+
+/* Header in workspace view */
+#workspace_header {
+  width: 100%;
+  align-content: center;
+  text-align: center;
+  vertical-align: center;
+  padding-top: 5px;
+}
+#workspace_header h3{ 
+  color: #FFFFFF;
+}
+
+/* ----- Two Pane Tabs ----- */
+.nav-tab {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 35px;
+  /*border: 1px solid #ccc;*/
+  /*background-color: #63B4D1;*/
+}
+
+.nav-tab button {
+  background-color: inherit;
+  width: 50%;
+  height: 100%;
+  float: left;
+  border: none;
+  background-color: #008CBA;
+  color: white;
+  outline: none;
+  cursor: pointer;
+  padding: 5px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+  border-radius: 10px 10px 1px 1px;
+  /*font-family: "Times New Roman", Times, serif;*/
+}
+
+/* Change background color of buttons on hover */
+.nav-tab button:hover { /*#7180AC*/
+  background-color: rgb(0, 162, 216);
+}
+
+/* Create an active/current tablink class */
+.nav-tab button.open {
+  border: none;
+  color: black;
+  border-bottom-color: #FFFFFF;
+  background-color: #FFFFFF;
+}
+
+/* Style the tab content */
+.nav-tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+/* --------------------------*/
+/* ---------------------------------------------------*/
+
+/* --------------- Render Panel ---------------*/
+/* Right Panel */
+#render_panel {
+  width: 75%;
+  right: 0;
+  height: 100%;
+  top: 0%;
+  position: /*fixed;*/absolute;
+  z-index: 1;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-top: 0px;
+}
+
+/*Chrome tabs*/
+#tabs_panel {
+  width: 100%;
+  left: 0;
+  right: 0;
+  height: 33px;
+  /*top: 0%;*/
+  top: 0%;
+  position: /*fixed;*/absolute;
+  z-index: 1;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  padding-top: 0px;
+}
+
+/* Iframe */
+#html_disp {
+  width: 100%;
+  height: 95.5%;
+  /*top: 5.5%;*/
+  top: 33px;
+  position: absolute;
+  border-radius: 0px;
+}
+
+/* Annotations toolbar */
+#annotations_bar {
+  top: 95%;
+  position: relative;
+}
+
+/* ---------------------------------------------*/
+
+.hidden {
+  display: none;
+}
+
+/* -------------- Search -------------- */
+#overlay {
+  position: absolute;
+  background-color: #ffffff;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: .87;
+  display: none;
+  font-size: 20pt;
+  border-radius: inherit;
+}
+
+#overlay-message {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  overflow-y: hidden;
+}
+
+
+#overlay-icon {
+  position: relative;
+  margin: auto;
+  right: 15%;
+  width: 25%;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+
+#overlay-label {
+  position: absolute;
+  align-content: center;
+  margin-top: auto;
+  margin-bottom: auto;
+  left: 45%;
+  color: #000000;
+  margin-left: 5px;
+  vertical-align: middle;
+}
+
+#search_settings {
+    background-color: #ffffff;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border-radius: 0px 0px 10px 10px;
+    margin: 0;
+    position: relative;
+}
+
+#search_settings input {
+    margin: 3px;
+}
+
+#search_query {
+  width: 80%;
+}
+
+.search_subpanel {
+    /*background-color: #9BD1E5;*/
+    /*background-color: #57A773; */
+    background-color: #E8F1F2;
+    margin: 5px 5px 5px 0px;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+#basic-search_panel {
+    margin: 5px 5px 5px 0px;
+    text-align: center;
+}
+
+#search_results {
+    margin-top: 5px;
+    text-align: center;
+    /*border-top: 1px solid #ccc;*/
+    /*border-radius: 10px;*/
+}
+
+#results_label {
+    left: 50%;
+    color: white;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 2px;
+}
+
+/* --------------------------------------*/
+
+/* --------------- Context Menu --------------- */
+#context_menu {
+  width: 120px;
+  box-shadow: 0 4px 5px 3px rgba(0, 0, 0, 0.2);
+  background-color: #FFFFFF;
+  position: absolute;
+  display: none;
+  z-index: 100;
+}
+
+#context_menu .menu-options {
+  list-style: none;
+  padding: 0px 0;
+}
+
+#context_menu .menu-option {
+  font-weight: 500;
+  font-size: 14px;
+  padding: 10px 40px 10px 20px;
+  cursor: pointer;
+}
+
+#context_menu li:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* ---------------------------------------------*/
+
+/* -------------- Resizable Panes ---------------*/
+
+.splitter {
+  width: 100%;
+  height: 100px;
+  display: flex;
+}
+
+#separator {
+  cursor: col-resize;
+  background-color: #aaa;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='30'><path d='M2 0 v30 M5 0 v30 M8 0 v30' fill='none' stroke='black'/></svg>");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 10px;
+  height: 100%;
+
+/* prevent browser's built-in drag from interfering */
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+#first {
+  background-color: #dde;
+  width: 20%;
+  height: 100%;
+  min-width: 10px;
+}
+
+#second {
+  background-color: #eee;
+  width: 80%;
+  height: 100%;
+  min-width: 10px;
+}
+
+/* ----------------------------------------------*/
+
+
+/* -------- DialogOLD --------- */
+.popup-modal {
+  position: fixed;
+  top: 45%;
+  left: 40%;
+  z-index: 1000;
+  background-color: #FFFFFF;
+  border: 1px solid #ccc;
+}
+
+/* ----------------------------------------------*/
+
+
+/* -------- Chrome Tabs --------- */
+
+.chrome-tabs {
+	height: 33px;
+	font-size: 12px;
+	background: #dee1e6;
+	overflow: hidden;
+}
+
+.chrome-tabs .chrome-tabs-content {
+  position: relative;
+  background: rgb(199, 205, 206);
+	width: 100%;
+	height: 33px;
+}
+
+/* ------------------------------- */
+
+
+/* --------------- Tooltip --------------- */
+
+#tooltip {
+  /*width: 120px;*/
+  background-color: rgb(245, 245, 245);
+  color: rgb(0, 0, 0);
+  text-align: center;
+  border-radius: 3px;
+  padding: 5px 5px 5px 5px;
+  position: absolute;
+  z-index: 5;
+  /*bottom: 150%;
+  left: 50%;*/
+  margin-left: -13px;
+  margin-top: -54px;
+  box-shadow: 0 2px 3px 1px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+#tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 15px;
+  margin-left: -5px;
+  border-width: 3px;
+  border-style: solid;
+  border-color: rgb(255, 247, 224) transparent transparent transparent;
+}
+
+#tooltip ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  color: rgb(80, 80, 80);
+}
+
+.fadein {
+  animation: fadeIn ease .4s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+
+/* --------------------------------------- */

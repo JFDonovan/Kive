@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+
+  <!-- JQUERY -->
+  <!--<link rel="stylesheet" href="jqtree.css">-->
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script src="app/js/tree.jquery.js"></script>
+
+  <!-- Index Styling -->
+  <link rel="stylesheet" href="app/style/index.css">
+  <link rel="stylesheet" href="app/style/chrome-tabs.css">
+  <link rel="stylesheet" href="app/style/bootstrap.min.css">
+  <link rel="stylesheet" href="app/style/jqtree.css">
+  <link rel="stylesheet" href="app/style/split-pane.css">
+
+  <!-- For swal alert (DUMB) -->
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <!-- For Icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <title>kive</title>
+</head>
+
+<body onload="onLoad()">
+  <!-- Context menu base element -->
+  <div id="context_menu">
+    <ul class="menu-options">
+    </ul>
+  </div>
+  <!-- Modal base element -->
+  <div id="modal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title"></h4>
+        </div>
+        <div class="modal-body">
+          <!--<p>Some text in the modal.</p>-->
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+  </div>
+  <!-- Tooltip base element -->
+  <span id="tooltip" class="hidden"></span>
+  <!--<h1>Kive!</h1>-->
+  <div id="main">
+    <div id="explore_panel" class="noselect">
+      <!-- Home View -->
+      <div id="home">
+        <div id="kive_header">
+          <h1>
+            Kivé
+          </h1>
+        </div>
+        <div id="home_header">
+          <h3>Workspaces
+            <button class="new_workspace_btn"
+              onclick="openModal('single-input', 'Name Workspace', ['Workspace Name: '], function (name) { createWorkspace(name) })">+</button>
+          </h3>
+        </div>
+        <div id="workspace_btns_cont">
+          <ul id="workspace_btns"></ul>
+        </div>
+      </div>
+      <!-- Workspace View -->
+      <div id="workspace_view" class="hidden">
+        <button onclick="goToHome()" class="home_btn"><i class="fa fa-home"></i></button>
+        <div id="workspace_header">
+          <h3 id="workspace_title"></h3>
+        </div>
+        <!-- Navigation tab -->
+        <div class="nav-tab">
+          <button id="files_tab_btn" onclick="goToFilesView()" class="open">Files</button>
+          <button id="search_tab_btn" onclick="goToSearchView()">Search</button>
+        </div>
+        <!-- Files View -->
+        <div id="files_view" class="">
+          <!-- Container for all base tree elements -->
+          <div id="tree_display" onscroll="despawnContextMenu()">
+            <!-- Root import dropdown -->
+            <div class="dropdown" id="ingest_dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true">
+                +
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a id="folder_create_btn"
+                    onclick="openModal('single-input', 'New Folder', ['Folder Name: '], function (name) { createFolder(null, name); })">Create
+                    Folder</a></li>
+                <li><a id="file_import_btn">Import File</a></li>
+                <li><a id="folder_import_btn">Import Folder</a></li>
+                <li><a id="wsb_import_btn">Import WebScrapBook</a></li>
+                <li><a id="sb_import_btn">Import Scrapbook</a></li>
+              </ul>
+              <button class="btn-xs" id="import-options-btn"
+                onclick="openModal('import-options-info', 'Import Options', [null], null)">?</button>
+            </div>
+          </div>
+          <!--</div>-->
+        </div>
+        <!-- Search View -->
+        <div id="search_view" class="hidden">
+          <div id="search_settings">
+            <!-- Overlay to disable search functionality while indexing-->
+            <div id="overlay"></div>
+            <div id="overlay-message">
+              <img id="overlay-icon" class="center" src="app/style/fonts/sphere_loading.gif">
+              <p id="overlay-label"> indexing...</p>
+            </div>
+            <!-- Basic search panel -->
+            <div id="basic-search_panel">
+              <span><i class="fas fa-search" onclick="getSearchQuery()"></i></span>
+              <span><input type="text" id="search_query"></span>
+              <span><i class="fas fa-cog" onclick="toggleAdvancedMenu()"></i></span>
+            </div>
+            <!-- Advanced search panel -->
+            <div id="adv-search_panel" class="hidden">
+              <!-- Title and visible text options -->
+              <input type="checkbox" id="search-set_title" checked><label for="search-set_title">Title</label>
+              <input type="checkbox" id="search-set_visible_text" checked><label for="search-set_visible_text">Visible
+                Text</label><br>
+              <!-- Date last accessed panel -->
+              <div id="dla_panel" class="search_subpanel">
+                <input type="checkbox" id="search-set_dla"><label for="search-set_dla">Date Last Accessed: </label><br>
+                From <input type="date" id="start_dla">
+                to <input type="date" id="end_dla"><br>
+              </div>
+              <!-- Date ingested kive panel -->
+              <div id="dik_panel" class="search_subpanel">
+                <input type="checkbox" id="search-set_dik"><label for="search-set_dik">Date Ingested (Kive):
+                </label><br>
+                From <input type="date" id="start_dik">
+                to <input type="date" id="end_dik"><br>
+              </div>
+              <!-- Date ingested legacy panel -->
+              <div id="dil_panel" class="search_subpanel">
+                <input type="checkbox" id="search-set_dil"><label for="search-set_dil">Date Ingested (Legacy):
+                </label><br>
+                From <input type="date" id="start_dil">
+                to <input type="date" id="end_dil"><br>
+              </div>
+              <!-- Media Query panel -->
+              <div id="media_panel" class="search_subpanel">
+                <input type="checkbox" id="search-set_media"><label for="search-set_media">Media: </label><br>
+                <input type="text" id="media_query" placeholder=".mp3"><br>
+              </div>
+            </div>
+          </div>
+          <!-- Search results -->
+          <div id="search_results">
+            <span id="results_label">(0 results)</span>
+            <div class="container-fluid" style="height: 49vh; overflow-y: scroll;">
+              <ul id="results_list" class="list-group"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--</div>-->
+    </div>
+    <!-- Render Panel -->
+    <div id="render_panel">
+      <!-- Chrome tabs -->
+      <div id="tabs_panel">
+        <div class="chrome-tabs">
+          <div class="chrome-tabs-content"></div>
+        </div>
+      </div>
+      <!-- Iframe for displaying webpage -->
+      <iframe id="html_disp" src="" class="noselect"></iframe>
+      <!-- Annoations tool bar -->
+      <!--<div id="annotations_bar">
+        <button id="write_btn" onclick="saveHtmlFile()">Save file!</button>
+        <button id="rmvh1_btn" onclick="rmvH1()">Find H1 header</button>
+        <button id="selection_btn" onclick="getSelectionHtml()">Make Node pink</button>
+        <button id="add_text_btn" onclick="addText()">Add Note</button>
+      </div>-->
+    </div>
+    <div id="split_handle"></div>
+    
+    <button onclick="test('sumtwonumbers/10/60/just_a_name/')" style="z-index: 1000000000000000000; position: fixed;">TEST</button>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="app/js/split-pane.js"></script>
+  <script src="app/js/connection.js"></script>
+  <script src="app/js/annotations.js"></script>
+  <script src="app/js/navigation.js"></script>
+  <script src="app/js/tree_logic.js"></script>
+  <script src="app/js/context_menu.js"></script>
+  <script src="app/js/modal.js"></script>
+  <script src="app/js/tooltip.js"></script>
+  <script src="app/js/ingest.js"></script>
+  <script src="app/js/home.js"></script>
+  <script src="app/js/search.js"></script>
+  <script src="app/js/viewer.js"></script>
+  <script src="app/js/setup.js"></script>
+  <script src="app/js/bootstrap.min.js"></script>
+  <script src="app/js/server.js"></script>
+
+  <script src="app/js/renderer.js"></script>
+</body>
+
+</html>

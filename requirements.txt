@@ -1,0 +1,8 @@
+flask
+Flask-RESTful
+pyinstaller
+isort==4.3.21
+mccabe==0.6.1
+psutil==5.7.0
+selectolax==0.2.3
+Whoosh==2.7.4

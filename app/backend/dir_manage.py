@@ -34,13 +34,13 @@ def create_workspace(name):
         return {
                 'message': 'create-workspace-success',
                 'data': name,
-                'workspace-guid': workspace_guid
+                'workspace_guid': workspace_guid
                 }
     except OSError:
         return {
                 'message': 'create-workspace-error',
                 'data': None,
-                'workspace-guid': workspace_guid
+                'workspace_guid': workspace_guid
                 }
 
 
@@ -63,12 +63,12 @@ def delete_workspace(guid):
         return {
                 'message': 'delete-workspace-success',
                 'data': None,
-                'workspace-guid': workspace_guid
+                'workspace_guid': workspace_guid
                 }
     except Exception:
         return {
                 'message': 'delete-workspace-error',
                 'data': None,
-                'workspace-guid': workspace_guid
+                'workspace_guid': workspace_guid
                 }
 

@@ -15,3 +15,5 @@ dist
 __pycache__/
 
 build/
+
+workspace_repo/

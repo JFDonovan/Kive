@@ -7,26 +7,58 @@ import shutil
 import sys
 import time
 
-def ingest(path, import_type, workspace_guid):
+def get_files(path, import_type, workspace_guid):
     '''
     Called whenever a user imports webpages.
+
+    Returns a tuple. 
+    First element contains the full json structure including
+    parent directories, etc. 
+    Second element contains a flattened list of all of the json
+    objects that represent actual web page files.
     '''
     try:
         # Get JSON objects for a web page or all of the web pages in a directory
         json_tree, json_lst = get_json_lst(path, import_type)
         
-        # Write json to file
-        with open('app/workspace_repo/{}/temp.json'.format(workspace_guid), 'w') as json_file:
-            json.dump(json_tree, json_file)
-        print('import-success'+':*:'+workspace_guid)
-
-        # Index documents
-        index_docs(json_lst, 'add', workspace_guid)
+        # # Write json to file
+        # with open('app/workspace_repo/{}/temp.json'.format(workspace_guid), 'w') as json_file:
+        #     json.dump(json_tree, json_file)
         
-        backup(workspace_guid)
-        print('index-success' + ':*:' + workspace_guid)
+        return {
+                'message': 'import-success',
+                'data': {
+                        'json_tree': json_tree, 
+                        'json_lst': json_lst
+                        },
+                'workspace-guid': workspace_guid
+                }
     except Exception as e:
         restore_from_backup(workspace_guid)
+        return {
+                'message': 'restored-from-backup',
+                'data': None,
+                'workspace-guid': workspace_guid
+                }
+
+def send_to_indexer(json_lst, workspace_guid)
+    try:
+        # Index documents
+        index_docs(json_lst, 'add', workspace_guid)
+
+        backup(workspace_guid)
+        return {
+                'message': 'index-success',
+                'data': None,
+                'workspace-guid': workspace_guid
+                }
+    except Exception as e:
+        restore_from_backup(workspace_guid)
+        return {
+                'message': 'restored-from-backup',
+                'data': None,
+                'workspace-guid': workspace_guid
+                }
 
 def update(json_lst, workspace_guid):
     '''
@@ -37,9 +69,18 @@ def update(json_lst, workspace_guid):
         index_docs(json.loads(json_lst), 'update', workspace_guid)
 
         backup(workspace_guid)
-        print('update-success' + ':*:' + workspace_guid)
+        return {
+                'message': 'update-success',
+                'data': None,
+                'workspace-guid': workspace_guid
+                }
     except Exception as e:
         restore_from_backup(workspace_guid)
+        return {
+                'message': 'restored-from-backup',
+                'data': None,
+                'workspace-guid': workspace_guid
+                }
 
 def delete(json_lst, workspace_guid):
     '''
@@ -50,6 +91,15 @@ def delete(json_lst, workspace_guid):
         index_docs(json.loads(json_lst), 'delete', workspace_guid)
 
         backup(workspace_guid)
-        print('delete-success:*:' + workspace_guid)
+        return {
+                'message': 'delete-success',
+                'data': None,
+                'workspace-guid': workspace_guid
+                }
     except Exception as e:
         restore_from_backup(workspace_guid)
+        return {
+                'message': 'restored-from-backup',
+                'data': None,
+                'workspace-guid': workspace_guid
+                }

@@ -1,9 +1,10 @@
 
 
+var path = require("path");
 // Runs executable which starts local server
 var child = require('child_process').execFile;
 // Path to executable
-var executablePath = "G:/Users/jfdon/PycharmProjects/Kive latest/app/backend/dist/server.exe";
+var executablePath = '/Users/chrisyue/Documents/Homework/CMSC435/Kive/dist/server'
 
 child(executablePath, function (err, data) {
     if (err) {

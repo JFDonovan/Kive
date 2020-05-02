@@ -29,8 +29,8 @@ class sumNumbers(Resource):
     def get(self, first_number, second_number, workspace_guid):
         result = "success"
         try:
-            os.mkdir("G:/Users/jfdon/PycharmProjects/Kive latest/app/workspace_repo/" + workspace_guid + "/")
-            os.mkdir("G:/Users/jfdon/PycharmProjects/Kive latest/app/workspace_repo/" + workspace_guid + "/index_dir/")
+            os.mkdir("/Users/chrisyue/workspace_repo/" + workspace_guid + "/")
+            os.mkdir("/Users/chrisyue/workspace_repo/" + workspace_guid + "/index_dir/")
         except:
             result = "workspace already exists"
 

@@ -1,0 +1,17 @@
+node_modules/
+
+venv/
+
+package-lock.json
+
+.idea
+
+*.spec
+
+yarn-lock/
+
+dist
+
+__pycache__/
+
+build/

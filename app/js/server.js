@@ -29,6 +29,7 @@ function postRequest(path) {
     xhttp.send();
 }
 
+// Handles response from backend
 function handleResponse(response) {
     alert(response);
 }

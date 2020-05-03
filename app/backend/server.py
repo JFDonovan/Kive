@@ -1,5 +1,6 @@
 #import sumTwoNumbers
 import os
+import sys
 
 from flask import Flask, request, jsonify
 
@@ -109,6 +110,12 @@ def search_ep(guid):
         response = "IMPORT FAILED"
     return jsonify(response)
 
+def start_server():
+    # Set path to AppData/Local Resources/etc. folder
+    app_data_path = sys.argv[1]
+    # TODO: Set config class's app data path to above variable
+    app.run()
+
 # Runs main (should stay at bottom)
 if __name__ == '__main__':
-    app.run()
+    start_server()

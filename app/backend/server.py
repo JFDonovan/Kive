@@ -10,6 +10,9 @@ from search import search_from_strs
 
 app = Flask(__name__)
 
+## Path where user resources are located
+resources_path = None
+
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
     if func is None:
@@ -33,6 +36,12 @@ def test(name):
 
     return {'data': response}
 
+## Will set path variable when app Electron is loaded
+@app.route('/loadpath/<path>', methods=['GET'])
+def load_path_ep(path):
+    resources_path = path
+
+    return resources_path == None
 
 @app.route('/create-workspace/<name>', methods=['GET'])
 def create_workspace_ep(name):

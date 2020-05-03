@@ -85,7 +85,7 @@ function getSearchQuery() {
             options: options,
             media_query: mediaQuery,
         }
-        postRequest("/search/" + currentWorkspace, null, queryObj);
+        postRequest("search/" + currentWorkspace, null, queryObj);
     }
     else {
         openModal("search-query-error", "Search Error", [], null)

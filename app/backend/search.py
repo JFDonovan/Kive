@@ -29,7 +29,7 @@ def search_from_strs(search_text, leg_datetime_range, kive_datetime_range,
 def search_docs(search_text, leg_datetime_range, kive_datetime_range,
                 la_datetime_range, media_text_lst, fields_lst, workspace_guid):
     # start = time.time()
-    ix = open_dir('/Users/chrisyue/workspace_repo/{}/index_dir'.format(workspace_guid))
+    ix = open_dir(config.app_data_path + '/workspace_repo/{}/index_dir'.format(workspace_guid))
     # print(ix.schema)
     with ix.searcher() as searcher:
         ####### FOR DEBUGGING #########

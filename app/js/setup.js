@@ -4,12 +4,18 @@ var path = require("path");
 // Runs executable which starts local server
 var child = require('child_process').execFile;
 // Path to executable
-var executablePath = '/Users/chrisyue/Documents/Homework/CMSC435/Kive/dist/server'
+var executablePath = '../../app/backend/dist/server.exe'
 
-child(executablePath, function (err, data) {
+let remote = require('electron').remote;
+var appDataPath = remote.getGlobal('sharedObject').appDataPath;
+
+child(executablePath, [appDataPath], function (err, data) {
     if (err) {
         console.error(err);
         return;
+    }
+    else {
+        console.log("Server started...");
     }
 });
 
@@ -77,14 +83,16 @@ function onLoad() {
     };
 
     // Read each workspace json
-    fs.readFile("/Users/chrisyue/workspace_repo/workspaces.json", 'utf-8', (err, data) => {
+    fs.readFile(appDataPath + "/workspace_repo/workspaces.json", 'utf-8', (err, data) => {
         if (err) {
             // Couldn't find workspace_repo/workspaces.json
             console.log("No workspace_repo/workspaces.json present.");
+            // Create kive_data repo
+            fs.mkdirSync(appDataPath);
             // Create the workspace_repo directory
-            fs.mkdirSync("/Users/chrisyue/workspace_repo");
+            fs.mkdirSync(appDataPath + "/workspace_repo");
             // Create the workspaces.json file 
-            fs.writeFile("/Users/chrisyue/workspace_repo/workspaces.json", '{}', function (err2) {
+            fs.writeFile(appDataPath + "/workspace_repo/workspaces.json", '{}', function (err2) {
                 if (err2) throw (err2);
                 console.log("Succesfully wrote file.");
             });

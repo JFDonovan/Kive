@@ -29,13 +29,13 @@ function get_folder(importType, nodeId) {
     }
     else {
       // send import command to backend with filepath, import type, and current workspace
-      getRequest("/import/" + encodeURIComponent(folderPaths.filePaths) + "/" + importType + "/" + currentWorkspace, nodeId);
+      getRequest("import/" + encodeURIComponent(folderPaths.filePaths) + "/" + importType + "/" + currentWorkspace, nodeId);
     }
   });
 }
 
 // Retrieve selected file
-function get_file(node) {
+function get_file(nodeId) {
   console.log('get_file called');
   let remote = require('electron').remote;
   let dialog = remote.dialog;
@@ -55,7 +55,7 @@ function get_file(node) {
     }
     else {
       // send import command to backend with filepath, import type (file), and current workspace
-      getRequest("/import/" + encodeURIComponent(folderPaths.filePaths) + "/file/" + currentWorkspace, nodeId);
+      getRequest("import/" + encodeURIComponent(folderPaths.filePaths) + "/file/" + currentWorkspace, nodeId);
     }
   });
 }

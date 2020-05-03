@@ -4,7 +4,7 @@ venv/
 
 package-lock.json
 
-.idea
+*.idea
 
 *.spec
 
@@ -17,3 +17,5 @@ __pycache__/
 build/
 
 workspace_repo/
+
+*.lock

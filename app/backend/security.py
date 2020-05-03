@@ -4,7 +4,7 @@ Uncomment things that deal with "config" after app data path functionality is im
 
 import os
 import datetime
-# import config
+import config
 
 from cryptography.fernet import Fernet
 
@@ -13,8 +13,8 @@ def write_secret_key():
     '''
     Writes a secret key to the user's app data folder.
     '''
-    # with open('{}/secret_key'.format(config.app_data_path), 'w') as secret_key_file:
-    with open('{}/secret_key'.format('/Users/chrisyue/workspace_repo'), 'w') as secret_key_file:
+    with open('{}/secret_key'.format(config.app_data_path), 'w') as secret_key_file:
+    #with open('{}/secret_key'.format('/Users/chrisyue/workspace_repo'), 'w') as secret_key_file:
         secret_key_file.write(Fernet.generate_key())
 
 def encrypt_response(response):

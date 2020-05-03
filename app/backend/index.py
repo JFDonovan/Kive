@@ -10,6 +10,9 @@ import os
 import time
 import sys
 
+import config
+
+
 def get_schema():
     # Specifies what fields are stored in the index
     analyzer = analysis.StandardAnalyzer(stoplist=None, minsize=1) | analysis.CharsetFilter(accent_map)
@@ -36,11 +39,11 @@ def index(json_lst, operation, workspace_guid):
         schema = get_schema()
 
         # Index directory has to be made before index gets written
-        if len(os.listdir('/Users/chrisyue/workspace_repo/{}/index_dir'.format(workspace_guid))) == 0:
+        if len(os.listdir(config.app_data_path + '/workspace_repo/{}/index_dir'.format(workspace_guid))) == 0:
             # Create index based on schema
-            ix = create_in('/Users/chrisyue/workspace_repo/{}/index_dir'.format(workspace_guid), schema)
+            ix = create_in(config.app_data_path + '/workspace_repo/{}/index_dir'.format(workspace_guid), schema)
         else:
-            ix = open_dir('/Users/chrisyue/workspace_repo/{}/index_dir'.format(workspace_guid))
+            ix = open_dir(config.app_data_path + '/workspace_repo/{}/index_dir'.format(workspace_guid))
 
         # Prepare to write paths to index
         writer = ix.writer(procs=os.cpu_count(), multisegment=True)

@@ -1,6 +1,6 @@
 // Shuts server down
 module.exports = {
-    shutdown: () => { console.log('shutdown server called'), test('shutdown/') }
+    shutdown: () => { console.log('shutdown server called'); getRequest('shutdown', null) }
 }
 
 // Makes POST request at endpoint at path
@@ -36,27 +36,27 @@ function handleResponse(response, context) {
     swal(response); //TEMP
 
     // Parses response to json object
-    let respObj = JSON.parse(response).response;
+    let respObj = JSON.parse(response);
 
-    let respCmd = respObj.command;
+    let respCmd = respObj.message;
 
 
     // Response dictionary
     let respDict = {
         // Success responses
         "import-success": function () {
-            postRequest("/index/add", null, respObj.json_tree);
+            postRequest("index/add/" + respObj.workspace_guid, null, respObj.json_lst);
             appendTree(respObj.workspace_guid, respObj.json_tree, context);
             console.log("import successful");
         },
         "create-workspace-success": function () {
             workspaceHTML(respObj.workspace_guid, respObj.name);
-            workspaceQueues[args[0]] = [];
+            workspaceQueues[respObj.workspace_guid] = [];
             console.log("create workspace successful");
         },
         "delete-workspace-success": function () {
             deleteWorkspaceHTML(respObj.workspace_guid);
-            delete workspaceQueues[args[0]];
+            delete workspaceQueues[respObj.workspace_guid];
             console.log("delete workspace successful");
         },
         "search-success": function () {

@@ -13,7 +13,7 @@ function readTree(workspace) {
     let dialog = remote.dialog;
     let fs = remote.require('fs');
 
-    fs.readFile("/Users/chrisyue/workspace_repo/" + workspace + "/tree.json", 'utf-8', (err, data) => {
+    fs.readFile(appDataPath + "/workspace_repo/" + workspace + "/tree.json", 'utf-8', (err, data) => {
         if (err) {
             alert("An error occurred reading the tree file :" + err.message);
             return;
@@ -30,7 +30,7 @@ function readTree(workspace) {
 
 // Append to an existing tree
 function appendTree(workspace, data, parent_node) {
-    console.log('append_tree called');
+    console.log('appendTree called');
     let remote = require('electron').remote;
     let dialog = remote.dialog;
     let fs = remote.require('fs');
@@ -48,7 +48,7 @@ function appendTree(workspace, data, parent_node) {
         // Finds the tree of the workspace passed in
         let $tree = $('#' + workspace + '_tree');
         // If parent node specified, append tree to parent node
-        json_list = JSON.parse(data);
+        json_list = data;
         if (parent_node) {
             for (var i = 0; i < json_list.length; i++) {
                 $tree.tree(
@@ -256,7 +256,7 @@ function deleteNode(node) {
     addTreeTooltips(currentWorkspace);
     // Sends index command, node Id, and current workspace to backend
     // Adds command to queue
-    addToQueue("/index/delete/" + currentWorkspace, null, toDeleteFromIdx, currentWorkspace);
+    addToQueue("index/delete/" + currentWorkspace, null, toDeleteFromIdx, currentWorkspace);
 }
 
 // Update node (assumes current workspace)
@@ -296,7 +296,7 @@ function updateNode(node, key, value) {
         console.log("Send data: ");
         console.log(sendData);
         // Sends index command, node Id, and current workspace to backend
-        addToQueue("/files/update/" + currentWorkspace, null, [sendData], currentWorkspace);
+        addToQueue("files/update/" + currentWorkspace, null, [sendData], currentWorkspace);
     }
 }
 
@@ -311,7 +311,7 @@ function treeToJson(workspace) {
     treeJson = $('#' + workspace + '_tree').tree('toJson');
 
     // Writes to tree json
-    fs.writeFile("/Users/chrisyue/workspace_repo/" + workspace + "/tree.json", treeJson, (err) => {
+    fs.writeFile(appDataPath + "/workspace_repo/" + workspace + "/tree.json", treeJson, (err) => {
         if (err) {
             alert("An error ocurred updating the file" + err.message);
             console.log(err);
@@ -333,7 +333,7 @@ function treeToBackupJson(workspace) {
     treeJson = $('#' + workspace + '_tree').tree('toJson');
 
     // Writes to tree_backup.json
-    fs.writeFile("/Users/chrisyue/workspace_repo/" + workspace + "/tree_backup.json", treeJson, (err) => {
+    fs.writeFile(appDataPath + "/workspace_repo/" + workspace + "/tree_backup.json", treeJson, (err) => {
         if (err) {
             alert("An error ocurred updating the file" + err.message);
             console.log(err);

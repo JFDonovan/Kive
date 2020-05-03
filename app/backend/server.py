@@ -1,17 +1,17 @@
 #import sumTwoNumbers
 import os
 import sys
+import config
 
 from flask import Flask, request, jsonify
 
-from ingest import get_files, send_to_indexer, update, delete
+from ingesta import get_files, send_to_indexer, update, delete
 from dir_manage import create_workspace, delete_workspace
 from search import search_from_strs
 
 app = Flask(__name__)
 
-## Path where user resources are located
-resources_path = None
+app_data_path = "none"
 
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
@@ -19,29 +19,28 @@ def shutdown_server():
         raise RuntimeError('Not running with the Werkzeug Server')
     func()
 
-@app.route('/shutdown/', methods=['GET'])
+@app.route('/shutdown', methods=['GET'])
 def shutdown():
     shutdown_server()
     return 'Shutting down server..'
 
 
+@app.route('/check', methods=['GET'])
+def check():
+    return 'Server is running...'
+
+
 @app.route('/test/<name>', methods=['GET'])
-def test(name):
+def test(guid):
     response = "success"
     try:
-        os.mkdir("G:/Users/jfdon/PycharmProjects/Kive latest/app/workspace_repo/" + name + "/")
-        os.mkdir("G:/Users/jfdon/PycharmProjects/Kive latest/app/workspace_repo/" + name + "/index_dir/")
+        os.mkdir(app_data_path + "/workspace_repo/" + guid + "/")
+        os.mkdir(app_data_path + "/workspace_repo/" + guid + "/index_dir/")
     except:
         response = "workspace already exists"
 
     return {'data': response}
 
-## Will set path variable when app Electron is loaded
-@app.route('/loadpath/<path>', methods=['GET'])
-def load_path_ep(path):
-    resources_path = path
-
-    return resources_path == None
 
 @app.route('/create-workspace/<name>', methods=['GET'])
 def create_workspace_ep(name):
@@ -119,10 +118,15 @@ def search_ep(guid):
         response = "IMPORT FAILED"
     return jsonify(response)
 
+@app.route('/app_data_path')
+def get_app_data_path():
+    return app_data_path
+
 def start_server():
     # Set path to AppData/Local Resources/etc. folder
+    global app_data_path
     app_data_path = sys.argv[1]
-    # TODO: Set config class's app data path to above variable
+    config.app_data_path = app_data_path
     app.run()
 
 # Runs main (should stay at bottom)

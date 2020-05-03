@@ -33,7 +33,7 @@ function workspaceHTML(workspace, workspaceName) {
 function createWorkspace(name) {
     console.log("create workspace called");
     // Send create workspace command to backend
-    let toBackend = ("/create-workspace/" + name + "/");
+    let toBackend = ("create-workspace/" + name);
     getRequest(toBackend, name);
 }
 
@@ -45,7 +45,7 @@ function renameWorkspace(name, guid) {
     let fs = remote.require('fs');
 
     // Reads from workspaces json
-    fs.readFile("/Users/chrisyue/workspace_repo/workspaces.json", 'utf-8', (err, data) => {
+    fs.readFile(appDataPath + "/workspace_repo/workspaces.json", 'utf-8', (err, data) => {
         if (err) {
             // Failure
             alert("An error occurred reading the tree file :" + err.message);
@@ -61,7 +61,7 @@ function renameWorkspace(name, guid) {
         // Checks to see that workspaces json was successfully read from tree 
         if (workspacesJson) {
             // Writes workspacesJson object to workspaces json
-            fs.writeFile("/Users/chrisyue/workspace_repo/workspaces.json", JSON.stringify(workspacesJson), (err) => {
+            fs.writeFile(appDataPath + "/workspace_repo/workspaces.json", JSON.stringify(workspacesJson), (err) => {
                 if (err) {
                     // Failure
                     alert("An error ocurred updating the file" + err.message);
@@ -86,7 +86,7 @@ function renameWorkspace(name, guid) {
 function deleteWorkspace(guid) {
     console.log("delete workspace called");
     // Send delete workspace command to backend
-    let toBackend = ("/delete-workspace/" + guid + "/");
+    let toBackend = ("delete-workspace/" + guid);
     getRequest(toBackend, guid);
 }
 // Removes workspace html

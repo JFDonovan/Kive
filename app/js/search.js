@@ -41,47 +41,53 @@ function getSearchQuery() {
     let mediaQuery = document.getElementById("media_query").value.split("*");
 
     // Formats media queries
-    let mediaQueryStr = "[";
+    /*let mediaQueryStr = "[";
     for (let x = 0; x < mediaQuery.length; x++) {
         mediaQueryStr += ("'" + mediaQuery[x] + "',");
     }
-    mediaQueryStr += "]";
+    mediaQueryStr += "]";*/
 
     // Formats list of filters for search
-    let options = "[";
+    let options = [];
     if (title)
-        options += "'name',";
+        options.push("name");
     if (visibleText)
-        options += "'content',";
+        options.push("content");
     if (dla) {
         if (endDla != "" && startDla > endDla) 
             validQuery = false;
 
-        options += "'last_accessed',";
+        options.push("last_accessed");
     }
     if (dik) {
         if (endDik != "" && startDik > endDik) 
             validQuery = false;
             
-        options += "'ingest',";
+        options.push("ingest");
     }
     if (dil) {
         if (endDil != "" && startDil > endDil) 
             validQuery = false;
 
-        options += "'legacy_ingest',";
+        options.push("legacy_ingest");
     }
     if (media) {
-        options += "'media_files',";
+        options.push("media_files");
     }
-    options += "]"
 
     // Message sent to backend
     if(validQuery) {
-        let toBackend = "search:*:" + searchQuery + ":*:('" + startDil + "','" + endDil + "'):*:('" + startDik + "','" + endDik + "'):*:('" + startDla + "','" + endDla + "'):*:" + mediaQueryStr + ":*:" + options + ":*:" + currentWorkspace;
-        console.log(toBackend);
-        connect_pyshell(toBackend, null);
-    } else {
+        let queryObj = {
+            search_query: searchQuery,
+            date_last_accessed: [startDla, endDla],
+            date_ingested_legacy: [startDil, endDil],
+            date_ingested_kive: [startDik, endDik],
+            options: options,
+            media_query: mediaQuery,
+        }
+        postRequest("/search/" + currentWorkspace, null, queryObj);
+    }
+    else {
         openModal("search-query-error", "Search Error", [], null)
     }
 }

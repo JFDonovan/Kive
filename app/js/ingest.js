@@ -28,20 +28,8 @@ function get_folder(importType, nodeId) {
       return;
     }
     else {
-      // Formats command based on import type
-      let toBackend = "BAD COMMAND";
-
-      if (importType === "folder") {
-        toBackend = ("import-folder:*:" + folderPaths.filePaths + ":*:" + currentWorkspace);
-      }
-      else if (importType == "wsb") {
-        toBackend = ("import-wsb:*:" + folderPaths.filePaths + ":*:" + currentWorkspace);
-      }
-      else {
-        toBackend = ("import-sb:*:" + folderPaths.filePaths + ":*:" + currentWorkspace);
-      }
-      // Sends import command, path of selected folder, and current workspace to backend
-      addWork(toBackend, nodeId, currentWorkspace);
+      // send import command to backend with filepath, import type, and current workspace
+      getRequest("/import/" + encodeURIComponent(folderPaths.filePaths) + "/" + importType + "/" + currentWorkspace, nodeId);
     }
   });
 }
@@ -61,14 +49,13 @@ function get_file(node) {
     }]
   }).then(folderPaths => {
     // folderPaths is an array that contains all the selected paths
-    if (folderPaths.filePaths === undefined  || folderPaths.filePaths == "") {
+    if (folderPaths.filePaths === undefined || folderPaths.filePaths == "") {
       console.log("No destination folder selected");
       return;
     }
     else {
-      let toBackend = ("import-file:*:" + folderPaths.filePaths + ":*:" + currentWorkspace);
-      // Sends import command, path of selected file, and current workspace to backend
-      addWork(toBackend, node, currentWorkspace);
+      // send import command to backend with filepath, import type (file), and current workspace
+      getRequest("/import/" + encodeURIComponent(folderPaths.filePaths) + "/file/" + currentWorkspace, nodeId);
     }
   });
 }

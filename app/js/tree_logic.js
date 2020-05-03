@@ -29,18 +29,22 @@ function readTree(workspace) {
 }
 
 // Append to an existing tree
-function appendTree(workspace, parent_node) {
+function appendTree(workspace, data, parent_node) {
     console.log('append_tree called');
     let remote = require('electron').remote;
     let dialog = remote.dialog;
     let fs = remote.require('fs');
 
     // Reads from temp.json file
-    fs.readFile("/Users/chrisyue/workspace_repo/" + workspace + "/temp.json", 'utf-8', (err, data) => {
+    /*fs.readFile("/Users/chrisyue/workspace_repo/" + workspace + "/temp.json", 'utf-8', (err, data) => {
         if (err) {
             alert("An error occurred reading the tree file :" + err.message);
             return;
-        }
+        }*/
+    if (!data) {
+        console.error("Tree data is null");
+    }
+    else {
         // Finds the tree of the workspace passed in
         let $tree = $('#' + workspace + '_tree');
         // If parent node specified, append tree to parent node
@@ -73,10 +77,11 @@ function appendTree(workspace, parent_node) {
             }
         }
         // Write tree data to tree json file in the workspace repo
-        treeToJson(workspace);
+        //treeToJson(workspace);
         // Adds tooltip logic to tree (when appending to the tree in this case)
         addTreeTooltips(workspace);
-    });
+    }
+    //});
 }
 
 // Generates and returns GUID
@@ -172,13 +177,13 @@ function makeTree(workspace, data) {
                 }
 
                 // Could not load resource, reset to default file icon
-                icon_element.onerror = function() {
+                icon_element.onerror = function () {
                     icon_src = "";
                     icon_element = document.createElement('i');
                     icon_element.classList.add('fa', 'fa-file', 'file-icon');
                 }
 
-                $li.find('.jqtree-title').before(icon_element.outerHTML); 
+                $li.find('.jqtree-title').before(icon_element.outerHTML);
             }
             if (node.type == "folder") {
                 $li.find('.jqtree-title').before('<i class="fa fa-folder"></i>');
@@ -246,13 +251,12 @@ function deleteNode(node) {
     // Update tree
     $('#' + currentWorkspace + '_tree').tree('removeNode', node);
     // Write tree data to tree json file in the workspace repo
-    treeToJson(currentWorkspace);
+    //treeToJson(currentWorkspace);
     // Adds tooltip logic to tree (when deleting a node in this case)
     addTreeTooltips(currentWorkspace);
     // Sends index command, node Id, and current workspace to backend
-    let toBackend = "delete-files:*:" + JSON.stringify(toDeleteFromIdx) + ":*:" + currentWorkspace;
     // Adds command to queue
-    addWork(toBackend, node, currentWorkspace);
+    addToQueue("/index/delete/" + currentWorkspace, null, toDeleteFromIdx, currentWorkspace);
 }
 
 // Update node (assumes current workspace)
@@ -273,7 +277,7 @@ function updateNode(node, key, value) {
     // Updates chrome tab for the node
     updateTab(node)
     // Write tree data to tree json file in the workspace repo
-    treeToJson(currentWorkspace);
+    //treeToJson(currentWorkspace);
     // Adds tooltip logic to tree (when when updating a node in this case)
     addTreeTooltips(currentWorkspace);
     // Trigger reindexing of node
@@ -292,9 +296,7 @@ function updateNode(node, key, value) {
         console.log("Send data: ");
         console.log(sendData);
         // Sends index command, node Id, and current workspace to backend
-        let toBackend = "update-files:*:" + JSON.stringify([sendData]) + ":*:" + currentWorkspace;
-        // connect_pyshell(toBackend, null);
-        addWork(toBackend, node, currentWorkspace);
+        addToQueue("/files/update/" + currentWorkspace, null, [sendData], currentWorkspace);
     }
 }
 

@@ -33,8 +33,8 @@ function workspaceHTML(workspace, workspaceName) {
 function createWorkspace(name) {
     console.log("create workspace called");
     // Send create workspace command to backend
-    let toBackend = ("create-workspace:*:" + name);
-    connect_pyshell(toBackend, 'name');
+    let toBackend = ("/create-workspace/" + name + "/");
+    getRequest(toBackend, name);
 }
 
 // Renames workspace
@@ -86,14 +86,15 @@ function renameWorkspace(name, guid) {
 function deleteWorkspace(guid) {
     console.log("delete workspace called");
     // Send delete workspace command to backend
-    let toBackend = ("delete-workspace:*:" + guid);
-    connect_pyshell(toBackend, 'guid');
+    let toBackend = ("/delete-workspace/" + guid + "/");
+    getRequest(toBackend, guid);
 }
 // Removes workspace html
 function deleteWorkspaceHTML(guid) {
     removeHTML(guid + "_tree");
     removeHTML(guid + "_btn");
 }
+
 // Removes html element by id
 function removeHTML(id) {
     let elem = document.getElementById(id);

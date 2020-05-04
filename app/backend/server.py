@@ -4,7 +4,7 @@ import sys
 import config
 
 from flask import Flask, request, jsonify
-
+from urllib import parse
 from ingesta import get_files, send_to_indexer, update, delete
 from dir_manage import create_workspace, delete_workspace
 from search import search_from_strs
@@ -44,6 +44,7 @@ def test(guid):
 
 @app.route('/create-workspace/<name>', methods=['GET'])
 def create_workspace_ep(name):
+    name = parse.unquote(name)
     response = None
     try:
         response = create_workspace(name=name)
@@ -64,6 +65,7 @@ def delete_workspace_ep(guid):
 ## May need to decode paths here.
 @app.route('/import/<path>/<type>/<guid>', methods=['GET'])
 def import_ep(path, type, guid):
+    path = parse.unquote(path)
     response = None
     try:
         response = get_files(path=path, import_type=type, workspace_guid=guid)

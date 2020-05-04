@@ -14,7 +14,6 @@ def write_secret_key():
     Writes a secret key to the user's app data folder.
     '''
     with open('{}/secret_key'.format(config.app_data_path), 'w') as secret_key_file:
-    #with open('{}/secret_key'.format('/Users/chrisyue/workspace_repo'), 'w') as secret_key_file:
         secret_key_file.write(Fernet.generate_key())
 
 def encrypt_response(response):
@@ -23,9 +22,8 @@ def encrypt_response(response):
     Returns the encrypted data if successful, else, throws an error.
     '''
     try:
-        # secret = open('{}/secret_key'.format(config.app_data_path), 'r').read()
-        secret_key = open('{}/secret_key'.format('/Users/chrisyue/workspace_repo'), 'r').read()
-        cipher = Fernet(secret)
+        secret_key = open('{}/secret_key'.format(config.app_data_path), 'r').read()
+        cipher = Fernet(secret_key)
         return cipher.encrypt(response.encode('utf-8'))
     except Exception as e:
         raise e
@@ -36,9 +34,8 @@ def decrypt_request(request):
     Returns the decrypted data if successful, else, throws an error.
     '''
     try:
-        # secret_key = open('{}/secret_key'.format(config.app_data_path), 'r').read()
-        secret_key = open('{}/secret_key'.format('/Users/chrisyue/workspace_repo'), 'r').read()
-        cipher = Fernet(secret)
+        secret_key = open('{}/secret_key'.format(config.app_data_path), 'r').read()
+        cipher = Fernet(secret_key)
         return cipher.decrypt(request)
     except Exception as e:
         raise e

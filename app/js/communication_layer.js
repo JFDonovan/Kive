@@ -26,6 +26,7 @@ function postRequest(path, context, json_obj) {
         }
     };
     xhttp.open("POST", "http://localhost:5000/" + path, true);
+    xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send(JSON.stringify(json_obj));
 }
 

@@ -5,6 +5,7 @@ module.exports = {
 
 // Makes POST request at endpoint at path
 function getRequest(path, context) {
+    console.log("Post Request called");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -18,6 +19,7 @@ function getRequest(path, context) {
 
 // Makes POST request at endpoint at path
 function postRequest(path, context, json_obj) {
+    console.log("Post Request called");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -46,7 +48,7 @@ function handleResponse(response, context) {
     let respDict = {
         // Success responses
         "import-success": function () {
-            postRequest("index/add/" + respObj.workspace_guid, null, respObj.json_lst);
+            addToQueue("index/add/" + respObj.workspace_guid, null, {"json_lst": respObj.json_lst}, respObj.workspace_guid);
             appendTree(respObj.workspace_guid, respObj.json_tree, context);
             console.log("import successful");
         },

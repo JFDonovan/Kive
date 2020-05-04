@@ -79,7 +79,7 @@ def import_ep(path, type, guid):
 def index_ep(operation, guid):
     response = None
     try:
-        json_lst = request.get_json()
+        json_lst = request.get_json()['json_lst']
         if operation == 'add':
             response = send_to_indexer(json_lst=json_lst, workspace_guid=guid)
         elif operation == 'update':
@@ -89,7 +89,7 @@ def index_ep(operation, guid):
         else:
             response = "INVALID INDEX OPERATION"
     except:
-        response = "INDEX FAILED"
+        response = json_lst#"INDEX FAILED"
     return jsonify(response)
 
 ## Search request

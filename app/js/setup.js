@@ -1,10 +1,22 @@
 
 
 var path = require("path");
+
+// ***** Global variable that stores guid of current workspace
+var currentWorkspace = null;
+var workspaceQueues = {};
+
+// ***** Global variable that stores OS
+var OS = getOS();
+
 // Runs executable which starts local server
 var child = require('child_process').execFile;
+
 // Path to executable
-var executablePath = '../../app/backend/dist/server.exe'
+var executablePath = path.join(__dirname, '/app/backend/dist/server');
+if (OS == 'Windows') {
+    executablePath = path.join(__dirname, '/app/backend/dist/server.exe');
+}
 
 let remote = require('electron').remote;
 var appDataPath = remote.getGlobal('sharedObject').appDataPath;
@@ -19,13 +31,6 @@ child(executablePath, [appDataPath], function (err, data) {
     }
 });
 
-
-// ***** Global variable that stores guid of current workspace
-var currentWorkspace = null;
-var workspaceQueues = {};
-
-// ***** Global variable that stores OS
-var OS = getOS();
 
 // Gets OS
 function getOS() {

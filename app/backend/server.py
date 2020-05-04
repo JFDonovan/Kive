@@ -89,7 +89,7 @@ def index_ep(operation, guid):
         else:
             response = "INVALID INDEX OPERATION"
     except:
-        response = "IMPORT FAILED"
+        response = "INDEX FAILED"
     return jsonify(response)
 
 ## Search request

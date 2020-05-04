@@ -117,7 +117,7 @@ function createFolder(node, folderName) {
             );
         }
         else {
-            makeTree(currentWorkspace, JSON.stringify([newFolder]));
+            makeTree(currentWorkspace, [newFolder]);
         }
     }
     // Write tree data to tree json file in the workspace repo
@@ -133,7 +133,7 @@ function makeTree(workspace, data) {
 
     // Gets base tree element of workspace and initializes tree (look up jqtree for attributes)
     $('#' + workspace + '_tree').tree({
-        data: JSON.parse(data),
+        data: data,
         dragAndDrop: true,
         autoOpen: false,//1,
         //buttonLeft: false,

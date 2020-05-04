@@ -49,7 +49,7 @@ def create_workspace_ep(name):
     try:
         response = create_workspace(name=name)
     except:
-        response = "CREATE WORKSPACE FAILED"
+        response = {'message': "create-workspace-failure"}
     return jsonify(response)
 
 
@@ -59,7 +59,7 @@ def delete_workspace_ep(guid):
     try:
         response = delete_workspace(guid=guid)
     except:
-        response = "DELETE WORKSPACE FAILED"
+        response = {'message': "delete-workspace-failure"}
     return jsonify(response)
 
 ## May need to decode paths here.
@@ -70,7 +70,7 @@ def import_ep(path, type, guid):
     try:
         response = get_files(path=path, import_type=type, workspace_guid=guid)
     except:
-        response = "IMPORT FAILED"
+        response = {'message': "import-failure"}
     return jsonify(response)
 
 ## Subsequent call after import
@@ -89,7 +89,7 @@ def index_ep(operation, guid):
         else:
             response = "INVALID INDEX OPERATION"
     except:
-        response = json_lst#"INDEX FAILED"
+        response = {'message': "index-failure"}
     return jsonify(response)
 
 ## Search request
@@ -117,7 +117,7 @@ def search_ep(guid):
             fields_lst=json['options'], 
             workspace_guid=guid)
     except:
-        response = "IMPORT FAILED"
+        response = {'message': "search-failure"}
     return jsonify(response)
 
 @app.route('/app_data_path')

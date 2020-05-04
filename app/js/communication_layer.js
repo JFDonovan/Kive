@@ -5,7 +5,7 @@ module.exports = {
 
 // Makes POST request at endpoint at path
 function getRequest(path, context) {
-    console.log("Post Request called");
+    console.log("Get Request called");
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -48,9 +48,9 @@ function handleResponse(response, context) {
     let respDict = {
         // Success responses
         "import-success": function () {
+            console.log("import successful");
             addToQueue("index/add/" + respObj.workspace_guid, null, {"json_lst": respObj.json_lst}, respObj.workspace_guid);
             appendTree(respObj.workspace_guid, respObj.json_tree, context);
-            console.log("import successful");
         },
         "create-workspace-success": function () {
             workspaceHTML(respObj.workspace_guid, respObj.name);
@@ -106,8 +106,8 @@ function handleResponse(response, context) {
             indexFailureHandler(respObj.workspace_guid);
             console.error("index failure: ", respObj.workspace_guid, " : ", respObj.error);
             alert("index failure");
-        },
-        "update-failure": function () {
+        }
+        /*"update-failure": function () {
             indexFailureHandler(respObj.workspace_guid);
             console.error("update failure: ", respObj.workspace_guid, " : ", respObj.error);
             alert("update failure");
@@ -116,7 +116,7 @@ function handleResponse(response, context) {
             indexFailureHandler(respObj.workspace_guid);
             console.error("delete failure: ", respObj.workspace_guid, " : ", respObj.error);
             alert("delete failure");
-        },
+        },*/
     }
 
     // Execute function based on response

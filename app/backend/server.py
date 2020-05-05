@@ -2,6 +2,9 @@
 import os
 import sys
 import config
+import traceback
+import multiprocessing
+
 from flask import Flask, request, jsonify
 from urllib import parse
 from ingesta import get_files, send_to_indexer, update, delete
@@ -13,6 +16,7 @@ from multiprocessing import Process, freeze_support
 app = Flask(__name__)
 
 app_data_path = "none"
+# config.app_data_path = '/Users/chrisyue/Library/Application Support/kive_data'
 
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
@@ -88,7 +92,7 @@ def index_ep(operation, guid):
         else:
             response = "INVALID INDEX OPERATION"
     except Exception as e:
-        response = {'message': "index-failure", 'workspace_guid': guid, "error": str(e)}
+        response = {'message': "index-failure", 'workspace_guid': guid, "error": str(traceback.format_exc())}
     return jsonify(response)
 # Search request
 # Should receive JSON as a POST request argument
@@ -126,9 +130,9 @@ def get_app_data_path():
 
 def start_server():
     # Set path to AppData/Local Resources/etc. folder
-    global app_data_path
-    app_data_path = sys.argv[1]
-    config.app_data_path = app_data_path
+    # global app_data_path
+    # app_data_path = sys.argv[1]
+    # config.app_data_path = app_data_path
     app.run()
 
 

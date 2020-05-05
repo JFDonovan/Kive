@@ -23,7 +23,7 @@ function readTree(workspace) {
 
         // If json contains tree data: make a tree
         if (data.length > 0) {
-            makeTree(workspace, data);
+            makeTree(workspace, JSON.parse(data));
         }
     });
 }

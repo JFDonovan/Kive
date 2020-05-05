@@ -100,7 +100,7 @@ function handleResponse(response, context) {
         "search-failure": function () {
             disableOverlay();
             console.error("search failure: ", respObj.error);
-            alert("delete workspace failure");
+            alert("search failure");
         },
         "index-failure": function () {
             indexFailureHandler(respObj.workspace_guid);

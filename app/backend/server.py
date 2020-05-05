@@ -8,11 +8,11 @@ from ingesta import get_files, send_to_indexer, update, delete
 from dir_manage import create_workspace, delete_workspace
 from search import search_from_strs
 
+from multiprocessing import Process, freeze_support
 
 app = Flask(__name__)
 
 app_data_path = "none"
-# config.app_data_path = '/Users/chrisyue/Library/Application Support/kive_data'
 
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
@@ -87,8 +87,8 @@ def index_ep(operation, guid):
             response = delete(json_lst=json_lst, workspace_guid=guid)
         else:
             response = "INVALID INDEX OPERATION"
-    except:
-        response = {'message': "index-failure"}
+    except Exception as e:
+        response = {'message': "index-failure", 'workspace_guid': guid, "error": str(e)}
     return jsonify(response)
 # Search request
 # Should receive JSON as a POST request argument
@@ -134,6 +134,6 @@ def start_server():
 
 # Runs main (should stay at bottom)
 if __name__ == '__main__':
+    freeze_support()
     start_server()
-Collapse
 

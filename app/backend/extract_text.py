@@ -59,6 +59,7 @@ def scrape_paths(json_lst):
     # threads = min(MAX_THREADS, len(paths))
     p = Pool(processes=os.cpu_count())
     results = p.map(parse_html, json_lst)
+    #results = [parse_html(json_lst[0])]
     # end = time.time()
     # print('Time to scrape: {}'.format(str(end - start)))
     return results

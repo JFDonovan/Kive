@@ -306,8 +306,8 @@
   position: relative;
   margin: auto;
   right: 15%;
-  width: 25%;
-  height: auto;
+  height: 100%;
+  width: auto;
   mix-blend-mode: multiply;
 }
 

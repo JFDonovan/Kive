@@ -139,7 +139,7 @@ def start_server():
     global app_data_path
     app_data_path = sys.argv[1]
     config.app_data_path = app_data_path
-    app.run()
+    app.run(host='localhost', port=sys.argv[2])
 
 
 # Runs main (should stay at bottom)

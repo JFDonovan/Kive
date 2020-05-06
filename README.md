@@ -1,35 +1,31 @@
 # Kivé
 
-#### NOTE
-create and activate your venv/ in the Kive/ directory
-do 'npm install' to create node_modules/ in Kive/
-
 ### FOR COMMIT
-svn ignore "node_modules/" and "venv/"
+``` svn ignore "node_modules/" and "venv/" ```
 
--- INSTRUCTIONS FOR STARTING --
-[ ALL within Kive/ directory ]
+### INSTRUCTIONS FOR STARTING 
+##### ALL within Kive/ directory 
 
 1. make sure you have python3
-
-2. create a virtual environment
-Mac and Linux: 'python3 -m venv venv'
-Windows: py -m venv venv
-
-3. activate virtual environment
-Mac and Linux: . venv/bin/activate
-Windows: .\venv\Scripts\activate
-
-leave virtual environment with 'deactivate'
-
+2. create a virtual environment 
+ - OS X and Linux: 
+```python3 -m venv venv``` 
+ - Windows: 
+```py -m venv venv```
+3. activate virtual environment 
+ - OS X and Linux: 
+```. venv/bin/activate```
+ - Windows: 
+```.\venv\Scripts\activate``` 
+ - (exit virtual environment with ```deactivate```)
 4. install dependencies
-'pip install -r requirements.txt'
+```pip install -r requirements.txt```
 
 5. install Node dependencies
-'npm install'
+```npm install```
 
 6. start app
-'npm start'
+```npm start```
 
 -- VERSIONS --
 npm: 6.13.4

@@ -304,10 +304,12 @@
 
 #overlay-icon {
   position: relative;
+  display: inline-flex;
   margin: auto;
   right: 15%;
   height: 100%;
   width: auto;
+  max-height: 50px;
   mix-blend-mode: multiply;
 }
 

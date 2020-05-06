@@ -2,9 +2,18 @@
 
 Kivé will be a standalone desktop application that allows users to import cached web pages and store them in workspaces that resemble a tree-like directory structure. While within a given workspace, users can browse, preview, add, move, delete, and search over their cached web pages. When importing web pages, Kivé stores the file path relating to the imported file, not the file itself. For this reason, Kivé is very space efficient and respects the structural integrity of imported web pages.
 
-### DOWNLOAD
+## IMPORTING
+
+Kivé operates under the assumption that users have already saved their web pages locally. In order to retain the integrity of resources embedded within a web page, users should be saving those pages as “complete web pages”. Browsers such as Google Chrome, Internet Explorer, and Firefox all have the capabilities to save complete web pages.
+
+#### Legacy Imports
+
+Kivé will have support for legacy ScrapBook or WebScrapBook users looking for a new platform to host their already existing archive. When a user wants to import a legacy workspace, they will be prompted to select the root directory that contains the ScrapBook/WebScrapBook ```data/``` folder.  We will need access to this folder in order to import the workspace into Kivé, since this folder contains the complete web page files. Once the ```data/``` folder has been located, Kivé then looks for the ```scrapbook.rdf``` file or ```tree/``` folder for ScrapBook and WebScrapBook repos respectively; this file/folder contains the information Kivé needs to infer the structuring of the imported legacy workspace. If not present, the web pages found in the ```data/``` folder will be ingested as a flat structure.
+
+
+## DOWNLOAD
 ``` git clone https://github.com/JFDonovan/Kive/ ```
-### INSTRUCTIONS FOR STARTING 
+## INSTRUCTIONS FOR STARTING 
 ##### ALL within ```Kive/``` directory 
 
 1. Make sure you have python3: <br/>
@@ -30,11 +39,11 @@ Kivé will be a standalone desktop application that allows users to import cache
 ```npm start```
 
 ### VERSIONS 
-- **npm**: 6.13.4
-- **node**: v12.14.1
-- **python**: 3.8
-- **electron**: ^8.2.0
-- **python-shell**: ^1.0.8
+- **npm**: ```6.13.4```
+- **node**: ```v12.14.1```
+- **python**: ```3.8```
+- **electron**: ```^8.2.0```
+- **python-shell**: ```^1.0.8```
 
 ## PACKAGING 
 #### For packaging Python Backend

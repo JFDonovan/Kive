@@ -1,11 +1,11 @@
 # Kivé
 
-Kivé will be a standalone desktop application that allows users to import cached web pages and store them in workspaces that resemble a tree-like directory structure. While within a given workspace, users can browse, preview, add, move, delete, and search over their cached web pages. When adding web pages, Kivé stores the file path relating to the “added” file, not the file itself. For this reason, Kivé is very space efficient and respects the structural integrity of imported web pages.
+Kivé will be a standalone desktop application that allows users to import cached web pages and store them in workspaces that resemble a tree-like directory structure. While within a given workspace, users can browse, preview, add, move, delete, and search over their cached web pages. When importing web pages, Kivé stores the file path relating to the imported file, not the file itself. For this reason, Kivé is very space efficient and respects the structural integrity of imported web pages.
 
 ### DOWNLOAD
 ``` git clone https://github.com/JFDonovan/Kive/ ```
 ### INSTRUCTIONS FOR STARTING 
-##### ALL within Kive/ directory 
+##### ALL within ```Kive/``` directory 
 
 1. Make sure you have python3: <br/>
    ```python3 --version```

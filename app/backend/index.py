@@ -9,6 +9,7 @@ from datetime import datetime
 import os
 import time
 import sys
+import multiprocessing
 
 import config
 
@@ -46,6 +47,7 @@ def index(json_lst, operation, workspace_guid):
             ix = open_dir(config.app_data_path + '/workspace_repo/{}/index_dir'.format(workspace_guid))
 
         # Prepare to write paths to index
+        # multiprocessing.set_start_method('spawn')
         writer = ix.writer(procs=os.cpu_count(), multisegment=True)
         searcher = ix.searcher()
         id_check = ""

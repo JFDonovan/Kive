@@ -2,6 +2,9 @@
 import os
 import sys
 import config
+import traceback
+import multiprocessing
+
 from flask import Flask, request, jsonify
 from urllib import parse
 from ingesta import get_files, send_to_indexer, update, delete
@@ -130,9 +133,9 @@ def get_app_data_path():
 
 def start_server():
     # Set path to AppData/Local Resources/etc. folder
-    global app_data_path
-    app_data_path = sys.argv[1]
-    config.app_data_path = app_data_path
+    # global app_data_path
+    # app_data_path = sys.argv[1]
+    # config.app_data_path = app_data_path
     app.run()
 
 

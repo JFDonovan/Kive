@@ -50,7 +50,6 @@ def parse_html(json_entry):
 from multiprocessing import Pool
 import concurrent.futures
 import multiprocessing
-
 import time
 
 # MAX_THREADS = 30
@@ -75,7 +74,8 @@ def scrape_paths(json_lst):
     # print('Time to scrape: {}'.format(str(end - start)))
     return results
 
-    # from bs4 import BeautifulSoup
+
+# from bs4 import BeautifulSoup
 # from bs4.element import Comment
 
 # import urllib.request

@@ -16,26 +16,26 @@ Kivé will have support for legacy ScrapBook or WebScrapBook users looking for a
 ## INSTRUCTIONS FOR STARTING 
 ##### ALL within ```Kive/``` directory 
 
-1. Make sure you have python3: <br/>
+1. Make sure you have python3: 
    ```python3 --version```
 2. Create a virtual environment: 
-   - OS X and Linux: <br/>
+   - OS X and Linux: 
    ```python3 -m venv venv``` 
-   - Windows: <br/>
+   - Windows: 
    ```py -m venv venv```
 3. Activate the virtual environment: 
-   - OS X and Linux: <br/>
+   - OS X and Linux: 
    ```. venv/bin/activate```
-   - Windows: <br/>
+   - Windows: 
    ```.\venv\Scripts\activate``` 
    - (exit virtual environment with ```deactivate```)
-4. Install dependencies: <br/>
+4. Install dependencies: 
    ```pip install -r requirements.txt```
 
-5. Install Node dependencies: <br/>
+5. Install Node dependencies: 
 ```npm install```
 
-6. Start application: <br/>
+6. Start application: 
 ```npm start```
 
 ### VERSIONS 
@@ -56,9 +56,9 @@ Kivé will have support for legacy ScrapBook or WebScrapBook users looking for a
 1. Make sure you are in ```Kive/``` directory
 2. ```rm -rf node-modules venv package-lock.json```
 3. Install yarn if not already installed (```yarn --version``` to test)
-   - OS X & Linux: <br/>
+   - OS X & Linux:
    ```brew install yarn```
-   - Windows: <br/>
+   - Windows: 
    ```choco install yarn```
    - if ```yarn``` command is not found then make sure yarn ```bin/``` folder is added to path correctly 
 4. run cmd ```yarn``` in ```Kive/``` repo, which will create ```yarn.lock```

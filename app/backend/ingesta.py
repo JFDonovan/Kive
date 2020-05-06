@@ -88,7 +88,7 @@ def delete(json_lst, workspace_guid):
     e.g. renaming, accessing, etc.
     '''
     try:
-        index_docs(json.loads(json_lst), 'delete', workspace_guid)
+        index_docs(json_lst, 'delete', workspace_guid)
 
         backup(workspace_guid)
         return {

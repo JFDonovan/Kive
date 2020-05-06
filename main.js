@@ -13,13 +13,9 @@ global.sharedObject = {
 }
 
 
-
+/*** ----------------------- Start Server ------------------------- ***/
 
 const path = require("path");
-
-/*************************************************************
- * py process
- *************************************************************/
 
 // Path to backend folder
 const BACKEND_FOLDER = 'app/backend';

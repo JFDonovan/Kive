@@ -9,22 +9,17 @@ from datetime import datetime
 import time
 import sys
 import os
+import config
 import ast
 import json
 
 def search_from_strs(search_text, leg_datetime_range, kive_datetime_range,
                 la_datetime_range, media_text_lst, fields_lst, workspace_guid):
-    # Evaluate strings into objects for search_docs
-    leg_datetime_range = ast.literal_eval(leg_datetime_range)
-    kive_datetime_range = ast.literal_eval(kive_datetime_range)
-    la_datetime_range = ast.literal_eval(la_datetime_range)
-    media_text_lst = ast.literal_eval(media_text_lst)
-    fields_lst = ast.literal_eval(fields_lst)
 
     results = search_docs(search_text, leg_datetime_range, kive_datetime_range, la_datetime_range,
                         media_text_lst, fields_lst, workspace_guid)
-    json_results = json.dumps(results)
-    print('search-success:*:' + json_results)
+    json_results = results
+    return {'message': "search-success", 'results': json_results}
 
 def search_docs(search_text, leg_datetime_range, kive_datetime_range,
                 la_datetime_range, media_text_lst, fields_lst, workspace_guid):

@@ -17,7 +17,7 @@ from multiprocessing import Process, freeze_support
 app = Flask(__name__)
 
 app_data_path = "none"
-# config.app_data_path = '/Users/chrisyue/Library/Application Support/kive_data'
+#config.app_data_path = '/Users/josh/Library/Application Support/kive_data'
 
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
@@ -67,17 +67,19 @@ def delete_workspace_ep(guid):
     except Exception as e:
         response = {'message': "delete-workspace-failure", 'error': str(traceback.format_exc())}#str(e)}
     return jsonify(response)
+
 # May need to decode paths here.
-@app.route('/import/<path>/<type>/<guid>', methods=['GET'])
+@app.route('/import/<path:path>/<type>/<guid>', methods=['GET'])
 def import_ep(path, type, guid):
     path = parse.unquote(path)
-    #path = '/' + path
+    path = '/' + path
     response = None
     try:
         response = get_files(path=path, import_type=type, workspace_guid=guid)
     except Exception as e:
         response = {'message': "import-failure", 'error': str(e)}
     return jsonify(response)
+
 # Subsequent call after import
 # Should receive JSON as a POST request argument
 @app.route('/index/<operation>/<guid>', methods=['GET', 'POST'])
@@ -96,6 +98,7 @@ def index_ep(operation, guid):
     except Exception as e:
         response = {'message': "index-failure", 'workspace_guid': guid, "error": str(traceback.format_exc())}#str(e)}
     return jsonify(response)
+
 # Search request
 # Should receive JSON as a POST request argument
 # Schema:
@@ -120,6 +123,7 @@ def search_ep(guid):
             media_text_lst=json['media_query'],
             fields_lst=json['options'],
             workspace_guid=guid)
+            
     except Exception as e:
         response = {'message': "search-failure", 'error': str(traceback.format_exc())}#str(e)}
     return jsonify(response)

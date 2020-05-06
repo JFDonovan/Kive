@@ -38,7 +38,7 @@ function getSearchQuery() {
 
     // Media query (queries currently split up by *)
     let media = document.getElementById("search-set_media").checked;
-    let mediaQuery = document.getElementById("media_query").value.split("*");
+    let mediaQueryList = document.getElementById("media_query").value.split("*");
 
     // Formats media queries
     /*let mediaQueryStr = "[";
@@ -79,13 +79,15 @@ function getSearchQuery() {
     if(validQuery) {
         let queryObj = {
             search_query: searchQuery,
-            date_last_accessed: [startDla, endDla],
             date_ingested_legacy: [startDil, endDil],
             date_ingested_kive: [startDik, endDik],
-            options: options,
-            media_query: mediaQuery,
+            date_last_accessed: [startDla, endDla],
+            media_query: mediaQueryList,
+            options: options,           
         }
         postRequest("search/" + currentWorkspace, null, queryObj);
+        // console.log(JSON.stringify(queryObj))
+        // console.log(currentWorkspace)
     }
     else {
         openModal("search-query-error", "Search Error", [], null)
@@ -97,11 +99,9 @@ function renderSearchResults(results) {
     // Clear results list
     let resultListHtmlObj = document.getElementById("results_list")
     resultListHtmlObj.innerHTML = ""
-
-    jsonList = JSON.parse(results)
     
-    for (let i = 0; i < jsonList.length; i++) {
-        let treeNode = $(`#${currentWorkspace}_tree`).tree('getNodeById', jsonList[i].id);
+    for (let i = 0; i < results.length; i++) {
+        let treeNode = $(`#${currentWorkspace}_tree`).tree('getNodeById', results[i].id);
 
         resultListHtmlObj.appendChild(
             createSearchResultListItem(treeNode));
@@ -109,7 +109,7 @@ function renderSearchResults(results) {
 
     // Show new result quantity
     let resultsLabel = document.getElementById("results_label");
-    resultsLabel.innerText = `(${jsonList.length} results)`
+    resultsLabel.innerText = `(${results.length} results)`
 }
 
 // Helper to create the HTML element for each search result

@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "chrome-tabs": "^5.4.0",
+    "fernet": "^0.3.1",
     "python-shell": "^1.0.8"
   }
 }

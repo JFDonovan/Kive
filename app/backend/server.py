@@ -8,11 +8,14 @@ from ingesta import get_files, send_to_indexer, update, delete
 from dir_manage import create_workspace, delete_workspace
 from search import search_from_strs
 
+import traceback
+
 from multiprocessing import Process, freeze_support
 
 app = Flask(__name__)
 
 app_data_path = "none"
+# config.app_data_path = '/Users/chrisyue/Library/Application Support/kive_data'
 
 def shutdown_server():
     func = request.environ.get('werkzeug.server.shutdown')
@@ -49,8 +52,8 @@ def create_workspace_ep(name):
     response = None
     try:
         response = create_workspace(name=name)
-    except:
-        response = {'message': "create-workspace-failure"}
+    except Exception as e:
+        response = {'message': "create-workspace-failure", 'error': str(traceback.format_exc())}#str(e)}
     return jsonify(response)
 
 
@@ -59,18 +62,19 @@ def delete_workspace_ep(guid):
     response = None
     try:
         response = delete_workspace(guid=guid)
-    except:
-        response = {'message': "delete-workspace-failure"}
+    except Exception as e:
+        response = {'message': "delete-workspace-failure", 'error': str(traceback.format_exc())}#str(e)}
     return jsonify(response)
 # May need to decode paths here.
-@app.route('/import/<path>/<type>/<guid>', methods=['GET'])
+@app.route('/import/<path:path>/<type>/<guid>', methods=['GET'])
 def import_ep(path, type, guid):
-    path = parse.unquote(path)
+    #path = parse.unquote(path)
+    path = '/' + path
     response = None
     try:
         response = get_files(path=path, import_type=type, workspace_guid=guid)
-    except:
-        response = {'message': "import-failure"}
+    except Exception as e:
+        response = {'message': "import-failure", 'error': str(e)}
     return jsonify(response)
 # Subsequent call after import
 # Should receive JSON as a POST request argument
@@ -88,7 +92,7 @@ def index_ep(operation, guid):
         else:
             response = "INVALID INDEX OPERATION"
     except Exception as e:
-        response = {'message': "index-failure", 'workspace_guid': guid, "error": str(e)}
+        response = {'message': "index-failure", 'workspace_guid': guid, "error": str(traceback.format_exc())}#str(e)}
     return jsonify(response)
 # Search request
 # Should receive JSON as a POST request argument
@@ -107,15 +111,15 @@ def search_ep(guid):
     try:
         json = request.get_json()
         response = search_from_strs(
-            search_text=json['searchQuery'],
-            leg_datetime_range=json['dil'],
-            kive_datetime_range=json['dik'],
-            la_datetime_range=json['dla'],
-            media_text_lst=json['mediaQuery'],
+            search_text=json['search_query'],
+            leg_datetime_range=json['date_ingested_legacy'],
+            kive_datetime_range=json['date_ingested_kive'],
+            la_datetime_range=json['date_last_accessed'],
+            media_text_lst=json['media_query'],
             fields_lst=json['options'],
             workspace_guid=guid)
-    except:
-        response = {'message': "search-failure"}
+    except Exception as e:
+        response = {'message': "search-failure", 'error': str(traceback.format_exc())}#str(e)}
     return jsonify(response)
 
 

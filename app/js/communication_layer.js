@@ -106,8 +106,8 @@ function handleResponse(response, context) {
             indexFailureHandler(respObj.workspace_guid);
             console.error("index failure: ", respObj.workspace_guid, " : ", respObj.error);
             alert("index failure");
-        }
-        /*"update-failure": function () {
+        },
+        "update-failure": function () {
             indexFailureHandler(respObj.workspace_guid);
             console.error("update failure: ", respObj.workspace_guid, " : ", respObj.error);
             alert("update failure");
@@ -116,7 +116,7 @@ function handleResponse(response, context) {
             indexFailureHandler(respObj.workspace_guid);
             console.error("delete failure: ", respObj.workspace_guid, " : ", respObj.error);
             alert("delete failure");
-        },*/
+        }
     }
 
     // Execute function based on response

@@ -256,7 +256,7 @@ function deleteNode(node) {
     addTreeTooltips(currentWorkspace);
     // Sends index command, node Id, and current workspace to backend
     // Adds command to queue
-    addToQueue("index/delete/" + currentWorkspace, null, toDeleteFromIdx, currentWorkspace);
+    addToQueue("index/delete/" + currentWorkspace, null, {'json_lst': toDeleteFromIdx}, currentWorkspace);
 }
 
 // Update node (assumes current workspace)
@@ -296,7 +296,7 @@ function updateNode(node, key, value) {
         console.log("Send data: ");
         console.log(sendData);
         // Sends index command, node Id, and current workspace to backend
-        addToQueue("files/update/" + currentWorkspace, null, [sendData], currentWorkspace);
+        addToQueue("index/update/" + currentWorkspace, null, {'json_lst': [sendData]}, currentWorkspace);
     }
 }
 

@@ -19,14 +19,14 @@ Kivé will have support for legacy ScrapBook or WebScrapBook users looking for a
 1. Make sure you have python3: 
    ```python3 --version```
 2. Create a virtual environment: 
-   - OS X and Linux: 
+   - **OS X and Linux:** 
    ```python3 -m venv venv``` 
-   - Windows: 
+   - **Windows:** 
    ```py -m venv venv```
 3. Activate the virtual environment: 
-   - OS X and Linux: 
+   - **OS X and Linux:** 
    ```. venv/bin/activate```
-   - Windows: 
+   - **Windows:** 
    ```.\venv\Scripts\activate``` 
    - (exit virtual environment with ```deactivate```)
 4. Install dependencies: 
@@ -48,23 +48,23 @@ Kivé will have support for legacy ScrapBook or WebScrapBook users looking for a
 ## PACKAGING 
 #### For packaging Python Backend
 1. ```cd app/backend/ ```
-2. - OS X & Linux: ```pyinstaller --onefile -c server.py```
-   - Windows: ```pyinstaller.exe --onefile -c server.py```
+2. - **OS X & Linux:** ```pyinstaller --onefile -c server.py```
+   - **Windows:** ```pyinstaller.exe --onefile -c server.py```
 3. ```server.exe``` will be in ```dist/``` directory within ```app/backend/```
 
 #### For packaging Electron Frontend
 1. Make sure you are in ```Kive/``` directory
 2. ```rm -rf node-modules venv package-lock.json```
 3. Install yarn if not already installed (```yarn --version``` to test)
-   - OS X & Linux:
+   - **OS X & Linux:**
    ```brew install yarn```
-   - Windows: 
+   - **Windows:** 
    ```choco install yarn```
    - if ```yarn``` command is not found then make sure yarn ```bin/``` folder is added to path correctly 
 4. run cmd ```yarn``` in ```Kive/``` repo, which will create ```yarn.lock```
    - now ```yarn start``` is same as ```npm start```
 5. run cmd ```yarn dist``` to package
-   - OS X & Linux: <br/>
+   - **OS X & Linux:** <br/>
    find ```kive-1.0.0.dmg``` in ```dist/``` folder
-   - Windows: <br/>
+   - **Windows:** <br/>
    find ```kive.exe``` in ```dist/``` folder

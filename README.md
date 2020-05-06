@@ -1,8 +1,10 @@
--- NOTE --
+# Kivé
+
+#### NOTE
 create and activate your venv/ in the Kive/ directory
 do 'npm install' to create node_modules/ in Kive/
 
--- FOR COMMIT --
+### FOR COMMIT
 svn ignore "node_modules/" and "venv/"
 
 -- INSTRUCTIONS FOR STARTING --

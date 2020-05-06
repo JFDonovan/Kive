@@ -29,7 +29,6 @@ function addTreeTooltips(workspace) {
         // Prevents spawning of tooltip if hover breaks
         titles[x].onmouseleave = function (e) {
             if (delay) {
-                console.log("THAT CASE");
                 clearTimeout(delay);
             }
         }
@@ -49,15 +48,16 @@ function spawnTooltip(event, textList) {
         list.appendChild(item);
     }
     tooltip.appendChild(list);
-    // Gets mouse position for tooltip positioning
-    let posX = event.pageX;
-    let posY = event.pageY;
-    // Sets tooptip position
-    tooltip.style.top = posY + "px";
-    tooltip.style.left = posX + "px";
 
     // Shows tool tip
     tooltip.classList.remove("hidden");
+    // Gets mouse position for tooltip positioning
+    let posX = event.pageX;
+    let posY = event.pageY - tooltip.clientHeight - 5;
+    // Sets tooptip position
+    tooltip.style.top = posY + "px";
+    tooltip.style.left = posX + "px";
+    // Fade in animation
     tooltip.classList.add("fadein");
     // Makes it so that moving mouse inside iframe despawns tooltip
     document.getElementById("html_disp").style.pointerEvents = "none";

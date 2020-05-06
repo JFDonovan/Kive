@@ -68,10 +68,10 @@ def delete_workspace_ep(guid):
         response = {'message': "delete-workspace-failure", 'error': str(traceback.format_exc())}#str(e)}
     return jsonify(response)
 # May need to decode paths here.
-@app.route('/import/<path:path>/<type>/<guid>', methods=['GET'])
+@app.route('/import/<path>/<type>/<guid>', methods=['GET'])
 def import_ep(path, type, guid):
     path = parse.unquote(path)
-    path = '/' + path
+    #path = '/' + path
     response = None
     try:
         response = get_files(path=path, import_type=type, workspace_guid=guid)

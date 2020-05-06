@@ -3,7 +3,6 @@ import os
 import sys
 import config
 import traceback
-import multiprocessing
 
 from flask import Flask, request, jsonify
 from urllib import parse
@@ -67,9 +66,11 @@ def delete_workspace_ep(guid):
         response = {'message': "delete-workspace-failure"}
     return jsonify(response)
 # May need to decode paths here.
-@app.route('/import/<path>/<type>/<guid>', methods=['GET'])
+@app.route('/import/<path:path>/<type>/<guid>', methods=['GET'])
 def import_ep(path, type, guid):
     path = parse.unquote(path)
+    path = '/' + path
+
     response = None
     try:
         response = get_files(path=path, import_type=type, workspace_guid=guid)
@@ -130,9 +131,9 @@ def get_app_data_path():
 
 def start_server():
     # Set path to AppData/Local Resources/etc. folder
-    # global app_data_path
-    # app_data_path = sys.argv[1]
-    # config.app_data_path = app_data_path
+    global app_data_path
+    app_data_path = sys.argv[1]
+    config.app_data_path = app_data_path
     app.run()
 
 

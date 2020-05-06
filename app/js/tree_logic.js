@@ -296,7 +296,7 @@ function updateNode(node, key, value) {
         console.log("Send data: ");
         console.log(sendData);
         // Sends index command, node Id, and current workspace to backend
-        addToQueue("files/update/" + currentWorkspace, null, [sendData], currentWorkspace);
+        addToQueue("index/update/" + currentWorkspace, null, {"json_lst": [sendData]}, currentWorkspace);
     }
 }
 

@@ -6,6 +6,7 @@ import json
 import shutil
 import sys
 import time
+import traceback
 
 
 def get_files(path, import_type, workspace_guid):
@@ -36,6 +37,7 @@ def get_files(path, import_type, workspace_guid):
         restore_from_backup(workspace_guid)
         return {
                 'message': 'restored-from-backup',
+                'error': str(traceback.format_exc()),
                 'workspace_guid': workspace_guid
                 }
 
@@ -53,6 +55,7 @@ def send_to_indexer(json_lst, workspace_guid):
         restore_from_backup(workspace_guid)
         return {
                 'message': 'restored-from-backup',
+                'error': str(traceback.format_exc()),
                 'workspace_guid': workspace_guid
                 }
 
@@ -62,7 +65,7 @@ def update(json_lst, workspace_guid):
     e.g. renaming, accessing, etc.
     '''
     try:
-        index_docs(json.loads(json_lst), 'update', workspace_guid)
+        index_docs(json_lst, 'update', workspace_guid)
 
         backup(workspace_guid)
         return {
@@ -73,6 +76,7 @@ def update(json_lst, workspace_guid):
         restore_from_backup(workspace_guid)
         return {
                 'message': 'restored-from-backup',
+                'error': str(traceback.format_exc()),
                 'workspace_guid': workspace_guid
                 }
 

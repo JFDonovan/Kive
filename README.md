@@ -37,13 +37,13 @@ Kivé will be a standalone desktop application that allows users to import cache
 - **python-shell**: ^1.0.8
 
 ## PACKAGING 
-##### For packaging Python Backend
+#### For packaging Python Backend
 1. ```cd app/backend/ ```
 2. - OS X & Linux: ```pyinstaller --onefile -c server.py```
    - Windows: ```pyinstaller.exe --onefile -c server.py```
 3. ```server.exe``` will be in ```dist/``` directory within ```app/backend/```
 
-##### For packaging Electron Frontend
+#### For packaging Electron Frontend
 1. Make sure you are in ```Kive/``` directory
 2. ```rm -rf node-modules venv package-lock.json```
 3. Install yarn if not already installed (```yarn --version``` to test)

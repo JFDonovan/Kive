@@ -70,14 +70,8 @@ def delete_workspace_ep(guid):
 # May need to decode paths here.
 @app.route('/import/<path:path>/<type>/<guid>', methods=['GET'])
 def import_ep(path, type, guid):
-<<<<<<< HEAD
     path = parse.unquote(path)
     path = '/' + path
-
-=======
-    #path = parse.unquote(path)
-    path = '/' + path
->>>>>>> 6f384e86a8c83c585c34fe29a38184b40c38bbaa
     response = None
     try:
         response = get_files(path=path, import_type=type, workspace_guid=guid)

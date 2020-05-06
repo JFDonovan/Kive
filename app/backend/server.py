@@ -11,6 +11,8 @@ from dir_manage import create_workspace, delete_workspace
 from search import search_from_strs
 
 import traceback
+import json
+import security
 
 from multiprocessing import Process, freeze_support
 
@@ -78,7 +80,7 @@ def import_ep(path, type, guid):
         response = get_files(path=path, import_type=type, workspace_guid=guid)
     except Exception as e:
         response = {'message': "import-failure", 'error': str(e)}
-    return jsonify(response)
+    return security.encrypt_response(json.dumps(response))
 
 # Subsequent call after import
 # Should receive JSON as a POST request argument
@@ -86,7 +88,8 @@ def import_ep(path, type, guid):
 def index_ep(operation, guid):
     response = None
     try:
-        json_lst = request.get_json()['json_lst']
+        request_json_str = security.decrypt_request(request.get_data())
+        json_lst = json.loads(request_json_str)['json_lst']
         if operation == 'add':
             response = send_to_indexer(json_lst=json_lst, workspace_guid=guid)
         elif operation == 'update':
@@ -97,7 +100,7 @@ def index_ep(operation, guid):
             response = "INVALID INDEX OPERATION"
     except Exception as e:
         response = {'message': "index-failure", 'workspace_guid': guid, "error": str(traceback.format_exc())}#str(e)}
-    return jsonify(response)
+    return security.encrypt_response(json.dumps(response))
 
 # Search request
 # Should receive JSON as a POST request argument
@@ -114,19 +117,20 @@ def index_ep(operation, guid):
 def search_ep(guid):
     response = None
     try:
-        json = request.get_json()
+        request_json_str = security.decrypt_request(request.get_data())
+        request_json = json.loads(request_json_str)
         response = search_from_strs(
-            search_text=json['search_query'],
-            leg_datetime_range=json['date_ingested_legacy'],
-            kive_datetime_range=json['date_ingested_kive'],
-            la_datetime_range=json['date_last_accessed'],
-            media_text_lst=json['media_query'],
-            fields_lst=json['options'],
+            search_text=request_json['search_query'],
+            leg_datetime_range=request_json['date_ingested_legacy'],
+            kive_datetime_range=request_json['date_ingested_kive'],
+            la_datetime_range=request_json['date_last_accessed'],
+            media_text_lst=request_json['media_query'],
+            fields_lst=request_json['options'],
             workspace_guid=guid)
             
     except Exception as e:
         response = {'message': "search-failure", 'error': str(traceback.format_exc())}#str(e)}
-    return jsonify(response)
+    return security.encrypt_response(json.dumps(response))
 
 
 @app.route('/app_data_path')

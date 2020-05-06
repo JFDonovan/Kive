@@ -1,27 +1,32 @@
 # Kivé
 
+Kivé will be a standalone desktop application that allows users to import cached web pages and store them in workspaces that resemble a tree-like directory structure. While within a given workspace, users can browse, preview, add, move, delete, and search over their cached web pages. When adding web pages, Kivé stores the file path relating to the “added” file, not the file itself. For this reason, Kivé is very space efficient and respects the structural integrity of imported web pages.
+
+### DOWNLOAD
+``` git clone https://github.com/JFDonovan/Kive/ ```
 ### INSTRUCTIONS FOR STARTING 
 ##### ALL within Kive/ directory 
 
-1. make sure you have python3
-2. create a virtual environment 
-   - OS X and Linux: 
-```python3 -m venv venv``` 
-   - Windows: 
-```py -m venv venv```
-3. activate virtual environment 
-   - OS X and Linux: 
-```. venv/bin/activate```
-   - Windows: 
-```.\venv\Scripts\activate``` 
+1. Make sure you have python3: <br/>
+   ```python3 --version```
+2. Create a virtual environment: 
+   - OS X and Linux: <br/>
+   ```python3 -m venv venv``` 
+   - Windows: <br/>
+   ```py -m venv venv```
+3. Activate the virtual environment: 
+   - OS X and Linux: <br/>
+   ```. venv/bin/activate```
+   - Windows: <br/>
+   ```.\venv\Scripts\activate``` 
    - (exit virtual environment with ```deactivate```)
-4. install dependencies
-```pip install -r requirements.txt```
+4. Install dependencies: <br/>
+   ```pip install -r requirements.txt```
 
-5. install Node dependencies
+5. Install Node dependencies: <br/>
 ```npm install```
 
-6. start app
+6. Start application: <br/>
 ```npm start```
 
 ### VERSIONS 
@@ -39,14 +44,18 @@
 3. ```server.exe``` will be in ```dist/``` directory within ```app/backend/```
 
 ##### For packaging Electron Frontend
-1. Copy Kive repo locally
+1. Make sure you are in ```Kive/``` directory
 2. ```rm -rf node-modules venv package-lock.json```
 3. Install yarn if not already installed (```yarn --version``` to test)
-   - OS X & Linux: ```brew install yarn```
-   - Windows: ```choco install yarn```
+   - OS X & Linux: <br/>
+   ```brew install yarn```
+   - Windows: <br/>
+   ```choco install yarn```
    - if ```yarn``` command is not found then make sure yarn ```bin/``` folder is added to path correctly 
 4. run cmd ```yarn``` in ```Kive/``` repo, which will create ```yarn.lock```
- - now ```yarn start``` is same as ```npm start```
+   - now ```yarn start``` is same as ```npm start```
 5. run cmd ```yarn dist``` to package
-   - OS X & Linux: find ```kive-1.0.0.dmg``` in ```dist/``` folder
-   - Windows: find ```kive.exe``` in ```dist/``` folder
+   - OS X & Linux: <br/>
+   find ```kive-1.0.0.dmg``` in ```dist/``` folder
+   - Windows: <br/>
+   find ```kive.exe``` in ```dist/``` folder

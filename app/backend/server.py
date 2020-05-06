@@ -133,9 +133,9 @@ def get_app_data_path():
 
 def start_server():
     # Set path to AppData/Local Resources/etc. folder
-    # global app_data_path
-    # app_data_path = sys.argv[1]
-    # config.app_data_path = app_data_path
+    global app_data_path
+    app_data_path = sys.argv[1]
+    config.app_data_path = app_data_path
     app.run()
 
 

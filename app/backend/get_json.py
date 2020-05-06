@@ -61,9 +61,9 @@ def find_icon_recursive(obj):
 def find_icon(file_json):
     json_icon = file_json.get('icon', '')
     url_source = file_json.get('source', '')
-    icon_src = ""
+    icon_src = "app/style/fonts/world-icon.png"
     # If node has valid icon field
-    if ((json_icon != "") and (json_icon != None)):
+    if ((json_icon.strip() != "") and (json_icon != None)):
         icon_src = json_icon
         # Check if icon field is actually a valid icon
         if not((icon_src.endswith('.png') or icon_src.endswith('.jpg') or icon_src.endswith('.jpeg') or icon_src.endswith('.ico') or ('https://s2.googleusercontent.com/s2/favicons?domain_url=' in icon_src))):
@@ -73,9 +73,6 @@ def find_icon(file_json):
     elif ((url_source != "") and (url_source != None)):
         # Grab icon from web using url source field
         icon_src = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + url_source
-    else:
-        # Set icon_element to default file icon
-        icon_src = ""
 
     return icon_src                           
             

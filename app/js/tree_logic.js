@@ -171,22 +171,25 @@ function makeTree(workspace, data) {
                     icon_element.src = icon_src;
                 } else {
                     // Set icon_element to default file icon
-                    icon_src = "";
-                    icon_element = document.createElement('i');
-                    icon_element.classList.add('fa', 'fa-file', 'file-icon');
+                    icon_src = "app/style/fonts/world-icon.png";
+                    icon_element.src = icon_src;
                 }
 
                 // Could not load resource, reset to default file icon
                 icon_element.onerror = function () {
-                    icon_src = "";
-                    icon_element = document.createElement('i');
-                    icon_element.classList.add('fa', 'fa-file', 'file-icon');
+                    icon_src = "app/style/fonts/world-icon.png";
+                    icon_element.src = icon_src;
                 }
 
                 $li.find('.jqtree-title').before(icon_element.outerHTML);
             }
             if (node.type == "folder") {
-                $li.find('.jqtree-title').before('<i class="fa fa-folder"></i>');
+                if (node.is_open) {
+                    $li.find('.jqtree-title').before('<img class="file-icon" src="app/style/fonts/folder-open-icon.png">');
+                } else {
+                    $li.find('.jqtree-title').before('<img class="file-icon" src="app/style/fonts/folder-icon.png">');
+                }
+                
             }
         }
     });
@@ -200,6 +203,36 @@ function makeTree(workspace, data) {
             if (node.type == "file") {
                 // Renders page based on node.path
                 renderPage(node);
+            } else {
+                if (node.is_open) {
+                    $('#' + workspace + '_tree').tree('closeNode', node);
+                } else {
+                    $('#' + workspace + '_tree').tree('openNode', node);
+                }
+            }
+        }
+    );
+
+    // Defines open folder icon change
+    $('#' + workspace + '_tree').on(
+        'tree.open',
+        function (event) {
+            // The clicked node is 'event.node'
+            node = event.node;
+            if (node.type == 'folder') {
+                node.element.childNodes[0].getElementsByClassName('file-icon')[0].src = 'app/style/fonts/folder-open-icon.png';
+            }
+        }
+    );
+
+    // Defines close folder icon change
+    $('#' + workspace + '_tree').on(
+        'tree.close',
+        function (event) {
+            // The clicked node is 'event.node'
+            node = event.node;
+            if (node.type == 'folder') {
+                node.element.childNodes[0].getElementsByClassName('file-icon')[0].src = 'app/style/fonts/folder-icon.png';
             }
         }
     );

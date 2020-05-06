@@ -59,6 +59,7 @@ function renderPage(node) {
                 chromeTabs.addTab({
                 title: node.name,
                 id: node.id,
+                favicon: 'app/style/fonts/world-icon.png'
                 });
             }
             chromeMap.set(node.id, node.path);

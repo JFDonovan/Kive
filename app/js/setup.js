@@ -21,6 +21,7 @@ if (OS == 'Windows') {
 let remote = require('electron').remote;
 var appDataPath = remote.getGlobal('sharedObject').appDataPath;
 
+// Runs executable to start backend server
 child(executablePath, [appDataPath], function (err, data) {
     if (err) {
         console.error(err);

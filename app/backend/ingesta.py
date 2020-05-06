@@ -2,6 +2,8 @@ from index import index_docs
 from get_json import get_json_lst
 from backup import backup, restore_from_backup
 
+import traceback
+
 import json
 import shutil
 import sys
@@ -36,9 +38,9 @@ def get_files(path, import_type, workspace_guid):
     except Exception as e:
         restore_from_backup(workspace_guid)
         return {
-                'message': 'restored-from-backup',
-                'error': str(traceback.format_exc()),
-                'workspace_guid': workspace_guid
+                'message': 'import-failure',
+                'workspace_guid': workspace_guid,
+                'error': str(traceback.format_exc())
                 }
 
 def send_to_indexer(json_lst, workspace_guid):
@@ -54,9 +56,9 @@ def send_to_indexer(json_lst, workspace_guid):
     except Exception as e:
         restore_from_backup(workspace_guid)
         return {
-                'message': 'restored-from-backup',
-                'error': str(traceback.format_exc()),
-                'workspace_guid': workspace_guid
+                'message': 'index-failure',
+                'workspace_guid': workspace_guid,
+                'error': str(traceback.format_exc())
                 }
 
 def update(json_lst, workspace_guid):
@@ -70,14 +72,14 @@ def update(json_lst, workspace_guid):
         backup(workspace_guid)
         return {
                 'message': 'update-success',
-                'workspace_guid': workspace_guid
+                'workspace_guid': workspace_guid,
                 }
     except Exception as e:
         restore_from_backup(workspace_guid)
         return {
-                'message': 'restored-from-backup',
-                'error': str(traceback.format_exc()),
-                'workspace_guid': workspace_guid
+                'message': 'update-failure',
+                'workspace_guid': workspace_guid,
+                'error': str(traceback.format_exc())
                 }
 
 def delete(json_lst, workspace_guid):
@@ -96,6 +98,7 @@ def delete(json_lst, workspace_guid):
     except Exception as e:
         restore_from_backup(workspace_guid)
         return {
-                'message': 'restored-from-backup',
-                'workspace_guid': workspace_guid
+                'message': 'delete-failure',
+                'workspace_guid': workspace_guid,
+                'error': str(traceback.format_exc())
                 }

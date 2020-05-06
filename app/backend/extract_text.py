@@ -58,14 +58,22 @@ def scrape_paths(json_lst):
     # start = time.time()
     # threads = min(MAX_THREADS, len(paths))
     # multiprocessing.set_start_method('spawn')
+
+    # MULTIPROCESSING
     p = Pool(processes=os.cpu_count())
     results = p.map(parse_html, json_lst)
     p.close()
     p.join()
-    #results = [parse_html(json_lst[0])]
+
+    # NON_MULTIPROCESSING
+    # results = []
+    # for item in json_lst:
+    #     results.append(parse_html(json_lst[0]))
+
     # end = time.time()
     # print('Time to scrape: {}'.format(str(end - start)))
     return results
+
 
 # from bs4 import BeautifulSoup
 # from bs4.element import Comment
@@ -148,4 +156,4 @@ def scrape_paths(json_lst):
 #     # results = [parse_html(json_lst[0])]
 #     # end = time.time()
 #     # print('Time to scrape: {}'.format(str(end - start)))
-#     return results
+#     return results 

@@ -21,7 +21,7 @@ function addTreeTooltips(workspace) {
                 if (node.source) {
                     content.push("(" + node.source + ")");
                 }
-                content.push("(www.example.com)"); // TEMPORARY EXAMPLE
+                //content.push("(www.example.com)"); // TEMPORARY EXAMPLE
                 // Spawns popup for tooltip
                 spawnTooltip(e, content);
             }, 600)

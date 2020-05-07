@@ -21,6 +21,7 @@ This file defines the endpoints of and runs the API.
 app = Flask(__name__)
 
 app_data_path = "none"
+platform = "none"
 #config.app_data_path = '/Users/josh/Library/Application Support/kive_data'
 
 def shutdown_server():
@@ -41,15 +42,9 @@ def check():
     return 'Server is running...'
 
 
-@app.route('/test/<name>', methods=['GET'])
-def test(guid):
-    response = "success"
-    try:
-        os.mkdir(app_data_path + "/workspace_repo/" + guid + "/")
-        os.mkdir(app_data_path + "/workspace_repo/" + guid + "/index_dir/")
-    except:
-        response = "workspace already exists"
-    return {'data': response}
+@app.route('/get_platform', methods=['GET'])
+def get_platform():
+    return platform
 
 
 @app.route('/create-workspace/<name>', methods=['GET'])
@@ -81,14 +76,15 @@ def delete_workspace_ep(guid):
     return jsonify(response)
 
 # May need to decode paths here.
-@app.route('/import/<path>/<type>/<guid>', methods=['GET'])
+@app.route('/import/<path:path>/<type>/<guid>', methods=['GET'])
 def import_ep(path, type, guid):
     '''
     Sends given path and type to the import workflow.
     '''
     
     path = parse.unquote(path)
-    #path = '/' + path
+    if platform != 'win32':
+        path = '/' + path
     response = None
     try:
         response = get_files(path=path, import_type=type, workspace_guid=guid)
@@ -162,12 +158,16 @@ def start_server():
     Returns the data to a user's appdata directory 
     (e.g. /users/user1234/Library/Application Support/kive_data)
     '''
-
     # Set path to AppData/Local Resources/etc. folder
-    global app_data_path
-    app_data_path = sys.argv[1]
+    global app_data_path    
+    app_data_path = sys.argv[2]
     config.app_data_path = app_data_path
-    app.run(host='localhost', port=sys.argv[2])
+    # Set platform
+    global platform
+    platform = sys.argv[3]
+    config.platform = platform
+    # Run app
+    app.run(host='localhost', port=sys.argv[1])
 
 
 # Runs main (should stay at bottom)

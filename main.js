@@ -42,17 +42,17 @@ const startServer = (port_num) => {
   if (checkPackaged) {
     if (platform === 'win32') {
       console.log("Packaged: windows");
-      serverProc = require('child_process').execFile(path.join(__dirname, BACKEND_FOLDER, BACKEND_DIST_FOLDER, SERVER_MODULE + '.exe'), [appDataPath, port]);
+      serverProc = require('child_process').execFile(path.join(__dirname, BACKEND_FOLDER, BACKEND_DIST_FOLDER, SERVER_MODULE + '.exe'), [port, appDataPath, platform]);
     }
     else {
       console.log("Packaged: not windows");
-      serverProc = require('child_process').execFile(path.join(__dirname, BACKEND_FOLDER, BACKEND_DIST_FOLDER, SERVER_MODULE), [appDataPath, port]);
+      serverProc = require('child_process').execFile(path.join(__dirname, BACKEND_FOLDER, BACKEND_DIST_FOLDER, SERVER_MODULE), [port, appDataPath, platform]);
     }
   }
   // Else, run python script
   else {
     console.log("Not packaged");
-    serverProc = require('child_process').spawn('python', [path.join(__dirname, BACKEND_FOLDER, SERVER_MODULE + '.py'), appDataPath, port]);
+    serverProc = require('child_process').spawn('python', [path.join(__dirname, BACKEND_FOLDER, SERVER_MODULE + '.py'), port, appDataPath, platform]);
   }
   // Log success/failure
   if (serverProc != null) {

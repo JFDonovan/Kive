@@ -70,7 +70,7 @@ def find_icon(file_json):
             # Grab icon from web if icon field doesn't point to valid icon    
             icon_src = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + icon_src
     # If node has valid url source field     
-    elif ((url_source != "") and (url_source != None)):
+    elif ((url_source != "") and (url_source != None) and ('localhost' not in url_source)):
         # Grab icon from web using url source field
         icon_src = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + url_source
 

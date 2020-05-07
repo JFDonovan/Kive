@@ -1,4 +1,3 @@
-
 // For Initializing all trees at once (not currently in use)
 function initTrees(workspaces) {
     workspaces.forEach((workspace) => {
@@ -9,9 +8,6 @@ function initTrees(workspaces) {
 // Reads tree from workspaces tree json and initializes that tree
 function readTree(workspace) {
     console.log('read_tree called');
-    let remote = require('electron').remote;
-    let dialog = remote.dialog;
-    let fs = remote.require('fs');
 
     fs.readFile(appDataPath + "/workspace_repo/" + workspace + "/tree.json", 'utf-8', (err, data) => {
         if (err) {
@@ -31,9 +27,6 @@ function readTree(workspace) {
 // Append to an existing tree
 function appendTree(workspace, data, parent_node) {
     console.log('appendTree called');
-    let remote = require('electron').remote;
-    let dialog = remote.dialog;
-    let fs = remote.require('fs');
 
     // Reads from temp.json file
     /*fs.readFile("/Users/chrisyue/workspace_repo/" + workspace + "/temp.json", 'utf-8', (err, data) => {
@@ -338,9 +331,6 @@ function updateNode(node, key, value) {
 // Writes tree json to tree file of a workspace
 function treeToJson(workspace) {
     console.log("tree to json called: " + workspace);
-    let remote = require('electron').remote;
-    let dialog = remote.dialog;
-    let fs = remote.require('fs');
 
     // Gets tree json of current workspace tree
     treeJson = $('#' + workspace + '_tree').tree('toJson');
@@ -360,9 +350,6 @@ function treeToJson(workspace) {
 // Writes tree json to backup tree file of a workspace
 function treeToBackupJson(workspace) {
     console.log("tree to json called: " + workspace);
-    let remote = require('electron').remote;
-    let dialog = remote.dialog;
-    let fs = remote.require('fs');
 
     // Gets tree json of current workspace tree
     treeJson = $('#' + workspace + '_tree').tree('toJson');
@@ -397,13 +384,12 @@ function scrollToNodeInTree(node) {
 
 // Handles failed path integrity
 function missingPath(node) {
-    let fs = require('fs');
 
     // Initialize folderList
     let folderList = node.path[0].split("\\");
 
-    // Set folder list based on OS
-    if (OS == "Windows") {
+    // Set folder list based on platform OS
+    if (platform == "Windows") {
         folderList = node.path[0].split("\\");
     }
     else {

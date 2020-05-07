@@ -15,8 +15,6 @@ document.getElementById("sb_import_btn").onclick = function () {
 // Retrieve selected folder
 function get_folder(importType, nodeId) {
   console.log('get_folder called');
-  let remote = require('electron').remote;
-  let dialog = remote.dialog;
 
   dialog.showOpenDialog({
     title: "Select a folder",
@@ -37,8 +35,6 @@ function get_folder(importType, nodeId) {
 // Retrieve selected file
 function get_file(nodeId) {
   console.log('get_file called');
-  let remote = require('electron').remote;
-  let dialog = remote.dialog;
 
   dialog.showOpenDialog({
     title: "Select a file",

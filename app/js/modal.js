@@ -170,8 +170,6 @@ function openModal(type, title, prompts, func) {
 // Retrieve selected file
 function chooseFilePath(func) {
     console.log('chooseFilePath called');
-    let remote = require('electron').remote;
-    let dialog = remote.dialog;
 
     dialog.showOpenDialog({
         title: "Select a file",

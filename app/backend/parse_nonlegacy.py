@@ -4,6 +4,10 @@ from selectolax.parser import HTMLParser
 import os
 import uuid
 
+'''
+Non-legacy directory ingest workflow.
+'''
+
 def find_files(folder):
     '''
     Walks through the specified directory to find all web pages and create JSON objects for them.
@@ -69,12 +73,15 @@ def find_files(folder):
     try:
         find_files_helper(folder, json_tree)
     except Exception as e:
-        # print('Exception:', e)
         return None, None
 
     return [json_tree], json_lst
 
 def get_canonical(path):
+    '''
+    Finds link tag with rel attribute == 'canonical' to use for icon path.
+    '''
+
     with open(path, 'r', encoding='utf8', errors='ignore') as f:
         html = f.read()    
         tree = HTMLParser(html)

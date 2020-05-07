@@ -9,8 +9,17 @@ import ast
 import uuid
 import json
 
+'''
+This file contains code for walking through directories/parsing through legacy workspaces
+to retrieve directory structure and lists of web page metadata.
+'''
+
 ########################## CALLED BY MAIN INGEST FILE #########################
 def get_json_lst(path, import_type): 
+    '''
+    Returns directory structure and list of actual web page paths in JSON format.
+    '''
+
     # If path is actually a path to an HTML file and not a directory
     if not os.path.isdir(path) and (path.endswith('.html') or path.endswith('.htm') or path.endswith('.mhtml')):
         json_tree = [{
@@ -59,6 +68,10 @@ def find_icon_recursive(obj):
             find_icon_recursive(child)    
 
 def find_icon(file_json):
+    '''
+    Finds path of tab icon.
+    '''
+
     json_icon = file_json.get('icon', '')
     url_source = file_json.get('source', '')
     icon_src = "app/style/fonts/world-icon.png"

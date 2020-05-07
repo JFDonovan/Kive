@@ -7,6 +7,10 @@ from whoosh.fields import *
 
 import config
 
+'''
+Functionality to allow users to create and delete workspaces.
+'''
+
 # For creating new workspace
 def create_workspace(name):
     # global tempStr

@@ -15,7 +15,10 @@ import config
 
 
 def get_schema():
-    # Specifies what fields are stored in the index
+    '''
+    Specifies what fields are stored in the index and returns to be passed to newly created index.
+    '''
+
     analyzer = analysis.StandardAnalyzer(stoplist=None, minsize=1) | analysis.CharsetFilter(accent_map)
     return Schema(name=TEXT(stored=True, analyzer=analyzer),
                     path=TEXT(stored=True),
@@ -29,12 +32,10 @@ def get_schema():
 
 
 def index_docs(json_lst, operation, workspace_guid):
-    try:
-        index(json_lst, operation, workspace_guid)
-    except Exception as e:
-        raise e
+    '''
+    Writes, updates, or deletes documents to/from the index based on the specified operation.
+    '''
 
-def index(json_lst, operation, workspace_guid):
     try:
         # The schema specifies the fields of documents in an index
         schema = get_schema()
@@ -44,14 +45,14 @@ def index(json_lst, operation, workspace_guid):
             # Create index based on schema
             ix = create_in(config.app_data_path + '/workspace_repo/{}/index_dir'.format(workspace_guid), schema)
         else:
+            # Open existing index
             ix = open_dir(config.app_data_path + '/workspace_repo/{}/index_dir'.format(workspace_guid))
 
         # Prepare to write paths to index
-        # multiprocessing.set_start_method('spawn')
         writer = ix.writer(procs=os.cpu_count(), multisegment=True)
         searcher = ix.searcher()
         id_check = ""
-        if operation == 'add':
+        if operation == 'add': # Used if files are imported into workspace
             index_lst = scrape_paths(json_lst)
 
             for entry, content, media_files in index_lst:
@@ -72,7 +73,7 @@ def index(json_lst, operation, workspace_guid):
                                     media_files=media_files,
                                     indexed_time=indexed_time,
                                     id=id)
-        elif operation == 'update':
+        elif operation == 'update': # Used if names or dates get updated in workspace
             index_lst = scrape_paths(json_lst)
             for entry, content, media_files in index_lst:
                 path = entry['path']
@@ -83,12 +84,7 @@ def index(json_lst, operation, workspace_guid):
                 indexed_time = datetime.utcnow()
                 id = entry['id']
                 id_check = id
-                # raise Exception(entry)
-                # cur_fields = searcher.document(id=id)
-                # raise Exception(cur_fields)
-                # content = cur_fields['content']
-                # media_files = cur_fields['media_files']
-                # raise Exception(entry)
+
                 writer.update_document(name=name,
                                         path=path, 
                                         content=content, 
@@ -98,10 +94,9 @@ def index(json_lst, operation, workspace_guid):
                                         media_files=media_files,
                                         indexed_time=indexed_time,
                                         id=id)
-        elif operation == 'delete':
+        elif operation == 'delete': # Used if files get deleted from workspace
             for entry in json_lst:
                 id = entry['id']
-
                 writer.delete_by_term('id', id)
 
         writer.commit()

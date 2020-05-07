@@ -13,8 +13,15 @@ import config
 import ast
 import json
 
-def search_from_strs(search_text, leg_datetime_range, kive_datetime_range,
+'''
+Provides functionality for executing search queries and returning results.
+'''
+
+def get_search_results(search_text, leg_datetime_range, kive_datetime_range,
                 la_datetime_range, media_text_lst, fields_lst, workspace_guid):
+    '''
+    Returns search results based on query and filters.
+    '''
 
     results = search_docs(search_text, leg_datetime_range, kive_datetime_range, la_datetime_range,
                         media_text_lst, fields_lst, workspace_guid)
@@ -23,17 +30,13 @@ def search_from_strs(search_text, leg_datetime_range, kive_datetime_range,
 
 def search_docs(search_text, leg_datetime_range, kive_datetime_range,
                 la_datetime_range, media_text_lst, fields_lst, workspace_guid):
-    # start = time.time()
+    '''
+    Creates query string from given arguments and performs search over index.
+    '''
+
     ix = open_dir(config.app_data_path + '/workspace_repo/{}/index_dir'.format(workspace_guid))
-    # print(ix.schema)
+
     with ix.searcher() as searcher:
-        ####### FOR DEBUGGING #########
-        # print(searcher.doc_count())
-        # for doc in searcher.documents():
-
-        #     print(doc['media_files'])
-
-
         # Create parser.
         # Set termclass so that it accounts for grammatical variations in word spelling.
         # Change default query operators so that ANDs, ORs, and NOTs in actual
@@ -44,7 +47,6 @@ def search_docs(search_text, leg_datetime_range, kive_datetime_range,
 
         ########### Build query based on filters sent from front-end ##########
         query_lst = []
-        # raise Exception('Search text:', search_text)
         if search_text and ('name' in fields_lst or 'content' in fields_lst):
             if 'name' in fields_lst and 'content' in fields_lst:
                 query_lst.append('(name:(*{}*) &!OR!& content:(*{}*))'.format(search_text, search_text))
@@ -96,20 +98,15 @@ def search_docs(search_text, leg_datetime_range, kive_datetime_range,
 
         query_string = ' &!AND!& '.join(query_lst)
         query = parser.parse(query_string) # Parse query string to create actual query
-        # print(query_string)
-        # print(query)
-        # raise Exception(query)
         results = searcher.search(query, limit=None) # Perform search and store results
+
         if len(results) == 0:
-            # print('No results found.')
             return []
         else:
             result_json_lst = []
             for result in results:
-                # Concat paths into asterisk-delimited string to send to front-end
                 result_json_lst.append({'name': result['name'], 'path': result['path'], 'id': result['id']})
 
-            # end = time.time()
             return result_json_lst
 
 if __name__ == '__main__':

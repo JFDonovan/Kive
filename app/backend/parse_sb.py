@@ -6,6 +6,11 @@ import sys
 import os
 import uuid
 
+'''
+ScrapBook directory ingest workflow.
+'''
+
+
 #Declaring global variables needed to be accessed everywhere
 folder_path = ''
 child_dict = {}

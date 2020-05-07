@@ -1,12 +1,12 @@
-'''
-Uncomment things that deal with "config" after app data path functionality is implemented.
-'''
-
 import os
 import datetime
 import config
 
 from cryptography.fernet import Fernet
+
+'''
+Provides encryption for securely transmitting data between backend and frontend.
+'''
 
 # If secret key doesn't exist, use this function to write it
 def write_secret_key():

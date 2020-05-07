@@ -43,7 +43,7 @@ def get_files(path, import_type, workspace_guid):
                 'error': str(traceback.format_exc())
                 }
 
-def send_to_indexer(json_lst, workspace_guid):
+def add(json_lst, workspace_guid):
     try:
         # Index documents
         index_docs(json_lst, 'add', workspace_guid)

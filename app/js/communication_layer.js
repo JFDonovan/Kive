@@ -80,11 +80,6 @@ function handleResponse(response, context) {
             console.log("deletion successful");
         },
         // Failure responses
-        /*"failure": function () {
-            disableOverlay();
-            console.error("Failure of ", respObj.attempt, " : ", respObj.error);
-            alert(respObj.attempt + " failure");
-        },*/
         "import-failure": function () {
             console.error("import failure: ", respObj.workspace_guid, " : ", respObj.error);
             alert("import failure");
@@ -141,7 +136,7 @@ function indexSuccessHandler(workspace) {
         enableOverlay();
         // Send next command to backend
         let nextCmd = workspaceQueues[workspace][0];
-        postRequest(nextCmd[0], nextCmd[1]);
+        postRequest(nextCmd[0], nextCmd[1], nextCmd[2]);
     }
     // Write to back up tree json
     treeToBackupJson(workspace);
@@ -159,7 +154,7 @@ function indexFailureHandler(workspace) {
 function addToQueue(endpoint, context, jsonObj, guid) {
     // If queue is empty, add to queue run command immediately 
     if (workspaceQueues[guid].length == 0) {
-        workspaceQueues[guid].push([endpoint, context]);
+        workspaceQueues[guid].push([endpoint, context, jsonObj]);
         // Enabling overlay to disable search functionality if command requires indexing
         enableOverlay();
         // Make post request
@@ -167,7 +162,7 @@ function addToQueue(endpoint, context, jsonObj, guid) {
     }
     // If queue is not empty, add command to queue and wait
     else {
-        workspaceQueues[guid].push([endpoint, context]);
+        workspaceQueues[guid].push([endpoint, context, jsonObj]);
     }
     console.log("Added", [endpoint, context], "to " + guid + "queue:  " + workspaceQueues[guid].length);
 }

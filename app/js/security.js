@@ -2,7 +2,6 @@
 
 function getToken() {
     let fernet = require('fernet');
-    let fs = remote.require('fs');
 
     let path = appDataPath + "/secret_key";
 

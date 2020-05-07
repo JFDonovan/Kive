@@ -2,9 +2,6 @@
 // Writes to htmlFile (for annotations)
 function saveHtmlFile() {
     console.log("write file called");
-    let remote = require('electron').remote;
-    let dialog = remote.dialog;
-    let fs = remote.require('fs');
 
     // Gets iframe doc and html
     let iframe = document.getElementById("html_disp");

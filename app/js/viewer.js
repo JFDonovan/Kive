@@ -40,7 +40,6 @@ function updateTab(node) {
 
 // Renders html file of node in iframe
 function renderPage(node) {
-    let fs = require('fs');
     // Check if file exists
     try {
         // Throws error if file does not exist
@@ -91,14 +90,12 @@ function openInBrowser(node) {
     // Opens path in another electron window (NOT IN USE)
     //window.open(path, '_system');
 
-    let fs = require('fs');
 
     // Check if file exists
     try {
         let integrity = fs.statSync(node.path);
         console.log(integrity);
         // Opens path in external browser
-        let shell = require('electron').shell
         //shell.openExternal(path).then(_ => _);
         shell.openItem(node.path);
         // update date last accessed (if does not match currently)

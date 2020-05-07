@@ -40,9 +40,6 @@ function createWorkspace(name) {
 // Renames workspace
 function renameWorkspace(name, guid) {
     console.log("rename workspace called");
-    let remote = require('electron').remote;
-    let dialog = remote.dialog;
-    let fs = remote.require('fs');
 
     // Reads from workspaces json
     fs.readFile(appDataPath + "/workspace_repo/workspaces.json", 'utf-8', (err, data) => {

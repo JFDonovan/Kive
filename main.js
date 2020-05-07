@@ -5,11 +5,12 @@ let myWindow = null;
 // Restricts user to one instance of Kive
 const gotTheLock = app.requestSingleInstanceLock();
 
-//var appDataPath = app.getPath('appData');
-
+// Sets app data path and platform as global variables
 const appDataPath = app.getPath('appData').split("\\").join("/") + "/kive_data";
+const platform = process.platform = process.platform
 global.sharedObject = {
-  appDataPath: appDataPath
+  appDataPath: appDataPath,
+  platform: platform
 }
 
 
@@ -39,7 +40,7 @@ const startServer = (port_num) => {
 
   // If packaged, run executable
   if (checkPackaged) {
-    if (process.platform === 'win32') {
+    if (platform === 'win32') {
       console.log("Packaged: windows");
       serverProc = require('child_process').execFile(path.join(__dirname, BACKEND_FOLDER, BACKEND_DIST_FOLDER, SERVER_MODULE + '.exe'), [appDataPath, port]);
     }
@@ -67,10 +68,9 @@ const killServer = () => {
   //serverPort = null
 }
 
-app.on('ready', () => startServer(serverPort));
 app.on('will-quit', killServer);
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 if (!gotTheLock) {
   app.quit()
@@ -86,6 +86,9 @@ else {
 
   // Create myWindow, load the rest of the app, etc...
   app.on('ready', () => {
+
+    // Starts server
+    startServer(serverPort)
 
     // Create the browser window.
     myWindow = new BrowserWindow({

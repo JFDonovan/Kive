@@ -34,7 +34,11 @@ el.addEventListener('tabRemove', ({ detail }) => {
 // Updates chrome tab for a given node
 function updateTab(node) {
     if (tabMap.get(node.id)) {
-        chromeTabs.updateTab(tabMap.get(node.id), { title: node.name, id: node.id, favicon: node.icon });
+        chromeTabs.updateTab(tabMap.get(node.id), { 
+            title: node.name, 
+            id: node.id, 
+            favicon: node.element.childNodes[0].getElementsByClassName('file-icon')[0].src
+        });
     }
 }
 

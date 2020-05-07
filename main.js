@@ -14,7 +14,7 @@ global.sharedObject = {
 }
 
 
-/*** ----------------------- Start Server ------------------------- ***/
+/*** ----------------------- Backend Server ------------------------- ***/
 
 const path = require("path");
 

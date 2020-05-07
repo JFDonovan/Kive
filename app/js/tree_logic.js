@@ -1,5 +1,3 @@
-import { Platform } from "electron-builder";
-
 // For Initializing all trees at once (not currently in use)
 function initTrees(workspaces) {
     workspaces.forEach((workspace) => {

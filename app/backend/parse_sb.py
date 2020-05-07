@@ -53,17 +53,10 @@ class MyRDFParser(HTMLParser):
                 elif attr[0] == 'ns1:title':
                     title = attr[1]
                 elif attr[0] == 'ns1:source':
-                    full_src_str = attr[1]
-                    if full_src_str.startswith('file://'):
-                        source_url = folder_path + full_src_str.split('data/')[1]
-                    else:
-                        source_url = full_src_str
+                    source_url = attr[1]
                 elif attr[0] == 'ns1:icon':
-                    full_icon_str = attr[1]
-                    if full_icon_str.startswith('resource://'):
-                        icon_src = folder_path + full_icon_str.split('data/')[1]
-                    else:
-                        icon_src = full_icon_str
+                    icon_src = attr[1]
+                    
 
             # Creating new JSON object with desired fields
             new_json = {

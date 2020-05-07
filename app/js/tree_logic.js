@@ -126,6 +126,7 @@ function makeTree(workspace, data) {
 
     // Gets base tree element of workspace and initializes tree (look up jqtree for attributes)
     $('#' + workspace + '_tree').tree({
+        selectable: false, // Stops scrolling issue, but no longer select nodes (could make custom select)
         data: data,
         dragAndDrop: true,
         autoOpen: false,//1,

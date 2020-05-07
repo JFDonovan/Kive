@@ -81,14 +81,14 @@ def delete_workspace_ep(guid):
     return jsonify(response)
 
 # May need to decode paths here.
-@app.route('/import/<path:path>/<type>/<guid>', methods=['GET'])
+@app.route('/import/<path>/<type>/<guid>', methods=['GET'])
 def import_ep(path, type, guid):
     '''
     Sends given path and type to the import workflow.
     '''
     
     path = parse.unquote(path)
-    path = '/' + path
+    #path = '/' + path
     response = None
     try:
         response = get_files(path=path, import_type=type, workspace_guid=guid)

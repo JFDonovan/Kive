@@ -53,42 +53,64 @@ function openModal(type, title, prompts, func) {
     // Get Info for a Node
     if (type == "get-info") {
         let n = prompts[0]
-        let contents = document.createElement("DIV");
+        let contents = document.createElement("UL");
         contents.style.wordWrap = "break-word";
+        contents.style.listStyle = "none";
+        contents.style.paddingLeft = "0px";
 
         // Name
+        let nameEl = document.createElement('LI');
         let nameLabel = document.createElement("B");
         nameLabel.appendChild(document.createTextNode("Name: "));
-        contents.appendChild(nameLabel)
-        contents.appendChild(document.createTextNode(n.name));
-        contents.appendChild(document.createElement("br"));
+        nameEl.appendChild(nameLabel)
+        nameEl.appendChild(document.createTextNode(n.name));
+        contents.appendChild(nameEl);
+
+        // Source
+        if (n.source) {
+            let sourceEl = document.createElement('LI');
+            let sourceLabel = document.createElement("B");
+            sourceLabel.appendChild(document.createTextNode("Source: "));
+            sourceEl.appendChild(sourceLabel);
+            let italicSrc = document.createElement("I");
+            italicSrc.appendChild(document.createTextNode(n.source));
+            sourceEl.appendChild(italicSrc);
+            contents.appendChild(sourceEl);
+        }
 
         // Path
+        let pathEl = document.createElement('LI');
         let pathLabel = document.createElement("B");
         pathLabel.appendChild(document.createTextNode("Path: "));
-        contents.appendChild(pathLabel)
-        contents.appendChild(document.createTextNode(n.path));
-        contents.appendChild(document.createElement("br"));
+        pathEl.appendChild(pathLabel);
+        pathEl.appendChild(document.createTextNode(n.path));
+        contents.appendChild(pathEl);
 
         // Legacy Ingest Date
-        let legacyLabel = document.createElement("B");
-        legacyLabel.appendChild(document.createTextNode("Legacy Platform Ingest Date: "));
-        contents.appendChild(legacyLabel)
-        contents.appendChild(document.createTextNode(n.legacy_ingest));
-        contents.appendChild(document.createElement("br"));
+        if (n.legacy_ingest) {
+            let legacyEl = document.createElement('LI');
+            let legacyLabel = document.createElement("B");
+            legacyLabel.appendChild(document.createTextNode("Legacy Platform Ingest Date: "));
+            legacyEl.appendChild(legacyLabel)
+            legacyEl.appendChild(document.createTextNode(formatDate(n.legacy_ingest)));
+            contents.appendChild(legacyEl);
+        }
 
         // Kive Ingest Date
+        let kiveEl = document.createElement('LI');
         let kiveLabel = document.createElement("B");
         kiveLabel.appendChild(document.createTextNode("Kive Ingest Date: "));
-        contents.appendChild(kiveLabel)
-        contents.appendChild(document.createTextNode(n.ingest));
-        contents.appendChild(document.createElement("br"));
+        kiveEl.appendChild(kiveLabel)
+        kiveEl.appendChild(document.createTextNode(formatDate(n.ingest)));
+        contents.appendChild(kiveEl);
 
         // Last Accessed Date
+        let accessedEl = document.createElement('LI');
         let accessedLabel = document.createElement("B");
         accessedLabel.appendChild(document.createTextNode("Last Accesssed Date: "));
-        contents.appendChild(accessedLabel)
-        contents.appendChild(document.createTextNode(n.last_accessed));
+        accessedEl.appendChild(accessedLabel)
+        accessedEl.appendChild(document.createTextNode(formatDate(n.last_accessed)));
+        contents.appendChild(accessedEl);
 
         modalBody.appendChild(contents)
     }
@@ -122,7 +144,7 @@ function openModal(type, title, prompts, func) {
     if (type == "import-options-info") {
         let contents = document.createElement("DIV");
         contents.style.wordWrap = "break-word";
-        
+
         // Import file options
         let fileLabel = document.createElement("B");
         fileLabel.appendChild(document.createTextNode("Import File: "));
@@ -165,6 +187,14 @@ function openModal(type, title, prompts, func) {
 
     // Opens modal
     $("#modal").modal("toggle");
+}
+
+// Formats date for display
+function formatDate(dateStr) {
+    let year = dateStr.substring(0, 4);
+    let month = dateStr.substring(4, 6);
+    let day = dateStr.substring(6, 8);
+    return month + "/" + day + "/" + year;
 }
 
 // Retrieve selected file

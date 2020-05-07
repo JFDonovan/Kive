@@ -8,7 +8,7 @@ from flask import Flask, request, jsonify
 from urllib import parse
 from ingesta import get_files, add, update, delete
 from dir_manage import create_workspace, delete_workspace
-from search import search_from_strs
+from search import get_search_results
 
 import traceback
 
@@ -138,7 +138,7 @@ def search_ep(guid):
     response = None
     try:
         json = request.get_json()
-        response = search_from_strs(
+        response = get_search_results(
             search_text=json['search_query'],
             leg_datetime_range=json['date_ingested_legacy'],
             kive_datetime_range=json['date_ingested_kive'],
@@ -162,7 +162,7 @@ def start_server():
     Returns the data to a user's appdata directory 
     (e.g. /users/user1234/Library/Application Support/kive_data)
     '''
-    
+
     # Set path to AppData/Local Resources/etc. folder
     global app_data_path
     app_data_path = sys.argv[1]

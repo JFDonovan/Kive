@@ -7,7 +7,7 @@ var currentWorkspace = null;
 var workspaceQueues = {};
 
 // ***** Global variable that stores OS
-//var OS = getOS();
+var OS = getOS();
 
 var remote = require('electron').remote;
 var fs = remote.require('fs');
@@ -19,7 +19,7 @@ var appDataPath = remote.getGlobal('sharedObject').appDataPath;
 var platform = remote.getGlobal('sharedObject').platform;
 
 // Runs executable which starts local server
-/*var child = require('child_process').execFile;
+var child = require('child_process').execFile;
 
 // Path to executable
 var executablePath = path.join(__dirname, '/app/backend/dist/server');
@@ -29,7 +29,7 @@ if (OS == 'Windows') {
 
 
 // Runs executable to start backend server
-/*child(executablePath, [appDataPath], function (err, data) {
+child(executablePath, [appDataPath], function (err, data) {
     if (err) {
         console.error(err);
         return;
@@ -37,11 +37,11 @@ if (OS == 'Windows') {
     else {
         console.log("Server started...");
     }
-});*/
+});
 
 
 // Gets OS
-/*function getOS() {
+function getOS() {
     var userAgent = window.navigator.userAgent,
         platform = window.navigator.platform,
         macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K'],
@@ -62,7 +62,7 @@ if (OS == 'Windows') {
     }
 
     return os;
-}*/
+}
 
 // Called on body onload
 function onLoad() {

@@ -180,7 +180,7 @@ function indexingOverlay() {
     document.getElementById('overlay-label').innerHTML = 'indexing...';
     // Shows top loading overlay
     let topOverlay = document.getElementById("loading_overlay");
-    topOverlay.innerHTML = "Indexing...";
+    topOverlay.getElementsByTagName("SPAN")[0].innerHTML = "Indexing...";
     topOverlay.classList.remove("hidden");
 
     $('#overlay').show();
@@ -193,7 +193,7 @@ function searchingOverlay() {
     document.getElementById('overlay-label').innerHTML = 'searching...';
     // Shows top loading overlay
     let topOverlay = document.getElementById("loading_overlay");
-    topOverlay.innerHTML = "Searching...";
+    topOverlay.getElementsByTagName("SPAN")[0].innerHTML = "Searching...";
     topOverlay.classList.remove("hidden");
 
     $('#overlay').show();
@@ -205,7 +205,7 @@ function searchingOverlay() {
 function importingOverlay() {
     // Shows top loading overlay
     let topOverlay = document.getElementById("loading_overlay");
-    topOverlay.innerHTML = "Importing...";
+    topOverlay.getElementsByTagName("SPAN")[0].innerHTML = "Importing...";
     topOverlay.classList.remove("hidden");
 
     console.log("Displayed importing overlay");

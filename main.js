@@ -45,11 +45,13 @@ const startServer = (port_num) => {
       serverProc = require('child_process').execFile(path.join(__dirname, BACKEND_FOLDER, BACKEND_DIST_FOLDER, SERVER_MODULE + '.exe'), [appDataPath, port]);
     }
     else {
+      console.log("Packaged: not windows");
       serverProc = require('child_process').execFile(path.join(__dirname, BACKEND_FOLDER, BACKEND_DIST_FOLDER, SERVER_MODULE), [appDataPath, port]);
     }
   }
   // Else, run python script
   else {
+    console.log("Not packaged");
     serverProc = require('child_process').spawn('python', [path.join(__dirname, BACKEND_FOLDER, SERVER_MODULE + '.py'), appDataPath, port]);
   }
   // Log success/failure

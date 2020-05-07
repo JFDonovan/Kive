@@ -19,7 +19,7 @@ function addTreeTooltips(workspace) {
                 // Sets content for tooltip
                 let content = [node.name];
                 if (node.source) {
-                    content.push("(" + node.source + ")");
+                    content.push("<i>" + node.source + "</i>");
                 }
                 //content.push("(www.example.com)"); // TEMPORARY EXAMPLE
                 // Spawns popup for tooltip
@@ -44,7 +44,8 @@ function spawnTooltip(event, textList) {
     let list = document.createElement("UL");
     for (let x = 0; x < textList.length; x ++) {
         let item = document.createElement("LI");
-        item.appendChild(document.createTextNode(textList[x]));
+        //item.appendChild(document.createTextNode(textList[x]));
+        item.innerHTML = textList[x];
         list.appendChild(item);
     }
     tooltip.appendChild(list);

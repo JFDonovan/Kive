@@ -158,6 +158,12 @@ function makeTree(workspace, data) {
                 let icon_src = "";
                 // Add class to new element for css styling
                 icon_element.classList.add("file-icon");
+                
+                // Could not load resource, reset to default file icon
+                icon_element.onerror = function () {
+                    node.element.childNodes[0].getElementsByClassName('file-icon')[0].src = 'app/style/fonts/world-icon.png';
+                }
+
                 // If node has valid icon field
                 if (node.icon != "" && node.icon != undefined) {
                     icon_src = node.icon;
@@ -168,11 +174,7 @@ function makeTree(workspace, data) {
                     icon_element.src = icon_src;
                 }
 
-                // Could not load resource, reset to default file icon
-                icon_element.onerror = function () {
-                    icon_src = "app/style/fonts/world-icon.png";
-                    icon_element.src = icon_src;
-                }
+                
 
                 $li.find('.jqtree-title').before(icon_element.outerHTML);
             }

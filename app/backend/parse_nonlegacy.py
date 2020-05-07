@@ -1,4 +1,5 @@
 from datetime import datetime
+from selectolax.parser import HTMLParser
 
 import os
 import uuid
@@ -32,7 +33,7 @@ def find_files(folder):
                         'ingest': datetime.now().strftime('%Y%m%d'),
                         'last_accessed': datetime.fromtimestamp(os.path.getmtime(folder + '/' + entity)).strftime('%Y%m%d'),
                         'path': folder + "/" + entity,
-                        'source': '',
+                        'source': get_canonical(folder + '/' + entity),
                         'icon': '',
                         'id': str(uuid.uuid4()),
                         'children': []
@@ -72,3 +73,15 @@ def find_files(folder):
         return None, None
 
     return [json_tree], json_lst
+
+def get_canonical(path):
+    with open(path, 'r', encoding='utf8', errors='ignore') as f:
+        html = f.read()    
+        tree = HTMLParser(html)
+        url = ''
+        
+        for node in tree.css('link'):
+            if 'rel' in node.attributes and node.attributes['rel'] == 'canonical':
+                url = node.attributes['href']
+        
+        return url

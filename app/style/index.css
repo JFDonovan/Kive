@@ -528,6 +528,6 @@
 /* ------------- Top Overlay --------------*/
 #loading_overlay {
   position: absolute;
-  left: 50%;
+  left: 50px;
   color: white;
 }

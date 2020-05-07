@@ -18,27 +18,6 @@ var shell = require('electron').shell;
 var appDataPath = remote.getGlobal('sharedObject').appDataPath;
 var platform = remote.getGlobal('sharedObject').platform;
 
-// Runs executable which starts local server
-var child = require('child_process').execFile;
-
-// Path to executable
-var executablePath = path.join(__dirname, '/app/backend/dist/server');
-if (OS == 'Windows') {
-    executablePath = path.join(__dirname, '/app/backend/dist/server.exe');
-}
-
-
-// Runs executable to start backend server
-child(executablePath, [appDataPath], function (err, data) {
-    if (err) {
-        console.error(err);
-        return;
-    }
-    else {
-        console.log("Server started...");
-    }
-});
-
 
 // Gets OS
 function getOS() {

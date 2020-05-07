@@ -36,7 +36,7 @@ function postRequest(path, context, json_obj) {
 function handleResponse(response, context) {
     console.log("Response from backend: ", response);
 
-    swal(response); //TEMP
+    //swal(response); //TEMP
 
     // Parses response to json object
     let respObj = JSON.parse(response);

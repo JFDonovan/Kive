@@ -52,7 +52,7 @@ function renderPage(node) {
                 id: node.id,
                 favicon: node.element.childNodes[0].getElementsByClassName('file-icon')[0].src
             });
-            
+
             chromeMap.set(node.id, node.path);
             tabMap.set(node.id, chromeTabs.activeTabEl);
         }

@@ -47,20 +47,12 @@ function renderPage(node) {
         console.log(integrity);
         // Add new tab
         if (!(chromeMap.has(node.id))) {
-            console.log('Node Icon Source: ' + node.icon)
-            if (node.icon != "" && node.icon != undefined) {
-                chromeTabs.addTab({
-                    title: node.name,
-                    id: node.id,
-                    favicon: node.icon
-                });
-            } else {
-                chromeTabs.addTab({
+            chromeTabs.addTab({
                 title: node.name,
                 id: node.id,
-                favicon: 'app/style/fonts/world-icon.png'
-                });
-            }
+                favicon: node.element.childNodes[0].getElementsByClassName('file-icon')[0].src
+            });
+            
             chromeMap.set(node.id, node.path);
             tabMap.set(node.id, chromeTabs.activeTabEl);
         }

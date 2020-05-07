@@ -35,7 +35,9 @@
 
 /* Container for workspace buttons */
 #workspace_btns_cont {
-  position: absolute;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
   height: 91.5%;
   width: 100%;
   overflow-y: auto;
@@ -56,6 +58,7 @@
 /* Header in Home view */
 #home_header {
   width: 100%;
+  display: inline-block;
   align-content: center;
   text-align: center;
   vertical-align: center;
@@ -67,16 +70,29 @@
 /* New Workspace Button */
 .new_workspace_btn {
   background-color: white;
-  width: 25px;
-  height: 25px;
+  position: relative;
+  bottom: 3px;
+  width: 27px;
+  height: 27px;
   color: #1C515E;
   text-align: center;
-  display: inline-block;
-  font-size: 16px;
+  display: inline-flex;
   cursor: pointer;
+  transition: 0.3s;
   border-radius: 50%;
   border: 1px;
   border-color: #1C515E;
+}
+
+#new_workspace_icon {
+  position: relative;
+  top: 1px;
+  font-size: 14px;
+}
+
+.new_workspace_btn:hover {
+  color: #FFFFFF;
+  background-color: rgb(0, 162, 216);
 }
 
 /* Workspace Button */
@@ -112,11 +128,17 @@
   /*margin: 4px 2px;*/
   top: 4px;
   left: 4px;
+  transition: 0.3s;
   cursor: pointer;
   border-radius: 25%;
   border-color: #008CBA;
   align-content: center;
   position: absolute;
+}
+
+.home_btn:hover {
+  color: #FFFFFF;
+  background-color: rgb(0, 162, 216);
 }
 
 #ingest_dropdown {

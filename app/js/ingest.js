@@ -26,6 +26,7 @@ function get_folder(importType, nodeId) {
       return;
     }
     else {
+      importingOverlay();
       // send import command to backend with filepath, import type, and current workspace
       getRequest("import/" + encodeURIComponent(folderPaths.filePaths) + "/" + importType + "/" + currentWorkspace, nodeId);
     }
@@ -50,6 +51,7 @@ function get_file(nodeId) {
       return;
     }
     else {
+      importingOverlay();
       // send import command to backend with filepath, import type (file), and current workspace
       getRequest("import/" + encodeURIComponent(folderPaths.filePaths) + "/file/" + currentWorkspace, nodeId);
     }

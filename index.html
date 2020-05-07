@@ -50,6 +50,11 @@
   <!--<h1>Kive!</h1>-->
   <div id="main">
     <div id="explore_panel" class="noselect">
+
+      <div id="loading_overlay" class="hidden">
+        loading...
+      </div>
+
       <!-- Home View -->
       <div id="home">
         <div id="kive_header">
@@ -80,27 +85,27 @@
         </div>
         <!-- Files View -->
         <div id="files_view" class="">
+          <!-- Root import dropdown -->
+          <div class="dropdown" id="ingest_dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="true">
+              +
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a id="folder_create_btn"
+                  onclick="openModal('single-input', 'New Folder', ['Folder Name: '], function (name) { createFolder(null, name); })">Create
+                  Folder</a></li>
+              <li><a id="file_import_btn">Import File</a></li>
+              <li><a id="folder_import_btn">Import Folder</a></li>
+              <li><a id="wsb_import_btn">Import WebScrapBook</a></li>
+              <li><a id="sb_import_btn">Import Scrapbook</a></li>
+            </ul>
+            <button class="btn-xs" id="import-options-btn"
+              onclick="openModal('import-options-info', 'Import Options', [null], null)">?</button>
+          </div>
           <!-- Container for all base tree elements -->
           <div id="tree_display" onscroll="despawnContextMenu()">
-            <!-- Root import dropdown -->
-            <div class="dropdown" id="ingest_dropdown">
-              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="true">
-                +
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><a id="folder_create_btn"
-                    onclick="openModal('single-input', 'New Folder', ['Folder Name: '], function (name) { createFolder(null, name); })">Create
-                    Folder</a></li>
-                <li><a id="file_import_btn">Import File</a></li>
-                <li><a id="folder_import_btn">Import Folder</a></li>
-                <li><a id="wsb_import_btn">Import WebScrapBook</a></li>
-                <li><a id="sb_import_btn">Import Scrapbook</a></li>
-              </ul>
-              <button class="btn-xs" id="import-options-btn"
-                onclick="openModal('import-options-info', 'Import Options', [null], null)">?</button>
-            </div>
           </div>
           <!--</div>-->
         </div>

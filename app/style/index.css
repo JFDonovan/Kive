@@ -121,6 +121,7 @@
 
 #ingest_dropdown {
   padding-bottom: 4px;
+  background-color: white;
 }
 
 /* Container for tree display */
@@ -401,7 +402,7 @@
 
 /* ---------------------------------------------*/
 
-/* -------------- Resizable Panes ---------------*/
+/* -------------- Resizable Panes ---------------
 
 .splitter {
   width: 100%;
@@ -419,7 +420,7 @@
   height: 100%;
 
 /* prevent browser's built-in drag from interfering */
-  -moz-user-select: none;
+  /*-moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
@@ -523,3 +524,10 @@
 
 
 /* --------------------------------------- */
+
+/* ------------- Top Overlay --------------*/
+#loading_overlay {
+  position: absolute;
+  left: 50%;
+  color: white;
+}

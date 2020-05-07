@@ -430,7 +430,7 @@ function missingPath(node) {
     }
     // Files immediate directory is missing also
     else {
-        alert("folder not found, implement")
+        alert("folder not found, implement");
     }
 
 }

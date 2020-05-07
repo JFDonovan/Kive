@@ -48,6 +48,7 @@ function handleResponse(response, context) {
     let respDict = {
         // Success responses
         "import-success": function () {
+            disableOverlay();
             console.log("import successful");
             addToQueue("index/add/" + respObj.workspace_guid, null, {"json_lst": respObj.json_lst}, respObj.workspace_guid);
             appendTree(respObj.workspace_guid, respObj.json_tree, context);
@@ -133,7 +134,7 @@ function indexSuccessHandler(workspace) {
     disableOverlay();
     if (workspaceQueues[workspace].length != 0) {
         // Enabling overlay to disable search functionality if command requires indexing
-        enableOverlay();
+        indexingOverlay();
         // Send next command to backend
         let nextCmd = workspaceQueues[workspace][0];
         postRequest(nextCmd[0], nextCmd[1], nextCmd[2]);
@@ -156,7 +157,7 @@ function addToQueue(endpoint, context, jsonObj, guid) {
     if (workspaceQueues[guid].length == 0) {
         workspaceQueues[guid].push([endpoint, context, jsonObj]);
         // Enabling overlay to disable search functionality if command requires indexing
-        enableOverlay();
+        indexingOverlay();
         // Make post request
         postRequest(endpoint, context, jsonObj);
     }
@@ -177,6 +178,11 @@ function dequeue(guid) {
 // Shows overlay that disables search functionality.
 function indexingOverlay() {
     document.getElementById('overlay-label').innerHTML = 'indexing...';
+    // Shows top loading overlay
+    let topOverlay = document.getElementById("loading_overlay");
+    topOverlay.innerHTML = "Indexing...";
+    topOverlay.classList.remove("hidden");
+
     $('#overlay').show();
     $('#overlay-message').css('display', 'flex');
     console.log("Displayed index overlay");
@@ -185,13 +191,32 @@ function indexingOverlay() {
 // Shows overlay that
 function searchingOverlay() {
     document.getElementById('overlay-label').innerHTML = 'searching...';
+    // Shows top loading overlay
+    let topOverlay = document.getElementById("loading_overlay");
+    topOverlay.innerHTML = "Searching...";
+    topOverlay.classList.remove("hidden");
+
     $('#overlay').show();
     $('#overlay-message').css('display', 'flex');
     console.log("Displayed searching overlay");
 }
 
+// Shows overlay that
+function importingOverlay() {
+    // Shows top loading overlay
+    let topOverlay = document.getElementById("loading_overlay");
+    topOverlay.innerHTML = "Importing...";
+    topOverlay.classList.remove("hidden");
+
+    console.log("Displayed importing overlay");
+}
+
 // Gets rid of overlay that disables search funcitonality.
 function disableOverlay() {
+    // Hides top loading overlay
+    let topOverlay = document.getElementById("loading_overlay");
+    topOverlay.className = "hidden";
+
     $('#overlay').css('display', 'none');
     $('#overlay-message').css('display', 'none');
     console.log("Removed overlay");

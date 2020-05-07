@@ -85,6 +85,7 @@ function getSearchQuery() {
             media_query: mediaQueryList,
             options: options,           
         }
+        searchingOverlay();
         postRequest("search/" + currentWorkspace, null, queryObj);
         // console.log(JSON.stringify(queryObj))
         // console.log(currentWorkspace)

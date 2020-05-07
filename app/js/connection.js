@@ -175,7 +175,7 @@ function enableSearchingOverlay() {
 }
 
 // Gets rid of overlay that disables search funcitonality.
-function disableOverlay() {
-  $('#overlay').css('display', 'none');
-  $('#overlay-message').css('display', 'none');
-}
+//function disableOverlay() {
+//  $('#overlay').css('display', 'none');
+//  $('#overlay-message').css('display', 'none');
+//}

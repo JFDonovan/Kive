@@ -86,6 +86,7 @@
 
 #new_workspace_icon {
   position: relative;
+  vertical-align: middle;
   top: 1px;
   font-size: 14px;
 }

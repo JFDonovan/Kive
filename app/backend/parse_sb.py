@@ -118,7 +118,6 @@ def build_tree_json():
             for child in child_dict[parent]:
                 # Append child JSON to parent JSON
                 parent_json['children'].append(json_dict[child])
-                json_dict[child] = ''
 
             # Update parent JSON in json_dict
             json_dict[parent] = parent_json
@@ -133,16 +132,15 @@ def build_tree_json():
 # Method to be called from outside scripts.
 # Accepts filepath pointing to 'scrapbook.rdf' file in a valid ScrapBook repository
 def parse_rdf(filepath):
-    
-    try:
-        # Open given filepath as 'rdf' and turn it into a string to be fed to MyRDFParser
-        with open (filepath) as rdf:
+    global child_dict
+    global json_dict
+    child_dict = {}
+    json_dict = {}
+   
+    # Open given filepath as 'rdf' and turn it into a string to be fed to MyRDFParser
+    with open (filepath) as rdf:
             rdf_str = rdf.read()
         
-    except Exception as e:
-        # print('Exception:', e)
-        return None, None
-
     # Updating global folder path to be accessed in MyRDFParser
     global folder_path 
     folder_path = filepath.split('scrapbook.rdf')[0] + 'data/'
@@ -153,6 +151,7 @@ def parse_rdf(filepath):
         # Creating MyRDFParser object and feeding it 'rdf_str'
         parser = MyRDFParser()
         parser.feed(rdf_str)
+        parser.close()
         # Build tree JSON and return it
         return build_tree_json()
     else:

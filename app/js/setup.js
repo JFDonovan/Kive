@@ -7,7 +7,7 @@ var currentWorkspace = null;
 var workspaceQueues = {};
 
 // ***** Global variable that stores OS
-var OS = getOS();
+// var OS = getOS();
 
 var remote = require('electron').remote;
 var fs = remote.require('fs');

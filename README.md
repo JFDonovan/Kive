@@ -54,7 +54,7 @@ Kivé will have support for legacy ScrapBook or WebScrapBook users looking for a
 
 #### For packaging Electron Frontend
 1. Make sure you are in ```Kive/``` directory
-2. ```rm -rf node-modules venv package-lock.json```
+2. ```rm -rf node-modules/ venv/ yarn.lock```
 3. Install yarn if not already installed (```yarn --version``` to test)
    - **OS X & Linux:**
    ```brew install yarn```

@@ -384,6 +384,17 @@ function scrollToNodeInTree(node) {
 
     // Highlight the node
     $(`#${currentWorkspace}_tree`).tree('addToSelection', node);
+
+    // Unselects node onclick
+    document.addEventListener('click', () => { tempDeselectNode(node); }, 1000);
+}
+
+function tempDeselectNode(node) {
+    console.log("UNSELECT");
+    let nodeTemp = $(`#${currentWorkspace}_tree`).tree('getNodeById', node.id);
+    $(`#${currentWorkspace}_tree`).tree('removeFromSelection', nodeTemp);
+
+    document.removeEventListener('click', () => { tempDeselectNode(node) });
 }
 
 // Handles failed path integrity

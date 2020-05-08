@@ -72,7 +72,7 @@ def delete_workspace_ep(guid):
     try:
         response = delete_workspace(guid=guid)
     except Exception as e:
-        response = {'message': "delete-workspace-failure", 'error': str(traceback.format_exc())}#str(e)}
+        response = {'message': "delete-workspace-failure", 'workspace_guid': guid, 'error': str(traceback.format_exc())}#str(e)}
     return jsonify(response)
 
 # May need to decode paths here.

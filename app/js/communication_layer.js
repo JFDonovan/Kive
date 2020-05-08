@@ -82,6 +82,7 @@ function handleResponse(response, context) {
         },
         // Failure responses
         "import-failure": function () {
+            disableOverlay();
             console.error("import failure: ", respObj.workspace_guid, " : ", respObj.error);
             alert("import failure");
         },

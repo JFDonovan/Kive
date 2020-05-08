@@ -9,7 +9,7 @@
     "dist": "electron-builder"
   },
   "build": {
-    "appId": "Kivé",
+    "appId": "Kive",
     "mac": {
       "icon": "app/assets/icons/macos/kive-logo.icns"
     },
@@ -17,7 +17,7 @@
       "icon": "app/assets/icons/windows/kive-logo.ico"
     }
   },
-  "author": "Kivé dev team",
+  "author": "Kive dev team",
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^8.2.3",

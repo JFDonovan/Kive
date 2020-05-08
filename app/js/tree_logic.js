@@ -165,7 +165,7 @@ function makeTree(workspace, data) {
                 
                 // Could not load resource, reset to default file icon
                 icon_element.onerror = function () {
-                    node.element.childNodes[0].getElementsByClassName('file-icon')[0].src = 'app/style/fonts/world-icon.png';
+                    node.element.childNodes[0].getElementsByClassName('file-icon')[0].src = 'app/assets/icons/world-icon.png';
                 }
 
                 // If node has valid icon field
@@ -174,7 +174,7 @@ function makeTree(workspace, data) {
                     icon_element.src = icon_src;
                 } else {
                     // Set icon_element to default file icon
-                    icon_src = "app/style/fonts/world-icon.png";
+                    icon_src = "app/assets/icons/world-icon.png";
                     icon_element.src = icon_src;
                 }
 
@@ -184,9 +184,9 @@ function makeTree(workspace, data) {
             }
             if (node.type == "folder") {
                 if (node.is_open) {
-                    $li.find('.jqtree-title').before('<img class="file-icon" src="app/style/fonts/folder-open-icon.png">');
+                    $li.find('.jqtree-title').before('<img class="file-icon" src="app/assets/icons/folder-open-icon.png">');
                 } else {
-                    $li.find('.jqtree-title').before('<img class="file-icon" src="app/style/fonts/folder-icon.png">');
+                    $li.find('.jqtree-title').before('<img class="file-icon" src="app/assets/icons/folder-icon.png">');
                 }
                 
             }
@@ -219,7 +219,7 @@ function makeTree(workspace, data) {
             // The clicked node is 'event.node'
             node = event.node;
             if (node.type == 'folder') {
-                node.element.childNodes[0].getElementsByClassName('file-icon')[0].src = 'app/style/fonts/folder-open-icon.png';
+                node.element.childNodes[0].getElementsByClassName('file-icon')[0].src = 'app/assets/icons/folder-open-icon.png';
             }
         }
     );
@@ -231,7 +231,7 @@ function makeTree(workspace, data) {
             // The clicked node is 'event.node'
             node = event.node;
             if (node.type == 'folder') {
-                node.element.childNodes[0].getElementsByClassName('file-icon')[0].src = 'app/style/fonts/folder-icon.png';
+                node.element.childNodes[0].getElementsByClassName('file-icon')[0].src = 'app/assets/icons/folder-icon.png';
             }
         }
     );

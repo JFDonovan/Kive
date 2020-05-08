@@ -74,7 +74,7 @@ def find_icon(file_json):
 
     json_icon = file_json.get('icon', '')
     url_source = file_json.get('source', '')
-    icon_src = "app/style/fonts/world-icon.png"
+    icon_src = "app/assets/icons/world-icon.png"
     # If node has valid icon field
     if ((json_icon.strip() != "") and (json_icon != None)):
         icon_src = json_icon

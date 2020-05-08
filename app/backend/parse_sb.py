@@ -132,7 +132,10 @@ def build_tree_json():
 # Method to be called from outside scripts.
 # Accepts filepath pointing to 'scrapbook.rdf' file in a valid ScrapBook repository
 def parse_rdf(filepath):
-    
+    global child_dict
+    global json_dict
+    child_dict = {}
+    json_dict = {}
     try:
         # Open given filepath as 'rdf' and turn it into a string to be fed to MyRDFParser
         with open (filepath) as rdf:

@@ -136,15 +136,11 @@ def parse_rdf(filepath):
     global json_dict
     child_dict = {}
     json_dict = {}
-    try:
-        # Open given filepath as 'rdf' and turn it into a string to be fed to MyRDFParser
-        with open (filepath) as rdf:
+   
+    # Open given filepath as 'rdf' and turn it into a string to be fed to MyRDFParser
+    with open (filepath) as rdf:
             rdf_str = rdf.read()
         
-    except Exception as e:
-        # print('Exception:', e)
-        return None, None
-
     # Updating global folder path to be accessed in MyRDFParser
     global folder_path 
     folder_path = filepath.split('scrapbook.rdf')[0] + 'data/'

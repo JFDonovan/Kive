@@ -138,7 +138,7 @@ def parse_rdf(filepath):
     json_dict = {}
    
     # Open given filepath as 'rdf' and turn it into a string to be fed to MyRDFParser
-    with open (filepath) as rdf:
+    with open (filepath, 'r', encoding='utf-8', errors='replace') as rdf:
             rdf_str = rdf.read()
         
     # Updating global folder path to be accessed in MyRDFParser

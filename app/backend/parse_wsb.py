@@ -11,7 +11,7 @@ def parse_meta(tree_dir):
     This file contains all of the metadata for each folder
     in the repository.
     '''
-    with open('{}/meta.js'.format(tree_dir), 'r') as f:
+    with open('{}/meta.js'.format(tree_dir), 'r', encoding='utf-8', errors='replace') as f:
         # Remove the surrounding scrapbook.meta() constructor
         file_str = ''
 

@@ -118,7 +118,6 @@ def build_tree_json():
             for child in child_dict[parent]:
                 # Append child JSON to parent JSON
                 parent_json['children'].append(json_dict[child])
-                json_dict[child] = ''
 
             # Update parent JSON in json_dict
             json_dict[parent] = parent_json
@@ -153,6 +152,7 @@ def parse_rdf(filepath):
         # Creating MyRDFParser object and feeding it 'rdf_str'
         parser = MyRDFParser()
         parser.feed(rdf_str)
+        parser.close()
         # Build tree JSON and return it
         return build_tree_json()
     else:

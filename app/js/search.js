@@ -10,6 +10,18 @@ function toggleAdvancedMenu() {
     }
 }
 
+document.getElementById("search_query").addEventListener("keyup", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+      // Cancel the default action, if needed
+      event.preventDefault();
+
+      // Run search
+      getSearchQuery();
+      document.activeElement.blur(); //avoid weird behavior when spamming enter
+    }
+});
+
 // Gets query values and sends search command and arguments to backend
 function getSearchQuery() {
     let validQuery = true
@@ -54,19 +66,19 @@ function getSearchQuery() {
     if (visibleText)
         options.push("content");
     if (dla) {
-        if (endDla != "" && startDla > endDla) 
+        if (endDla != "" && startDla > endDla)
             validQuery = false;
 
         options.push("last_accessed");
     }
     if (dik) {
-        if (endDik != "" && startDik > endDik) 
+        if (endDik != "" && startDik > endDik)
             validQuery = false;
-            
+
         options.push("ingest");
     }
     if (dil) {
-        if (endDil != "" && startDil > endDil) 
+        if (endDil != "" && startDil > endDil)
             validQuery = false;
 
         options.push("legacy_ingest");
@@ -76,14 +88,14 @@ function getSearchQuery() {
     }
 
     // Message sent to backend
-    if(validQuery) {
+    if (validQuery) {
         let queryObj = {
             search_query: searchQuery,
             date_ingested_legacy: [startDil, endDil],
             date_ingested_kive: [startDik, endDik],
             date_last_accessed: [startDla, endDla],
             media_query: mediaQueryList,
-            options: options,           
+            options: options,
         }
         searchingOverlay();
         postRequest("search/" + currentWorkspace, null, queryObj);
@@ -100,7 +112,7 @@ function renderSearchResults(results) {
     // Clear results list
     let resultListHtmlObj = document.getElementById("results_list")
     resultListHtmlObj.innerHTML = ""
-    
+
     for (let i = 0; i < results.length; i++) {
         let treeNode = $(`#${currentWorkspace}_tree`).tree('getNodeById', results[i].id);
 

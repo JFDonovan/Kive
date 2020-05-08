@@ -42,10 +42,11 @@ def create_workspace(name):
                 'name': name,
                 'workspace_guid': workspace_guid
                 }
-    except OSError:
+    except OSError as e:
         return {
-                'message': 'create-workspace-error',
-                'workspace_guid': workspace_guid
+                'message': 'create-workspace-failure',
+                'workspace_guid': workspace_guid,
+                'error': str(e)
                 }
 
 
@@ -69,9 +70,10 @@ def delete_workspace(guid):
                 'message': 'delete-workspace-success',
                 'workspace_guid': workspace_guid
                 }
-    except Exception:
+    except Exception as e:
         return {
-                'message': 'delete-workspace-error',
-                'workspace_guid': workspace_guid
+                'message': 'delete-workspace-failure',
+                'workspace_guid': workspace_guid,
+                'error': str(e)
                 }
 

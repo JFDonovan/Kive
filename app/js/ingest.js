@@ -13,7 +13,7 @@ document.getElementById("sb_import_btn").onclick = function () {
 }
 
 // Function to handle non legacy imports, choose whether to scrape for URL
-function get_folder_nonleg(importType, nodeId) {
+function get_folder_nonleg(nodeId) {
   console.log('get_folder_nonleg called');
 
   dialog.showOpenDialog({

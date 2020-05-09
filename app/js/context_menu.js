@@ -20,7 +20,7 @@ function spawnContextMenu(type, event, context) {
         if (event.node.type == "folder") {
             menuList.appendChild(makeContextMenuOption("Create Folder", function() { openModal('single-input', 'New Folder', ['Folder Name: '], function (name) { createFolder(event.node, name); })}));
             menuList.appendChild(makeContextMenuOption("Import File", function () { get_file(event.node.id) }));
-            menuList.appendChild(makeContextMenuOption("Import Folder", function () { get_folder("folder", event.node) }));
+            menuList.appendChild(makeContextMenuOption("Import Folder", function () { get_folder_nonleg(event.node) }));
             menuList.appendChild(makeContextMenuOption("Import Web-Scrapbook", function () { get_folder("wsb", event.node) }));
             menuList.appendChild(makeContextMenuOption("Import Scrapbook", function () { get_folder("sb", event.node) }));
         }

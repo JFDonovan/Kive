@@ -31,7 +31,7 @@ function openModal(type, title, prompts, func) {
         let affirmBtn = document.createElement("BUTTON");
         // Calls function passed in on input value
         affirmBtn.onclick = function () { func(input.value); $("#modal").modal("toggle"); };
-        affirmBtn.appendChild(document.createTextNode("Ok"));
+        affirmBtn.appendChild(document.createTextNode("OK"));
         affirmBtn.className = "btn btn-success";
         modalFooter.appendChild(affirmBtn);
     }
@@ -176,14 +176,46 @@ function openModal(type, title, prompts, func) {
         modalBody.appendChild(contents)
     }
 
+    if (type == "scrape-url") {
+        let contents = document.createElement("DIV");
+        contents.style.wordWrap = "break-word";
 
+        // URL Message
+        let urlMessage = document.createElement("P");
+        urlMessage.appendChild(document.createTextNode("Would you like Kivé to search imported files for a source URL? This will allow a URL to be displayed on hover and icons to be retrieved from the web, however may significantly increase time taken to build the file tree."));
+        contents.appendChild(urlMessage)
+
+        modalBody.appendChild(contents)
+
+         // Create affirmation and cancel buttons
+         let affirmBtn = document.createElement("BUTTON");
+         // Calls function passed in on input value
+         affirmBtn.onclick = function () { func("folder_url"); $("#modal").modal("toggle"); };
+         affirmBtn.appendChild(document.createTextNode("Yes"));
+         affirmBtn.className = "btn btn-success";
+         modalFooter.appendChild(affirmBtn);
+
+         let denyBtn = document.createElement("BUTTON");
+         // Calls function passed in on input value
+         denyBtn.onclick = function () { func("folder"); $("#modal").modal("toggle"); };
+         denyBtn.appendChild(document.createTextNode("No"));
+         denyBtn.className = "btn btn-danger";
+         modalFooter.appendChild(denyBtn);
+
+    }
+
+
+    
     let cancelBtn = document.createElement("BUTTON");
-    cancelBtn.appendChild(document.createTextNode("cancel"));
+    cancelBtn.appendChild(document.createTextNode("Cancel"));
     cancelBtn.onclick = function () { $("#modal").modal("toggle"); };
     cancelBtn.className = "btn btn-danger";
 
-    // Add buttons to footer
-    modalFooter.appendChild(cancelBtn);
+    // Add buttons to footer if not scrape-url
+    if (type != "scrape-url") {
+        modalFooter.appendChild(cancelBtn);
+    }
+    
 
     // Opens modal
     $("#modal").modal("toggle");

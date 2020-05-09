@@ -8,7 +8,7 @@ import uuid
 Non-legacy directory ingest workflow.
 '''
 
-def find_files(folder):
+def find_files(folder, get_source):
     '''
     Walks through the specified directory to find all web pages and create JSON objects for them.
     '''
@@ -29,6 +29,14 @@ def find_files(folder):
                 # Only handle html or htm files
                 if ext[1] in ('.html', '.htm'):
                     html_files.add(folder + "/" + entity.split(".htm")[0] + "_files")
+
+                    # Set base source_url
+                    source_url = ''
+
+                    # Check if source url is wanted on ingest, if so get url
+                    if get_source:
+                        source_url = get_canonical(folder + '/' + entity)
+
                     # Create new JSON object that represents a web page and its metadata
                     new_file_obj = {
                         'type': 'file',
@@ -37,7 +45,7 @@ def find_files(folder):
                         'ingest': datetime.now().strftime('%Y%m%d'),
                         'last_accessed': datetime.fromtimestamp(os.path.getmtime(folder + '/' + entity)).strftime('%Y%m%d'),
                         'path': folder + "/" + entity,
-                        'source': get_canonical(folder + '/' + entity),
+                        'source': source_url,
                         'icon': '',
                         'id': str(uuid.uuid4()),
                         'children': []

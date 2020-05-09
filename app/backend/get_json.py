@@ -1,7 +1,7 @@
 from datetime import datetime
 from parse_sb import parse_rdf
 from parse_wsb import create_wsb_json
-from parse_nonlegacy import find_files
+from parse_nonlegacy import find_files, get_canonical
 
 import os
 import time
@@ -29,7 +29,7 @@ def get_json_lst(path, import_type):
             'ingest': datetime.now().strftime('%Y%m%d'),
             'last_accessed': datetime.fromtimestamp(os.path.getmtime(path)).strftime('%Y%m%d'),
             'path': path,
-            'source': '',
+            'source': get_canonical(path),
             'icon': '',
             'id': str(uuid.uuid4()),
             'children': []
@@ -50,9 +50,11 @@ def get_json_lst(path, import_type):
         try: # Try to parse scrapbook.rdf and turn into JSON file tree.
            json_tree, json_lst = parse_rdf('{}/scrapbook.rdf'.format(path)) 
         except: # Triggered if scrapbook.rdf isnt found. 
-            json_tree, json_lst = find_files('{}/data'.format(path))
+            json_tree, json_lst = find_files('{}/data'.format(path), True)
+    elif import_type == 'folder_url':
+        json_tree, json_lst = find_files(path, True)
     else:
-        json_tree, json_lst = find_files(path)
+        json_tree, json_lst = find_files(path, False)
 
     
     for obj in json_tree:

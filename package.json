@@ -11,7 +11,7 @@
   "build": {
     "appId": "Kive",
     "mac": {
-      "icon": "app/assets/icons/macos/kive-logo.icns"
+      "icon": "app/assets/icons/macos/kive-logo.png"
     },
     "win": {
       "icon": "app/assets/icons/windows/kive-logo.icon"

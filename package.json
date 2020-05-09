@@ -14,7 +14,7 @@
       "icon": "app/assets/icons/macos/kive-logo.icns"
     },
     "win": {
-      "icon": "app/assets/icons/windows/kive-logo.ico"
+      "icon": "app/assets/icons/windows/kive-logo.icon"
     }
   },
   "author": "Kive dev team",

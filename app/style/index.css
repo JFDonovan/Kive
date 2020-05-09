@@ -75,7 +75,7 @@
   height: 27px;
   color: #1C515E;
   text-align: center;
-  display: inline-flex;
+  display: inline-block;
   cursor: pointer;
   transition: 0.3s;
   border-radius: 50%;
@@ -86,8 +86,8 @@
 #new_workspace_icon {
   position: relative;
   vertical-align: middle;
-  top: 1px;
-  font-size: 14px;
+  margin-top: -4px;
+  font-size: 10px;
 }
 
 .new_workspace_btn:hover {

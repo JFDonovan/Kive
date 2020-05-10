@@ -1,7 +1,7 @@
 from datetime import datetime
 from parse_sb import parse_rdf
 from parse_wsb import create_wsb_json
-from parse_nonlegacy import find_files, get_canonical
+from parse_nonlegacy import find_files
 
 import os
 import time
@@ -54,27 +54,28 @@ def get_json_lst(path, import_type):
     else:
         json_tree, json_lst = find_files(path)
 
+    # for obj in json_tree:
+    #   find_icon_recursive(obj)
+
     return json_tree, json_lst  
+
+def find_icon_recursive(obj):
+    if obj['type'] == 'file':
+        obj['icon'] = find_icon(obj)
+    elif obj['type'] == 'folder':
+        for child in obj['children']:
+            find_icon_recursive(child)
 
 def find_icon(file_json):
     '''
     Finds path of tab icon.
     '''
 
-    json_icon = file_json.get('icon', '')
-    url_source = file_json.get('source', '')
-    icon_src = "app/assets/icons/world-icon.png"
+    json_icon = file_json.get('icon', "")
+    url_source = file_json.get('source', "")
     # If node has valid icon field
-    if ((json_icon.strip() != "") and (json_icon != None)):
-        icon_src = json_icon
-        # Check if icon field is actually a valid icon
-        if not((icon_src.endswith('.png') or icon_src.endswith('.jpg') or icon_src.endswith('.jpeg') or icon_src.endswith('.ico') or ('https://s2.googleusercontent.com/s2/favicons?domain_url=' in icon_src))):
-            # Grab icon from web if icon field doesn't point to valid icon    
-            icon_src = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + icon_src
-    # If node has valid url source field     
-    elif ((url_source != "") and (url_source != None) and ('localhost' not in url_source)):
-        # Grab icon from web using url source field
-        icon_src = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + url_source
+    if (((json_icon == "") or (json_icon == None)) and ((url_source != "") and (url_source != None) and ('localhost' not in url_source))):
+        json_icon = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + url_source
 
-    return icon_src                           
+    return json_icon                           
             

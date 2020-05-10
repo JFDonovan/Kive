@@ -16,13 +16,17 @@ def parse_html(json_entry):
     if tree.body is None:
         return None
 
-    # Look for canonical tag and set to source URL
+    scraped_src = False
+    source_url = json_entry.get('source', '')
 
-    source_url = ''
-    for node in tree.css('link'):
-        if 'rel' in node.attributes and node.attributes['rel'] == 'canonical':
-            source_url = node.attributes['href']
-            break
+    # Look for canonical tag and set to source URL
+    if source_url == '':
+        scraped_src = True
+        for node in tree.css('link'):
+            if 'rel' in node.attributes and node.attributes['rel'] == 'canonical':
+                source_url = node.attributes['href']
+                break
+   
 
     # Find all multimedia filepaths in all tags that could possible contain such paths
     # using a CSS selector.
@@ -58,14 +62,15 @@ def parse_html(json_entry):
     tree.strip_tags(ignore_tags)
     text = tree.body.text()
 
-    if source_url != '':
+    if scraped_src:
         update_src_dict = {}
         update_src_dict['id'] = json_entry['id']
         update_src_dict['source'] = source_url
+        update_src_dict['icon'] = json_entry['icon']
         update_src_dict['icon'] = find_icon(update_src_dict)
         
-        
         return json_entry, text, media_lst, update_src_dict
+
     else:
         return json_entry, text, media_lst, None
     

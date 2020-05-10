@@ -77,19 +77,3 @@ def find_files(folder):
         return None, None
 
     return [json_tree], json_lst
-
-def get_canonical(path):
-    '''
-    Finds link tag with rel attribute == 'canonical' to use for icon path.
-    '''
-
-    with open(path, 'r', encoding='utf8', errors='ignore') as f:
-        html = f.read()    
-        tree = HTMLParser(html)
-        url = ''
-        
-        for node in tree.css('link'):
-            if 'rel' in node.attributes and node.attributes['rel'] == 'canonical':
-                url = node.attributes['href']
-        
-        return url

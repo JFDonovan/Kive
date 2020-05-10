@@ -46,12 +46,13 @@ def get_files(path, import_type, workspace_guid):
 def add(json_lst, workspace_guid):
     try:
         # Index documents
-        index_docs(json_lst, 'add', workspace_guid)
+        update_node_list = index_docs(json_lst, 'add', workspace_guid)
 
         backup(workspace_guid)
         return {
                 'message': 'index-success',
-                'workspace_guid': workspace_guid
+                'workspace_guid': workspace_guid,
+                'source_update_nodes': update_node_list
                 }
     except Exception as e:
         restore_from_backup(workspace_guid)

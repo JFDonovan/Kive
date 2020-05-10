@@ -1,5 +1,6 @@
 import os
 from selectolax.parser import HTMLParser
+from get_json import find_icon
 
 '''
 Parses the HTML of a file to extract visible text, tab icons, and multimedia file paths.
@@ -11,9 +12,17 @@ def parse_html(json_entry):
         html = f.read()
 
     tree = HTMLParser(html)
-
+    
     if tree.body is None:
         return None
+
+    # Look for canonical tag and set to source URL
+
+    source_url = ''
+    for node in tree.css('link'):
+        if 'rel' in node.attributes and node.attributes['rel'] == 'canonical':
+            source_url = node.attributes['href']
+            break
 
     # Find all multimedia filepaths in all tags that could possible contain such paths
     # using a CSS selector.
@@ -48,8 +57,19 @@ def parse_html(json_entry):
     ignore_tags = ['img', 'video', 'audio', 'object', 'embed', 'source', 'script', 'style', 'head', 'meta', '[document]']
     tree.strip_tags(ignore_tags)
     text = tree.body.text()
+
+    if source_url != '':
+        update_src_dict = {}
+        update_src_dict['id'] = json_entry['id']
+        update_src_dict['source'] = source_url
+        update_src_dict['icon'] = find_icon(update_src_dict)
+        
+        
+        return json_entry, text, media_lst, update_src_dict
+    else:
+        return json_entry, text, media_lst, None
     
-    return json_entry, text, media_lst
+    
 
 # Add multithreading
 from multiprocessing import Pool

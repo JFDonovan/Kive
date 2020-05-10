@@ -53,9 +53,14 @@ def index_docs(json_lst, operation, workspace_guid):
         searcher = ix.searcher()
         id_check = ""
         if operation == 'add': # Used if files are imported into workspace
+            update_node_list = []
             index_lst = scrape_paths(json_lst)
 
-            for entry, content, media_files in index_lst:
+            for entry, content, media_files, update_url_node in index_lst:
+                
+                if update_url_node is not None:
+                    update_node_list.append(update_url_node)
+                
                 path = entry['path']
                 name = entry['name']
                 legacy_ingest = entry['legacy_ingest']
@@ -73,6 +78,10 @@ def index_docs(json_lst, operation, workspace_guid):
                                     media_files=media_files,
                                     indexed_time=indexed_time,
                                     id=id)
+            
+            writer.commit()
+            return update_node_list
+
         elif operation == 'update': # Used if names or dates get updated in workspace
             # index_lst = scrape_paths(json_lst)
             for entry in json_lst:
@@ -103,7 +112,7 @@ def index_docs(json_lst, operation, workspace_guid):
                 id = entry['id']
                 writer.delete_by_term('id', id)
 
-        writer.commit()
+        
     except Exception as e:
         writer.commit()
         raise e

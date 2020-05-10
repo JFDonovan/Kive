@@ -29,7 +29,7 @@ def get_json_lst(path, import_type):
             'ingest': datetime.now().strftime('%Y%m%d'),
             'last_accessed': datetime.fromtimestamp(os.path.getmtime(path)).strftime('%Y%m%d'),
             'path': path,
-            'source': get_canonical(path),
+            'source': '',
             'icon': '',
             'id': str(uuid.uuid4()),
             'children': []
@@ -50,24 +50,11 @@ def get_json_lst(path, import_type):
         try: # Try to parse scrapbook.rdf and turn into JSON file tree.
            json_tree, json_lst = parse_rdf('{}/scrapbook.rdf'.format(path)) 
         except: # Triggered if scrapbook.rdf isnt found. 
-            json_tree, json_lst = find_files('{}/data'.format(path), True)
-    elif import_type == 'folder_url':
-        json_tree, json_lst = find_files(path, True)
+            json_tree, json_lst = find_files('{}/data'.format(path))
     else:
-        json_tree, json_lst = find_files(path, False)
+        json_tree, json_lst = find_files(path)
 
-    
-    for obj in json_tree:
-        find_icon_recursive(obj)
-
-    return json_tree, json_lst
-
-def find_icon_recursive(obj):
-    if obj['type'] == 'file':
-        obj['icon'] = find_icon(obj)
-    elif obj['type'] == 'folder':
-        for child in obj['children']:
-            find_icon_recursive(child)    
+    return json_tree, json_lst  
 
 def find_icon(file_json):
     '''

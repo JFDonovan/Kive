@@ -69,15 +69,15 @@ function handleResponse(response, context) {
             console.log("search successful");
         },
         "index-success": function () {
-            indexSuccessHandler(respObj.workspace_guid);
+            indexSuccessHandler(respObj.workspace_guid, respObj.source_update_nodes);
             console.log("index successful");
         },
         "update-success": function () {
-            indexSuccessHandler(respObj.workspace_guid);
+            updateSuccessHandler(respObj.workspace_guid);
             console.log("update successful");
         },
         "delete-success": function () {
-            indexSuccessHandler(respObj.workspace_guid);
+            updateSuccessHandler(respObj.workspace_guid);
             console.log("deletion successful");
         },
         // Failure responses
@@ -126,7 +126,27 @@ function handleResponse(response, context) {
 }
 
 // Handles indexing success
-function indexSuccessHandler(workspace) {
+function indexSuccessHandler(workspace, node_list) {
+
+    // Update all source and icon fields for every node in list
+    node_list.forEach(element => {
+        let updateObj = {}
+        let node = $(`#${currentWorkspace}_tree`).tree('getNodeById', element.id);
+        updateObj['source'] = element.source
+        updateObj['icon'] = element.icon
+
+        $('#' + currentWorkspace + '_tree').tree(
+            'updateNode',
+            node,
+            updateObj
+        );
+    });
+
+    updateSuccessHandler(workspace);
+}
+
+// Handles indexing success
+function updateSuccessHandler(workspace) {
     // Write tree to tree.json
     treeToJson(workspace)
     // Dequeue

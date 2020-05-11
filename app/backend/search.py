@@ -45,6 +45,7 @@ def search_docs(search_text, leg_datetime_range, kive_datetime_range,
         ########### Build query based on filters sent from front-end ##########
         query_lst = []
         # raise Exception('Search text:', search_text)
+        search_text = search_text.strip()
         if search_text and ('name' in fields_lst or 'content' in fields_lst):
             if 'name' in fields_lst and 'content' in fields_lst:
                 query_lst.append('(name:(*{}*) &!OR!& content:(*{}*))'.format(search_text, search_text))
@@ -96,6 +97,7 @@ def search_docs(search_text, leg_datetime_range, kive_datetime_range,
 
         query_string = ' &!AND!& '.join(query_lst)
         query = parser.parse(query_string) # Parse query string to create actual query
+        print(query)
         # print(query_string)
         # print(query)
         # raise Exception(query)

@@ -48,8 +48,8 @@ Kivé will have support for legacy ScrapBook or WebScrapBook users looking for a
 ## PACKAGING 
 #### For packaging Python Backend
 1. ```cd app/backend/ ```
-2. - **OS X & Linux:** ```pyinstaller --onefile -c server.py```
-   - **Windows:** ```pyinstaller.exe --onefile -c server.py```
+2. - **OS X & Linux:** ```pyinstaller --onefile server.py```
+   - **Windows:** ```pyinstaller.exe --onefile server.py```
 3. ```server.exe``` will be in ```dist/``` directory within ```app/backend/```
 
 #### For packaging Electron Frontend

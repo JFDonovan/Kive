@@ -55,6 +55,8 @@ function goToWorkspace(workspace, name) {
 
 function goToHome() {
     console.log("Go Home Called");
+    // Clears search results
+    document.getElementById("results_list").innerHTML = "";
     // Makes home visible and workspace view hidden
     let home = document.getElementById("home");
     home.classList.remove("hidden");

@@ -78,12 +78,12 @@ const killProcesses = () => {
       console.log(`statusCode: ${res.statusCode}`);
       res.on('data', d => {
         console.log(d);
-        //app.quit();
+        app.quit();
       });
     });
     req.on('error', error => {
       console.error(error)
-      //app.quit();
+      app.quit();
     });
 
     req.end()

@@ -176,6 +176,27 @@ function openModal(type, title, prompts, func) {
         modalBody.appendChild(contents)
     }
 
+    if (type == "no-data-folder") {
+        let contents = document.createElement("DIV");
+        contents.style.wordWrap = "break-word";
+
+        // Message to user that data folder not found
+        contents.appendChild(document.createTextNode("Kivé could not find a necessary 'data' folder. Please try selecting another folder to import or another import option."));
+        contents.appendChild(document.createElement("br"));
+        modalBody.appendChild(contents)
+        // Create affirmation button
+        let closeBtn = document.createElement("BUTTON");
+        // Calls function passed in on input value
+        closeBtn.onclick = function () { $("#modal").modal("toggle"); };
+        closeBtn.appendChild(document.createTextNode("Close"));
+        closeBtn.className = "btn btn-danger";
+        modalFooter.appendChild(closeBtn);
+
+        // Opens modal
+        $("#modal").modal("toggle");
+        return;
+    }
+
     let cancelBtn = document.createElement("BUTTON");
     cancelBtn.appendChild(document.createTextNode("Cancel"));
     cancelBtn.onclick = function () { $("#modal").modal("toggle"); };

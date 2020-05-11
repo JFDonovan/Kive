@@ -86,6 +86,12 @@ function handleResponse(response, context) {
             console.error("import failure: ", respObj.workspace_guid, " : ", respObj.error);
             alert("import failure");
         },
+        // No data/ folder found for legacy import
+        "import-failure-no-data": function () {
+            disableOverlay();
+            console.error("import failure: ", respObj.workspace_guid, " : ", respObj.error);
+            openModal("no-data-folder", "No Data Folder Found", [], function () {})
+        },
         "create-workspace-failure": function () {
             console.error("create workspace failure: ", respObj.workspace_guid, " : ", respObj.error);
             alert("create workspace failure");

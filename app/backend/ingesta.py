@@ -1,6 +1,7 @@
 from index import index_docs
 from get_json import get_json_lst
 from backup import backup, restore_from_backup
+from get_json import NoDataException
 
 import traceback
 
@@ -34,6 +35,12 @@ def get_files(path, import_type, workspace_guid):
                 'json_tree': json_tree, 
                 'json_lst': json_lst,
                 'workspace_guid': workspace_guid
+                }
+    except NoDataException as e:
+        return {
+                'message': 'import-failure-no-data',
+                'workspace_guid': workspace_guid,
+                'error': str(traceback.format_exc())
                 }
     except Exception as e:
         restore_from_backup(workspace_guid)

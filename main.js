@@ -65,8 +65,10 @@ const startServer = (port_num) => {
 
 // Kills server
 const killServer = () => {
-  serverProc.kill()
-  serverProc = null
+  // serverProc.kill()
+  // serverProc = null
+  // require('child_process').spawn('python', [path.join(__dirname, BACKEND_FOLDER, 'shutdown.py')]);
+  require('child_process').execFile(path.join(__dirname, BACKEND_FOLDER, BACKEND_DIST_FOLDER, 'shutdown'));
   //serverPort = null
 }
 

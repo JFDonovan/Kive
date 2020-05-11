@@ -1,3 +1,5 @@
+var overlayList = []
+
 // Shuts server down
 module.exports = {
     shutdown: () => { console.log('shutdown server called'); getRequest('shutdown', null) }
@@ -50,7 +52,7 @@ function handleResponse(response, context) {
         "import-success": function () {
             disableOverlay();
             console.log("import successful");
-            addToQueue("index/add/" + respObj.workspace_guid, null, {"json_lst": respObj.json_lst}, respObj.workspace_guid);
+            addToQueue("index/add/" + respObj.workspace_guid, null, { "json_lst": respObj.json_lst }, respObj.workspace_guid);
             appendTree(respObj.workspace_guid, respObj.json_tree, context);
         },
         "create-workspace-success": function () {
@@ -195,6 +197,45 @@ function dequeue(guid) {
     let cmd = workspaceQueues[guid].shift();
     console.log("Removed", cmd, "from queue: " + workspaceQueues[guid].length);
 }
+
+// OVERLAY STUFF
+
+function queueOverlay(type) {
+    let topOverlay = document.getElementById("loading_overlay");
+    let overlayText = topOverlay.getElementsByTagName("SPAN")[0];
+
+    overlayList.push(type);
+
+    topOverlay.classList.remove("hidden");
+
+    switch (type) {
+        case "search":
+            overlayText.innerHTML = "Searching...";
+            break;
+        case "index":
+            overlayText.innerHTML = "Indexing...";
+            break;
+        case "import":
+            overlayText.innerHTML = "Importing...";
+    }
+}
+
+function dequeueOverlay(type) {
+    let topOverlay = document.getElementById("loading_overlay");
+    let overlayText = topOverlay.getElementsByTagName("SPAN")[0];
+
+
+}
+
+
+
+
+
+
+
+
+
+
 
 // Shows overlay that disables search functionality.
 function indexingOverlay() {

@@ -112,6 +112,7 @@ def index_docs(json_lst, operation, workspace_guid):
                 id = entry['id']
                 writer.delete_by_term('id', id)
 
+        writer.commit()
         
     except Exception as e:
         writer.commit()

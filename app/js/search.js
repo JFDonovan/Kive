@@ -110,8 +110,8 @@ function getSearchQuery() {
 // Renders a list of paths representing search results
 function renderSearchResults(results) {
     // Clear results list
-    let resultListHtmlObj = document.getElementById("results_list")
-    resultListHtmlObj.innerHTML = ""
+    let resultListHtmlObj = document.getElementById("results_list");
+    resultListHtmlObj.innerHTML = "";
 
     for (let i = 0; i < results.length; i++) {
         let treeNode = $(`#${currentWorkspace}_tree`).tree('getNodeById', results[i].id);

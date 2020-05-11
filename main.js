@@ -63,19 +63,32 @@ const startServer = (port_num) => {
   }
 }
 
-// Kills server
-/*const killServer = () => {
-  let kill = require('tree-kill');
-  console.log(serverProc.pid);
-  kill(serverProc.pid);
-  //serverProc.kill()
-  serverProc = null;
-  // require('child_process').spawn('python', [path.join(__dirname, BACKEND_FOLDER, 'shutdown.py')]);
-  //require('child_process').execFile(path.join(__dirname, BACKEND_FOLDER, BACKEND_DIST_FOLDER, 'shutdown.exe'));
-  //serverPort = null
-}*/
+const killProcesses = () => {
+  // Shut down server
+  console.log("killProcesses called");
+  if (serverProc != null) {
+    const https = require('http')
+    const options = {
+      hostname: 'localhost',
+      port: serverPort,
+      path: '/shutdown',
+      method: 'GET'
+    }
+    const req = https.request(options, res => {
+      console.log(`statusCode: ${res.statusCode}`);
+      res.on('data', d => {
+        console.log(d);
+        //app.quit();
+      });
+    });
+    req.on('error', error => {
+      console.error(error)
+      //app.quit();
+    });
 
-//app.on('will-quit', killServer);
+    req.end()
+  }
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -113,28 +126,10 @@ else {
   // Quit when all windows are closed.
   app.on('window-all-closed', function () {
     // TODO: add closing/backup functionality when closed properly
+    app.quit();
+  });
 
-    // Shut down server
-    const https = require('http')
-    const options = {
-      hostname: 'localhost',
-      port: 5000,
-      path: '/shutdown',
-      method: 'GET'
-    }
-    const req = https.request(options, res => {
-      console.log(`statusCode: ${res.statusCode}`);
-      res.on('data', d => {
-        console.log(d);
-        app.quit();
-      });
-    });
-    req.on('error', error => {
-      console.error(error)
-      app.quit();
-    });
-
-    req.end()
-    //app.quit();
+  app.on('before-quit', (e) => {
+    killProcesses();
   });
 }

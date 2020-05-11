@@ -38,7 +38,18 @@ function spawnContextMenu(type, event, context) {
     else if (type == "workspace-button") {
         // Menu options for all workspaces
         menuList.appendChild(makeContextMenuOption("Rename", function () { openModal("single-input", "Rename node", ["New Name: "], function (name) { renameWorkspace(name, context) }) }));
-        menuList.appendChild(makeContextMenuOption("Delete", function () { openModal("confirmation", "Delete node", ["Are you sure you want to delete this?"], function () { deleteWorkspace(context) }) }));
+        
+        // Check if backend is not indexing
+        if (workspaceQueues[context].length != 0) {
+            let opt = document.createElement("LI");
+            opt.className = "menu-option";
+            opt.appendChild(document.createTextNode('Delete'));
+            
+            opt.style.cursor = 'not-allowed';
+            menuList.appendChild(opt)
+        } else {
+            menuList.appendChild(makeContextMenuOption("Delete", function () { openModal("confirmation", "Delete node", ["Are you sure you want to delete this?"], function () { deleteWorkspace(context) })}));
+        }
         //menuList.appendChild(makeContextMenuOption("cut", function () { alert("implement cut paste") }));
         // Set menu position based on click event
         posX = event.pageX;

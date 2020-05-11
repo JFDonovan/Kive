@@ -13,7 +13,7 @@ document.getElementById("sb_import_btn").onclick = function () {
 }
 
 // Retrieve selected folder
-function get_folder(importType, nodeId) {
+function get_folder(importType, node) {
   console.log('get_folder called');
 
   dialog.showOpenDialog({
@@ -28,13 +28,13 @@ function get_folder(importType, nodeId) {
     else {
       queueOverlay("import");
       // send import command to backend with filepath, import type, and current workspace
-      getRequest("import/" + encodeURIComponent(folderPaths.filePaths) + "/" + importType + "/" + currentWorkspace, nodeId);
+      getRequest("import/" + encodeURIComponent(folderPaths.filePaths) + "/" + importType + "/" + currentWorkspace, node);
     }
   });
 }
 
 // Retrieve selected file
-function get_file(nodeId) {
+function get_file(node) {
   console.log('get_file called');
 
   dialog.showOpenDialog({
@@ -53,7 +53,7 @@ function get_file(nodeId) {
     else {
       queueOverlay("import");
       // send import command to backend with filepath, import type (file), and current workspace
-      getRequest("import/" + encodeURIComponent(folderPaths.filePaths) + "/file/" + currentWorkspace, nodeId);
+      getRequest("import/" + encodeURIComponent(folderPaths.filePaths) + "/file/" + currentWorkspace, node);
     }
   });
 }

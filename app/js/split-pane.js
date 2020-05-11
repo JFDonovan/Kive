@@ -4,10 +4,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var handle = document.getElementById("split_handle");
 
     handle.addEventListener('mousedown', function (mdEvent) {
+        document.getElementById("tree_display").style.overflowX = "hidden";
         document.getElementById('html_disp').style.pointerEvents = 'none';
         mouseDragCount = 0;
         document.addEventListener('mousemove', handleDrag, true);
         document.addEventListener('mouseup', function (muEvent) {
+            document.getElementById("tree_display").style.overflowX = "auto";
             // Less taxing to update tabs here
             //chromeTabs.layoutTabs();
             document.removeEventListener('mousemove', handleDrag, true);

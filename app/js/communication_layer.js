@@ -2,7 +2,30 @@ var overlayList = []
 
 // Shuts server down
 module.exports = {
-    shutdown: () => { console.log('shutdown server called'); getRequest('shutdown', null) }
+    shutdown: () => {
+        console.log('shutdown server called');
+
+        let check = false;
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // Handles response
+                check = true;
+            }
+        };
+        xhttp.open("GET", "http://localhost:5000/shutdown", false);
+        xhttp.send();
+
+        return new Promise((resolve, reject) => {
+            if (check == true) {
+                resolve("successful shutdown");
+            }
+            else {
+                reject("failure shutting down");
+            }
+        });
+    }
 }
 
 // Makes POST request at endpoint at path
@@ -50,7 +73,7 @@ function handleResponse(response, context) {
     let respDict = {
         // Success responses
         "import-success": function () {
-            disableOverlay();
+            dequeueOverlay("import");
             console.log("import successful");
             addToQueue("index/add/" + respObj.workspace_guid, null, { "json_lst": respObj.json_lst }, respObj.workspace_guid);
             appendTree(respObj.workspace_guid, respObj.json_tree, context);
@@ -66,7 +89,7 @@ function handleResponse(response, context) {
             console.log("delete workspace successful");
         },
         "search-success": function () {
-            disableOverlay();
+            dequeueOverlay("search");
             renderSearchResults(respObj.results);
             console.log("search successful");
         },
@@ -84,15 +107,15 @@ function handleResponse(response, context) {
         },
         // Failure responses
         "import-failure": function () {
-            disableOverlay();
+            dequeueOverlay("import");
             console.error("import failure: ", respObj.workspace_guid, " : ", respObj.error);
             alert("import failure");
         },
         // No data/ folder found for legacy import
         "import-failure-no-data": function () {
-            disableOverlay();
+            dequeueOverlay("import");
             console.error("import failure: ", respObj.workspace_guid, " : ", respObj.error);
-            openModal("no-data-folder", "No Data Folder Found", [], function () {})
+            openModal("no-data-folder", "No Data Folder Found", [], function () { })
         },
         "create-workspace-failure": function () {
             console.error("create workspace failure: ", respObj.workspace_guid, " : ", respObj.error);
@@ -103,7 +126,7 @@ function handleResponse(response, context) {
             alert("delete workspace failure");
         },
         "search-failure": function () {
-            disableOverlay();
+            dequeueOverlay("search");
             console.error("search failure: ", respObj.error);
             alert("search failure");
         },
@@ -160,10 +183,10 @@ function updateSuccessHandler(workspace) {
     // Dequeue
     dequeue(workspace);
     // Disable overlay for indexing
-    disableOverlay();
+    dequeueOverlay("index");
     if (workspaceQueues[workspace].length != 0) {
         // Enabling overlay to disable search functionality if command requires indexing
-        indexingOverlay();
+        queueOverlay("index");
         // Send next command to backend
         let nextCmd = workspaceQueues[workspace][0];
         postRequest(nextCmd[0], nextCmd[1], nextCmd[2]);
@@ -177,7 +200,7 @@ function indexFailureHandler(workspace) {
     // Dequeue
     dequeue(workspace);
     // Disable overlay for indexing
-    disableOverlay();
+    dequeueOverlay("index");
 }
 
 // Adds command to given workspace queue (queue only used for indexing)
@@ -186,7 +209,7 @@ function addToQueue(endpoint, context, jsonObj, guid) {
     if (workspaceQueues[guid].length == 0) {
         workspaceQueues[guid].push([endpoint, context, jsonObj]);
         // Enabling overlay to disable search functionality if command requires indexing
-        indexingOverlay();
+        queueOverlay("index");
         // Make post request
         postRequest(endpoint, context, jsonObj);
     }
@@ -206,86 +229,64 @@ function dequeue(guid) {
 
 // OVERLAY STUFF
 
+// Queues overlay
 function queueOverlay(type) {
-    let topOverlay = document.getElementById("loading_overlay");
-    let overlayText = topOverlay.getElementsByTagName("SPAN")[0];
-
+    console.log("queue overlay called");
     overlayList.push(type);
+    displayOverlay(type);
+}
+
+// Displays overlay
+function displayOverlay(type) {
+    console.log("display overlay called");
+    let topOverlay = document.getElementById("loading_overlay");
+    let topOverlayText = topOverlay.getElementsByTagName("SPAN")[0];
+    let overlay = document.getElementById("overlay");
+    let overlayContent = document.getElementById("overlay-message");
+    let overlayLabel = document.getElementById("overlay-label");
 
     topOverlay.classList.remove("hidden");
+    overlay.classList.remove("hidden");
+    overlayContent.classList.remove("hidden");
 
     switch (type) {
         case "search":
-            overlayText.innerHTML = "Searching...";
+            topOverlayText.innerHTML = "Searching...";
+            overlayLabel.innerHTML = "Searching...";
             break;
         case "index":
-            overlayText.innerHTML = "Indexing...";
+            topOverlayText.innerHTML = "Indexing...";
+            overlayLabel.innerHTML = "Indexing...";
             break;
         case "import":
-            overlayText.innerHTML = "Importing...";
+            topOverlayText.innerHTML = "Importing...";
+            overlayLabel.innerHTML = "Importing...";
     }
 }
 
+// Dequeues overlay
 function dequeueOverlay(type) {
+    console.log("dequeue overlay called");
+    console.log(overlayList);
     let topOverlay = document.getElementById("loading_overlay");
-    let overlayText = topOverlay.getElementsByTagName("SPAN")[0];
+    let topOverlayText = topOverlay.getElementsByTagName("SPAN")[0];
+    let overlay = document.getElementById("overlay");
+    let overlayContent = document.getElementById("overlay-message");
 
+    let index = overlayList.indexOf(type);
+    if (index > -1) {
+        console.log("splice");
+        overlayList.splice(index, 1);
+    }
 
-}
-
-
-
-
-
-
-
-
-
-
-
-// Shows overlay that disables search functionality.
-function indexingOverlay() {
-    document.getElementById('overlay-label').innerHTML = 'indexing...';
-    // Shows top loading overlay
-    let topOverlay = document.getElementById("loading_overlay");
-    topOverlay.getElementsByTagName("SPAN")[0].innerHTML = "Indexing...";
-    topOverlay.classList.remove("hidden");
-
-    $('#overlay').show();
-    $('#overlay-message').css('display', 'flex');
-    console.log("Displayed index overlay");
-}
-
-// Shows overlay that
-function searchingOverlay() {
-    document.getElementById('overlay-label').innerHTML = 'searching...';
-    // Shows top loading overlay
-    let topOverlay = document.getElementById("loading_overlay");
-    topOverlay.getElementsByTagName("SPAN")[0].innerHTML = "Searching...";
-    topOverlay.classList.remove("hidden");
-
-    $('#overlay').show();
-    $('#overlay-message').css('display', 'flex');
-    console.log("Displayed searching overlay");
-}
-
-// Shows overlay that
-function importingOverlay() {
-    // Shows top loading overlay
-    let topOverlay = document.getElementById("loading_overlay");
-    topOverlay.getElementsByTagName("SPAN")[0].innerHTML = "Importing...";
-    topOverlay.classList.remove("hidden");
-
-    console.log("Displayed importing overlay");
-}
-
-// Gets rid of overlay that disables search funcitonality.
-function disableOverlay() {
-    // Hides top loading overlay
-    let topOverlay = document.getElementById("loading_overlay");
-    topOverlay.className = "hidden";
-
-    $('#overlay').css('display', 'none');
-    $('#overlay-message').css('display', 'none');
-    console.log("Removed overlay");
+    if (overlayList.length > 0) {
+        displayOverlay(overlayList[0]);
+    }
+    else {
+        topOverlay.className = "hidden";
+        topOverlayText.innerHTML = "Loading...";
+        overlay.className = "hidden";
+        overlayContent.className = "hidden";
+        overlayText = "Loading...";
+    }
 }

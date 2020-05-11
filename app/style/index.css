@@ -155,6 +155,7 @@
   height: 83%;
   width: 100%;
   overflow-y: auto;
+  overflow-x: auto;
   border: none;
   /*border-style: hidden double double double;
   border-color: #006494;
@@ -306,7 +307,6 @@
   height: 100%;
   margin: 0;
   opacity: .87;
-  display: none;
   font-size: 20pt;
   border-radius: inherit;
 }
@@ -318,7 +318,7 @@
   width: 100%;
   height: 100%;
   margin: 0;
-  display: none;
+  display: flex;
   justify-content: center;
   align-items: center;
   overflow-y: hidden;

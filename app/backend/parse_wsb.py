@@ -109,8 +109,7 @@ def build_json_no_tree(folder):
             if os.path.isdir(folder + "/" + entity):
                 folders.append(folder + "/" + entity)
             else:
-                ext = os.path.splitext(entity)
-                if ext[1] in ('.html', '.htm'):
+                if os.path.basename(entity) == 'index.html':
                     html_files.add(folder + "/" + entity.split(".htm")[0] + "_files")
                     name = get_html_title(folder + "/" + entity)
                     if not name:
@@ -122,6 +121,8 @@ def build_json_no_tree(folder):
                         'ingest': datetime.now().strftime('%Y%m%d'),
                         'last_accessed': datetime.fromtimestamp(os.path.getmtime(folder + '/' + entity)).strftime('%Y%m%d'),
                         'path': folder + "/" + entity,
+                        'icon': '',
+                        'source': '',
                         'id': str(uuid.uuid4()),
                         'children': []
                     }
@@ -169,6 +170,12 @@ def create_wsb_json(path):
             json_tree, json_lst = build_json(path, toc, meta)
         else:
             json_tree, json_lst = build_json_no_tree(path)
+            json_tree = [{
+                'type': 'folder',
+                'name': os.path.basename(path),
+                'id': str(uuid.uuid4()),
+                'children': json_lst
+            }]
     except:
         raise Exception('WSB directory could not be imported.')
 

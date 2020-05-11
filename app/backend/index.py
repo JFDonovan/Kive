@@ -19,8 +19,9 @@ def get_schema():
     Specifies what fields are stored in the index and returns to be passed to newly created index.
     '''
 
+    # analyzer = analysis.SpaceSeparatedTokenizer() | analysis.LowercaseFilter() | analysis.CharsetFilter(accent_map)
     analyzer = analysis.StandardAnalyzer(stoplist=None, minsize=1) | analysis.CharsetFilter(accent_map)
-    return Schema(name=TEXT(stored=True, analyzer=analyzer),
+    return Schema(name=TEXT(analyzer=analyzer, stored=True),
                     path=TEXT(stored=True),
                     content=TEXT(analyzer=analyzer, stored=True),
                     legacy_ingest=TEXT,
@@ -113,7 +114,6 @@ def index_docs(json_lst, operation, workspace_guid):
                 writer.delete_by_term('id', id)
 
         writer.commit()
-        
     except Exception as e:
         writer.commit()
         raise e

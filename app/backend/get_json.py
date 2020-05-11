@@ -1,6 +1,6 @@
 from datetime import datetime
 from parse_sb import parse_rdf
-from parse_wsb import create_wsb_json
+from parse_wsb import create_wsb_json, build_json_no_tree
 from parse_nonlegacy import find_files
 
 import os
@@ -13,6 +13,20 @@ import json
 This file contains code for walking through directories/parsing through legacy workspaces
 to retrieve directory structure and lists of web page metadata.
 '''
+
+# Exception to be raised when legacy import cannot find a data/ folder
+class NoDataException(Exception):
+    def __init__(self, *args):
+        if args:
+            self.message = args[0]
+        else:
+            self.message = None
+
+    def __str__(self):
+        if self.message:
+            return 'NoDataException, {0} '.format(self.message)
+        else:
+            return 'NoDataException has been raised'  
 
 ########################## CALLED BY MAIN INGEST FILE #########################
 def get_json_lst(path, import_type): 
@@ -39,18 +53,24 @@ def get_json_lst(path, import_type):
 
     if import_type == 'wsb':
         if not os.path.exists('{}/data'.format(path)):
-            raise Exception('WSB data folder not found.')
+            raise NoDataException('WSB data folder not found.')
         
         json_tree, json_lst = create_wsb_json(path)
         #if json_lst is None: # Triggered if meta.js, toc.js, or tree dirs don't exist
         #    json_tree, json_lst = find_files('{}/data'.format(path))
     elif import_type == 'sb':
         if not os.path.exists('{}/data'.format(path)):
-            raise Exception('ScrapBook data folder not found.')
+            raise NoDataException('ScrapBook data folder not found.')
         try: # Try to parse scrapbook.rdf and turn into JSON file tree.
            json_tree, json_lst = parse_rdf('{}/scrapbook.rdf'.format(path)) 
         except: # Triggered if scrapbook.rdf isnt found. 
-            json_tree, json_lst = find_files('{}/data'.format(path))
+            json_tree, json_lst = build_json_no_tree('{}'.format(path))
+            json_tree = [{
+                'type': 'folder',
+                'name': os.path.basename(path),
+                'id': str(uuid.uuid4()),
+                'children': json_lst
+            }]
     else:
         json_tree, json_lst = find_files(path)
 
@@ -77,5 +97,7 @@ def find_icon(file_json):
     if (((json_icon == "") or (json_icon == None)) and ((url_source != "") and (url_source != None) and ('localhost' not in url_source))):
         json_icon = 'https://s2.googleusercontent.com/s2/favicons?domain_url=' + url_source
 
-    return json_icon                           
+    return json_icon   
+
+                      
             

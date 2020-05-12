@@ -31,9 +31,20 @@ function onLoad() {
     console.log('read_tree called');
     document.getElementsByClassName("chrome-tabs")[0].addEventListener('dblclick', event => {
         chromeTabs.removeTab(chromeTabs.activeTabEl)
-      })
+    });
     // Bind an event listener to the loaded iframe to catch any link clicks
-    $('body iframe').on('load', function () {
+    /*let iframe = document.getElementById("html_disp").getElementsByTagName("IFRAME")[0];
+    console.log("iframe:   ", iframe);
+    iframe.addEventListener('click', function (e) {
+        console.log(iframe);
+        e.preventDefault();
+        let target = e.target;
+        while (!target.href) {
+            target = target.parentElement;
+        }
+        shell.openExternal(target.href).then(_ => _);
+    });*/
+    /*$('body iframe').on('load', function () {
         $(this).contents().find('a').bind('click', function (e) {
             e.preventDefault();
             let target = e.target;
@@ -42,7 +53,7 @@ function onLoad() {
             }
             shell.openExternal(target.href).then(_ => _);
         })
-    });
+    });*/
 
     // For creating compatible date strings 
     Date.prototype.yyyymmdd = function () {

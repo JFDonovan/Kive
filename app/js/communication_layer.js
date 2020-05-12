@@ -244,10 +244,12 @@ function displayOverlay(type) {
     let overlayContent = document.getElementById("overlay-message");
     let overlayLabel = document.getElementById("overlay-label");
 
+    // unhides all overlay elements
     topOverlay.classList.remove("hidden");
     overlay.classList.remove("hidden");
     overlayContent.classList.remove("hidden");
 
+    // Sets label content according to overlay type
     switch (type) {
         case "search":
             topOverlayText.innerHTML = "Searching...";
@@ -272,15 +274,17 @@ function dequeueOverlay(type) {
     let overlay = document.getElementById("overlay");
     let overlayContent = document.getElementById("overlay-message");
 
+    // Removes overlay type from queue
     let index = overlayList.indexOf(type);
     if (index > -1) {
         console.log("splice");
         overlayList.splice(index, 1);
     }
-
+    // If overlay list is not empty, display next overlay
     if (overlayList.length > 0) {
         displayOverlay(overlayList[0]);
     }
+    // Hide all overlay content (if Loading... is displayed, something went wrong)
     else {
         topOverlay.className = "hidden";
         topOverlayText.innerHTML = "Loading...";

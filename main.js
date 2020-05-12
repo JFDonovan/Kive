@@ -78,11 +78,13 @@ const killProcesses = () => {
       console.log(`statusCode: ${res.statusCode}`);
       res.on('data', d => {
         console.log(d);
+        serverProc = null;
         app.quit();
       });
     });
     req.on('error', error => {
       console.error(error)
+      serverProc = null;
       app.quit();
     });
 
@@ -126,7 +128,8 @@ else {
   // Quit when all windows are closed.
   app.on('window-all-closed', function () {
     // TODO: add closing/backup functionality when closed properly
-    app.quit();
+    killProcesses();
+    //app.quit();
   });
 
   app.on('before-quit', (e) => {

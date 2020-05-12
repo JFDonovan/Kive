@@ -12,6 +12,7 @@ import os
 import config
 import ast
 import json
+import string
 
 def get_search_results(search_text, leg_datetime_range, kive_datetime_range,
                 la_datetime_range, media_text_lst, fields_lst, workspace_guid):
@@ -45,6 +46,8 @@ def search_docs(search_text, leg_datetime_range, kive_datetime_range,
         ########### Build query based on filters sent from front-end ##########
         query_lst = []
         # raise Exception('Search text:', search_text)
+        trans = str.maketrans(string.punctuation, ' ' * len(string.punctuation))
+        search_text = search_text.translate(trans)
         search_text = search_text.strip()
         if search_text and ('name' in fields_lst or 'content' in fields_lst):
             if 'name' in fields_lst and 'content' in fields_lst:

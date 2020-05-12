@@ -24,8 +24,8 @@ function spawnContextMenu(type, event, context) {
     // If event has node associated with it (jqtree event)
     if (type == "file-tree") {
         // Menu options for all nodes
-        menuList.appendChild(makeContextMenuOption("Rename", function () { openModal("single-input", "Rename node", ["New Name: "], function (name) { updateNode(event.node, "name", name) }) }));
-        menuList.appendChild(makeContextMenuOption("Delete", function () { openModal("confirmation", "Delete node", ["Are you sure you want to delete this?"], function () { deleteNode(event.node) }) }));
+        menuList.appendChild(makeContextMenuOption("Rename", function () { openModal("single-input", "Rename", ["New Name: "], function (name) { updateNode(event.node, "name", name) }) }));
+        menuList.appendChild(makeContextMenuOption("Delete", function () { openModal("confirmation", "Delete", ["Are you sure you want to delete this?"], function () { deleteNode(event.node) }) }));
         /*menuList.appendChild(makeContextMenuOption("cut", function () { alert("implement cut paste") }));*/
         // Menu options for folder nodes only
         if (event.node.type == "folder") {
@@ -48,7 +48,7 @@ function spawnContextMenu(type, event, context) {
     // Right click on workspace button
     else if (type == "workspace-button") {
         // Menu options for all workspaces
-        menuList.appendChild(makeContextMenuOption("Rename", function () { openModal("single-input", "Rename node", ["New Name: "], function (name) { renameWorkspace(name, context) }) }));
+        menuList.appendChild(makeContextMenuOption("Rename", function () { openModal("single-input", "Rename", ["New Name: "], function (name) { renameWorkspace(name, context) }) }));
         
         // Check if backend is not indexing
         if (workspaceQueues[context].length != 0) {
@@ -59,7 +59,7 @@ function spawnContextMenu(type, event, context) {
             opt.style.cursor = 'not-allowed';
             menuList.appendChild(opt)
         } else {
-            menuList.appendChild(makeContextMenuOption("Delete", function () { openModal("confirmation", "Delete node", ["Are you sure you want to delete this?"], function () { deleteWorkspace(context) })}));
+            menuList.appendChild(makeContextMenuOption("Delete", function () { openModal("confirmation", "Delete", ["Are you sure you want to delete this?"], function () { deleteWorkspace(context) })}));
         }
         //menuList.appendChild(makeContextMenuOption("cut", function () { alert("implement cut paste") }));
         // Set menu position based on click event

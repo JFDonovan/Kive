@@ -1,3 +1,19 @@
+/**
+ * 
+ * Summary. 
+ * 
+ * This file is where we facilitate API requests to our backend. 
+ * 
+ * GET requests are used for all API calls except those that involve indexing such as
+ * adding files to the index, deleting, renaming, and updating the date last accessed. 
+ * 
+ * POST requests are used for all index related requests. In order to ensure that we are not concurrently writing to the same file
+ * we have a queue that holds POST requests for each workspace. 
+ * 
+ * This file contains the queue logic, as well.
+ * 
+ */
+
 var overlayList = []
 
 // Shuts server down

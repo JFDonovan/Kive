@@ -37,7 +37,7 @@ el.addEventListener('tabRemove', ({ detail }) => {
     tabMap.delete(detail.tabEl.dataset.tabId);
     if ($('.chrome-tab').length === 0) {
         let disp = document.getElementById('html_disp');
-        disp.src = "";
+        disp.src = "about:blank";
     }
 });
 

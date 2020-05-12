@@ -112,10 +112,9 @@
               onclick="openModal('import-options-info', 'Import Options', [null], null)">?</button>
           </div>
           <!-- Container for all base tree elements -->
-          <div id="tree_display" onscroll="despawnContextMenu()">
-          </div>
-          <!--</div>-->
+          <div id="tree_display" onscroll="despawnContextMenu()"></div>
         </div>
+      </div>
         <!-- Search View -->
         <div id="search_view" class="hidden">
           <div id="search_settings">
@@ -184,7 +183,7 @@
         </div>
       </div>
       <!-- Iframe for displaying webpage -->
-      <iframe id="html_disp" src="" class="noselect" sandbox=""></iframe>
+      <webview id="html_disp" nodeintegration='true'></webview>
       <!-- Annoations tool bar -->
       <!--<div id="annotations_bar">
         <button id="write_btn" onclick="saveHtmlFile()">Save file!</button>

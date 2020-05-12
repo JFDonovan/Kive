@@ -117,7 +117,8 @@ else {
       width: 1035,
       height: 1000,
       webPreferences: {
-        nodeIntegration: true
+        nodeIntegration: true,
+        webviewTag: true
       }
     })
 

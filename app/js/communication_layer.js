@@ -22,34 +22,23 @@ module.exports = {
         console.log('shutdown server called');
 
         let check = false;
-
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                // Handles response
-                check = true;
-            }
-        };
-        xhttp.open("GET", "http://localhost:5000/shutdown", false);
-        xhttp.send();
-
-        return new Promise((resolve, reject) => {
-            if (check == true) {
-                resolve("successful shutdown");
-            }
-            else {
-                reject("failure shutting down");
-            }
-        });
     }
 }
+
+// Global variable for storing overlays for current processes running
+var overlayList = []
 
 // Makes POST request at endpoint at path
 function getRequest(path, context) {
     console.log("Get Request called: ", path);
+    var start = performance.now();
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+             // For latency
+             var end = performance.now()
+             console.log(`Import time: ${end - start}`);
+
             // Handles response
             handleResponse(xhttp.responseText, context);
         }
@@ -61,9 +50,14 @@ function getRequest(path, context) {
 // Makes POST request at endpoint at path
 function postRequest(path, context, json_obj) {
     console.log("Post Request called: ", path, context, json_obj);
+    var start = performance.now();
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
+            // For latency
+            var end = performance.now()
+            console.log(`Index time: ${end-start}`);
+
             // Handles response
             handleResponse(xhttp.responseText, context);
         }

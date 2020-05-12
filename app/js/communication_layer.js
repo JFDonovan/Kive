@@ -14,17 +14,6 @@
  * 
  */
 
-var overlayList = []
-
-// Shuts server down
-module.exports = {
-    shutdown: () => {
-        console.log('shutdown server called');
-
-        let check = false;
-    }
-}
-
 // Global variable for storing overlays for current processes running
 var overlayList = []
 

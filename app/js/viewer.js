@@ -1,3 +1,13 @@
+/**
+ * 
+ * Summary. 
+ * 
+ * This file contains logic for rendering webpages. Kive's chrome-tab functionality
+ * and iframe rendering process is defined here. Functionality for viewing web pages 
+ * externally is also within this file.
+ * 
+ */
+
 // Create global variable for chrome-tabs
 window.ChromeTabs = require('chrome-tabs')
 

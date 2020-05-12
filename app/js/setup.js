@@ -1,4 +1,12 @@
-
+/**
+ * 
+ * Summary. 
+ * 
+ * This file contains the onload logic for Kive. As soon as Electron's renderer process 
+ * begins, onLoad() within this file gets triggered. Any logic or settings that need to
+ * be done as soon as Kive is launched should be added to this file.
+ * 
+ */
 
 var path = require("path");
 

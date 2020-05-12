@@ -1,3 +1,14 @@
+/**
+ * 
+ * Summary. 
+ * 
+ * This file contains the frontend communication logic for our pre-CDR build. It makes use of the npm
+ * package 'python-shell' to facilitate communication vid stdin and stdout.
+ * 
+ * This file is deprecated and subject to future deletion. 
+ * 
+ */
+
 // ***** Global variable that stores currently viewed file
 var open_file = null;
 

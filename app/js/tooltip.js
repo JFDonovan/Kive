@@ -1,7 +1,18 @@
+/**
+ * 
+ * Summary. 
+ * 
+ * This file contains the logic for spawning a tooltip for supported app entities. Currently,
+ * this file is used mainly inconjunction with jqTree, rendering full file titles and source
+ * urls when the user hovers for a selected amount of time. 
+ * 
+ * However, a developer could use our spawnTooltip() function to create custom tooltips
+ * that can be attached to other components within the application.
+ * 
+ */
 
 // Global variable for timeout for hover detection
 var delay = null;
-
 
 // Adds tooltip listeners to all jqtree nodes in the DOM
 function addTreeTooltips(workspace) {

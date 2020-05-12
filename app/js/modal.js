@@ -1,3 +1,17 @@
+/**
+ * 
+ * Summary. 
+ * 
+ * Kive uses this API to define unique modals.
+ * 
+ * Modals are used in many instances such as for anything that requires confirmation, renaming
+ * processes, and getting infor for file or search result entities. 
+ * 
+ * A developer can open a model using an already existing type or create one. When creating a modal
+ * you must give it a type name, a title to be displayed on the top of the modal, a prompt for the user, 
+ * and a callback function that gets triggered after proper interaction with the modal.
+ * 
+ */
 
 // Opens a modal (takes modal type, list of prompts, and a function to be called on confirmation -> ie clicking "ok")
 function openModal(type, title, prompts, func) {

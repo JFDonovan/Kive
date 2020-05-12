@@ -1,3 +1,12 @@
+/**
+ * 
+ * Summary. 
+ * 
+ * This file contains most, if not all, of Kive's frontend logic for searching.
+ * Functions within this file work to send a search request to our server, 
+ * retrieve results, and render them within the search view.
+ * 
+ */
 
 // Toggles advanced search ui dropdown
 function toggleAdvancedMenu() {

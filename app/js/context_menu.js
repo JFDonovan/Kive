@@ -1,3 +1,14 @@
+/**
+ * 
+ * Summary. 
+ * 
+ * Kive uses this API to define unique context menus for each supported entity.
+ * Supported entities include: files, folders, workspace buttons, and search results. //#endregion
+ * 
+ * Each menu list item must define a name, a callback function when clicked, and the node context 
+ * of the click event if applicable.
+ * 
+ */
 
 function spawnContextMenu(type, event, context) {
     // Base context menu element

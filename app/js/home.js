@@ -1,4 +1,13 @@
-
+/**
+ * 
+ * Summary. 
+ * 
+ * This file contains the logic for our home view: the view that displays the list 
+ * of the user's workspaces. 
+ * 
+ * Logic includes loading, creating, deleting and renaming workspace entities. 
+ * 
+ */
 
 // Creates all html elements for workspace
 function workspaceHTML(workspace, workspaceName) {

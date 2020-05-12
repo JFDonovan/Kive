@@ -1,3 +1,13 @@
+/**
+ * 
+ * Summary. 
+ * 
+ * This file contains all of the logic for annotations. Although annotations is not currently a part of
+ * Kive, we do have confidence that annotations is an implementable feature.
+ * Most of this logic is for adding annotations to a page within our iframe, but stroage of these annotations
+ * must be considered for future modifications to Kive
+ * 
+ */
 
 // Writes to htmlFile (for annotations)
 function saveHtmlFile() {

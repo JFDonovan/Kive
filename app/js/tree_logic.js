@@ -1,3 +1,17 @@
+/**
+ * 
+ * Summary. 
+ * 
+ * This file contains all the logic for the jqTrees within Kive.
+ * 
+ * Kive does not load the tree for each workspace on init. Instead, it caches tree
+ * objects as users navigate into different workspaces. 
+ * 
+ * Functions within this file include logic to create a tree and link node functionality, 
+ * append elements within the tree, and write the tree to its corresponding JSON file.
+ * 
+ */
+
 // Array of selected nodes
 var selectedNodes = [];
 

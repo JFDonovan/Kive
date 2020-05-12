@@ -1,4 +1,11 @@
-
+/**
+ * 
+ * Summary. 
+ * 
+ * This file contains the logic for listening to the dragging of Kive's vertical divider
+ * and adjusting the size of the left pane in relation to the right pane as necessary.
+ * 
+ */
 
 document.addEventListener('DOMContentLoaded', function () {
     var handle = document.getElementById("split_handle");

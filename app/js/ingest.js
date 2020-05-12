@@ -1,3 +1,16 @@
+/**
+ * 
+ * Summary. 
+ * 
+ * This file contains frontend logic for importing data into Kive.
+ * 
+ * When a user selects to import, an Electron file explorer is rendered and the user can choose 
+ * to import a file or folder depending on the input option selected.
+ * Our file explorer limits selectability to only folders when importing folders or legacy data and 
+ * .html or .html files when importing a file. 
+ * 
+ */
+
 // Set listeners for import options
 document.getElementById("file_import_btn").onclick = function () {
   get_file();

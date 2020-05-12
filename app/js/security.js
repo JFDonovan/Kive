@@ -1,4 +1,13 @@
-
+/**
+ * 
+ * Summary. 
+ * 
+ * This file works to encrypt and decrypt messages moving accross our middleware layer.
+ * 
+ * Although this has not been integrated into Kive, this functionality would be very useful and
+ * is of high priority moving forward.
+ * 
+ */
 
 function getToken() {
     let fernet = require('fernet');

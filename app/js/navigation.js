@@ -1,3 +1,13 @@
+/**
+ * 
+ * Summary. 
+ * 
+ * This file contains all of Kive's navigation logic. This includes the rendering of the 
+ * home view, file view, and search view. The file also facilitates the process of navigating
+ * into a workspace.
+ * 
+ */
+
 function goToSearchView() {
     // Hides file view components and shows search view components
     let search = document.getElementById("search_view");

@@ -5,6 +5,7 @@ var overlayList = []
 // Makes POST request at endpoint at path
 function getRequest(path, context) {
     console.log("Get Request called: ", path);
+    var start = performance.now();
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -23,6 +24,7 @@ function getRequest(path, context) {
 // Makes POST request at endpoint at path
 function postRequest(path, context, json_obj) {
     console.log("Post Request called: ", path, context, json_obj);
+    var start = performance.now();
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {

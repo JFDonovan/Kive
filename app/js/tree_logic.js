@@ -459,7 +459,9 @@ function missingPath(node) {
     }
     // Files immediate directory is missing also
     else {
-        alert("folder not found, implement");
+        //alert("folder not found, implement");
+        // Implement in future (should be better)
+        openModal("find-lost-file", "Folder not found!", ["Choose new file path: "], function (newPath) { replaceFilePath(node, newPath) });
     }
 
 }

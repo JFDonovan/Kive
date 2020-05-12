@@ -29,7 +29,9 @@ var platform = remote.getGlobal('sharedObject').platform;
 // Called on body onload
 function onLoad() {
     console.log('read_tree called');
-
+    document.getElementsByClassName("chrome-tabs")[0].addEventListener('dblclick', event => {
+        chromeTabs.removeTab(chromeTabs.activeTabEl)
+      })
     // Bind an event listener to the loaded iframe to catch any link clicks
     $('body iframe').on('load', function () {
         $(this).contents().find('a').bind('click', function (e) {

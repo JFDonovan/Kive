@@ -32,11 +32,11 @@ Kivé will have support for legacy ScrapBook or WebScrapBook users looking for a
 4. Install dependencies: 
    ```pip install -r requirements.txt```
 
-5. Install Node dependencies: 
-```npm install```
+5. Install frontend dependencies: 
+```yarn```
 
 6. Start application: 
-```npm start```
+```yarn start```
 
 ### VERSIONS 
 - **npm**: ```6.13.4```
